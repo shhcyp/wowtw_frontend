@@ -1,0 +1,321 @@
+<script setup>
+import { ref, watch } from 'vue'
+import BarAvatar from './BarAvatar.vue'
+import { useUserStore } from '@/stores'
+import { useRouter } from 'vue-router'
+import DialogModal from '@/components/module/DialogModal.vue'
+import { useAvatarStore } from '@/stores'
+import { storeToRefs } from 'pinia'
+import { avatarService, nicknameService } from '@/apis/user'
+import { forbiddenWords } from '@/utils/illegal'
+
+const userStore = useUserStore()
+const { avatar } = storeToRefs(useAvatarStore())
+const router = useRouter()
+
+const isModalOpen = ref(false)
+const target = ref(false)
+const avatarUrl = ref(null)
+const choosenIndex = ref(null)
+const newNickname = ref(null)
+const alertMessage = ref(null)
+const isAccess = ref(false)
+const textToCopy = ref(null)
+const isCopied = ref(false)
+
+const openModal = (value) => {
+  isModalOpen.value = true
+  target.value = value
+  document.body.style.overflow = 'hidden'  // 禁止滚动
+  console.log(userStore.identifier);
+}
+
+const chooseAvatar = (item, index) => {
+  avatarUrl.value = item.url
+  choosenIndex.value = index
+}
+
+const validateNickname = (nickname) => {
+  const validNicknamePattern = /^[a-zA-Z0-9\u4e00-\u9fa5]+$/
+
+  if (!nickname) {
+    return alertMessage.value = ''
+  }
+
+  if (!validNicknamePattern.test(nickname)) {
+    alertMessage.value = '只能是汉字、字母或数字'
+    return isAccess.value = false
+  }
+
+  for (const word of forbiddenWords) {
+    if (nickname.includes(word)) {
+      alertMessage.value = '对不起，不能含有非法字符'
+      return isAccess.value = false
+    }
+  }
+  return isAccess.value = true
+}
+
+const handleInput = (event) => {
+  newNickname.value = event.target.value
+  if (!newNickname.value || newNickname.value) {
+    alertMessage.value = ''
+  }
+}
+
+// 复制邀请码
+const copyToClipboard = () => {
+  const text = userStore.identifier
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        isCopied.value = true
+        alertMessage.value = '复制成功'
+        setTimeout(() => {
+          alertMessage.value = ''
+        }, 2000) // 2秒后隐藏提示消息
+      })
+      .catch(() => {
+        fallbackCopyToClipboard(text)
+      })
+  } else {
+    fallbackCopyToClipboard(text)
+  }
+}
+
+const fallbackCopyToClipboard = (text) => {
+  const textArea = document.createElement('textarea')
+  textArea.value = text
+  textArea.style.position = 'fixed'
+  document.body.appendChild(textArea)
+  textArea.focus()
+  textArea.select()
+
+  try {
+    document.execCommand('copy')
+    isCopied.value = true
+    alertMessage.value = '复制成功'
+    setTimeout(() => {
+      alertMessage.value = ''
+    }, 2000) // 2秒后隐藏提示消息
+  } catch (err) {
+    isCopied.value = false
+    alertMessage.value = '复制失败'
+  }
+
+  document.body.removeChild(textArea)
+}
+
+const confirm = async () => {
+  if (target.value === 'quitBar') {
+    userStore.resetUserData()
+    userStore.isLogin = false
+    router.push('/')
+    isModalOpen.value = false
+
+    document.body.style.overflow = 'auto'  // 恢复滚动
+  }
+
+  if (target.value === 'avatar' && choosenIndex.value !== null) {
+    const result = await avatarService(userStore.id, avatarUrl.value)
+    if (result.data.code === 1) {
+      userStore.userAvatar = avatarUrl.value
+      isModalOpen.value = false
+      choosenIndex.value = null
+    }
+
+    document.body.style.overflow = 'auto'  // 恢复滚动
+  }
+
+  if (target.value === 'nickname' && isAccess.value) {
+    //发起新昵称请求
+    await nicknameService(userStore.id, newNickname.value)
+    isModalOpen.value = false
+    isAccess.value = false
+    userStore.nickname = newNickname.value
+    newNickname.value = ''
+
+    document.body.style.overflow = 'auto'  // 恢复滚动
+  }
+
+  if (target.value === 'identifier') {
+    isModalOpen.value = false
+
+    document.body.style.overflow = 'auto'  // 恢复滚动
+  }
+}
+
+const cancel = () => {
+  document.body.style.overflow = 'auto'  // 恢复滚动
+  if (target.value === 'quitBar') {
+    isModalOpen.value = false
+  }
+
+  if (target.value === 'avatar') {
+    choosenIndex.value = null
+  }
+
+  if (target.value === 'nickname') {
+    isModalOpen.value = false
+    isAccess.value = false
+    newNickname.value = ''
+    alertMessage.value = ''
+  }
+}
+</script>
+
+<template>
+  <div id="bars-left">
+    <RouterLink :to="`/`">首页</RouterLink>
+    <!-- <RouterLink :to="`/prompt`">指引</RouterLink> -->
+    <!-- <RouterLink :to="`/gear`">装配</RouterLink> -->
+    <!-- <RouterLink :to="`/match`">竞速赛</RouterLink> -->
+    <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
+  </div>
+
+  <div v-if="!userStore.isLogin" id="bars-right">
+    <!-- <div v-if="false" id="bars-right"> -->
+    <RouterLink :to="`/register`">注册</RouterLink>
+    <RouterLink :to="`/login`">登录</RouterLink>
+  </div>
+  <div v-else id="bars-right">
+    <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
+    <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }} </div>
+    <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>
+    <div @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>
+  </div>
+
+  <DialogModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" @update:confirm="confirm"
+    @update:cancel="cancel">
+    <div v-if="target === 'quitBar'" class="text-center slot-content">
+      <h3>退出确认</h3>
+      <p class="padding-mini">勇士，你确定要退出时光漫游吗？</p>
+    </div>
+
+    <div v-if="target === 'identifier'" class="text-center slot-content">
+      <h3 @click="copyToClipboard">单击复制</h3>
+      <div :class="isCopied ? 'in-green' : 'alert'" id="alert-container">{{ alertMessage }}</div>
+      <p @click="copyToClipboard" ref="textToCopy" style="font-size: 12px;cursor: pointer;">{{ userStore.identifier }}
+      </p>
+    </div>
+
+    <div v-if="target === 'nickname'" class="text-center slot-content">
+      <h3>修改昵称</h3>
+      <div class="alert" id="alert-container">{{ alertMessage }}</div>
+      <!-- <p class="padding-mini">昵称长度不能超过七个字符</p> -->
+      <input v-model="newNickname" @keyup.enter="validateNickname(newNickname)" @blur="validateNickname(newNickname)"
+        @input="handleInput" maxlength="7" autocomplete="false" type="text" id="new-nickname">
+      <br>
+    </div>
+
+    <div v-if="target === 'avatar'" class="text-center slot-content">
+      <h3>更换头像</h3>
+      <p class="padding-mini"></p>
+      <div id="avatars-container">
+        <BarAvatar @click="chooseAvatar(item, index)" v-for="(item, index) in avatar" :key="index" :url="item.url"
+          :class="{ 'active-border': choosenIndex === index }">
+        </BarAvatar>
+      </div>
+    </div>
+  </DialogModal>
+</template>
+
+<style scoped>
+#bars-left,
+#bars-right {
+  display: flex;
+  align-items: center;
+}
+
+#bars-left a,
+#bars-right a,
+#quit-button {
+  line-height: 1;
+  padding: 0.85rem 2rem;
+}
+
+/* #bars-right :nth-child(3) {
+  padding: 0 2rem;
+} */
+
+.slot-content {
+  padding: 1rem 1rem 0 1rem;
+}
+
+#avatars-container {
+  padding: 1rem;
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(14, 2rem);
+}
+
+#new-nickname,
+#user-identifier {
+  background: none;
+  font-size: 1.3rem;
+  width: 77%;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 1rem 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  color: var(--color-text);
+}
+
+#bar-copy-container {
+  width: 2rem;
+  height: 2rem;
+  background: gray;
+  cursor: pointer;
+}
+
+#alert-container {
+  line-height: 1.77rem;
+  height: 1.77rem;
+}
+
+#generate-identifier {
+  padding: 0 1rem;
+}
+
+@media (max-width: 1240px) and (min-width: 1024px) {
+
+  #bars-left a,
+  #bars-right a,
+  #quit-button {
+    line-height: 1;
+    padding: 0.85rem 1.7rem;
+  }
+
+  /* #bars-right :nth-child(3) {
+    padding: 0 1.7rem;
+  } */
+}
+
+@media (max-width: 1024px) and (min-width: 820px) {
+
+  #bars-left a,
+  #bars-right a,
+  #quit-button {
+    line-height: 1;
+    padding: 0.85rem 1.3rem;
+  }
+
+  /* #bars-right :nth-child(3) {
+    padding: 0 1.3rem;
+  } */
+}
+
+@media (max-width: 820px) {
+
+  #bars-left a,
+  #bars-right a,
+  #quit-button {
+    line-height: 1;
+    padding: 0.85rem 1rem;
+  }
+
+  /* #bars-right :nth-child(3) {
+    padding: 0 1rem;
+  } */
+}
+</style>

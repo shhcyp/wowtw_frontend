@@ -1,0 +1,288 @@
+@import './base.css';
+@import './boxsize.css';
+/* @import './zindex.css'; */
+
+#app {
+  min-height: 100%;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 负责安全边距、底部border */
+.container {
+  padding: 1.7rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* 只负责安全边距 */
+.container- {
+  padding: 0 1.7rem;
+}
+
+/* 只负责处理版心 */
+.wrapper {
+  max-width: 1024px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.short-row-wrapper {
+  text-align: center;
+}
+
+@media (max-width: 1920px) {
+  body {
+    /* display: flex; */
+    /* place-items: center; */
+  }
+
+  #app {
+    /* display: grid; */
+    /* grid-template-columns: 1fr 1fr; */
+    /* padding: 0 2rem; */
+  }
+
+  /* 只负责处理版心 */
+  .wrapper {
+    /* width: 97%; */
+    /* max-width: 1024px; */
+    /* margin: 0 auto; */
+  }
+}
+
+.last-child {
+  /* border-bottom: none; */
+  margin-bottom: 3rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text);
+  transition: 0.4s;
+  cursor: pointer;
+  /* padding: 3px; */
+  
+}
+
+@media (hover: hover) {
+  a:hover {
+    /* background-color: hsla(160, 100%, 37%, 0.2); */
+    color: var(--color-hover);
+    /* font-weight: bold; */
+  }
+  .custom-button:hover,
+  .pointer:hover {
+    color: var(--color-hover);
+  }
+}
+
+.custom-button {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.padding-mini {
+  padding: 0.3rem;
+}
+
+.padding {
+  padding: 0.5rem;
+}
+
+.padding-plus {
+  padding: 0.77rem;
+}
+
+
+.bar-with-border {
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  padding: 0.3rem 1rem;
+  border-radius: 0.3rem;
+}
+
+.center-heading {
+  text-align: center;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.portal a {
+  color: var(--c-blue);
+}
+
+.active {
+  background-color: var(--color-highlight);
+  color: var(--color-opposite);
+}
+
+.active-border {
+  border: 1px solid var(--color-highlight);
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.flex-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.flex-row-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column-align-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+.space-evenly {
+  justify-content: space-evenly;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.no-grow {
+  flex-grow: 0;
+}
+
+.placeholder {
+  width: 100%;
+}
+
+.normal {
+  color: var(--c-normal);
+}
+
+.good {
+  color: var(--c-good);
+}
+
+.excellent {
+  color: var(--c-excellent);
+}
+
+.epic {
+  color: var(--c-epic);
+}
+
+.legendary {
+  color: var(--c-legendary);
+}
+
+.eternal {
+  color: var(--c-eternal);
+}
+
+.inherit {
+  color: var(--c-inherit);
+}
+
+.any {
+  color: var(--c-any);
+}
+
+.margin-bottom-1rem {
+  margin-bottom: 1rem;
+}
+
+.alert {
+  color: var(--c-alert);
+  font-size: 12px;
+}
+
+.in-green {
+  color: var(--c-good);
+  font-size: 12px;
+}
+
+.position-static {
+  position: static !important;
+}
+
+.position-relative{
+  position: relative;
+}
+
+.position-absolute-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.position-absolute-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.border-bottom {
+  width: 100%;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.line-height-3 {
+  line-height: 3;
+}
+
+.bar-useable {
+  background: var(--color-useable-background);
+  cursor: pointer;
+  color: var(--color-useable-text);
+}
+
+.bar-unuseable {
+  background: var(--color-unuseable-background);
+  cursor: not-allowed;
+  color: var(--color-unuseable-text);
+}

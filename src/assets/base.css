@@ -1,0 +1,240 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --c-white: #ffffff;
+  --c-white-soft: #f8f8f8;
+  --c-white-mute: #f2f2f2;
+  --c-white-mute-a: rgba(242, 242, 242, 0.77);
+  --c-white-deep: #ebebeb;
+
+  --c-gray: #838383;
+  --c-gray-a: rgba(131, 131, 131, 0.5);
+
+  --c-black: #181818;
+  --c-black-soft: #222222;
+  --c-black-mute: #282828;
+  --c-black-mute-a: rgba(40, 40, 40, 0.77);
+  --c-black-deep: #303030;
+
+  --c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --c-text-light-1: rgba(60, 60, 60, 1);
+  --c-text-light-2: rgba(60, 60, 60, 0.93);
+  --c-text-dark-1: var(--c-white);
+  --c-text-dark-2: rgba(235, 235, 235, 0.93);
+
+  --c-theme-wowtw:#dc801d;
+  --c-blue: #2486F8;
+  --c-red: rgb(255, 65, 65);
+
+  --c-normal: var(--color-text);
+  --c-good: #19B22A;
+  --c-excellent: #037BE2;
+  --c-epic: #A335EF;
+  --c-legendary: #ee8804;
+  /* --c-eternal: #cf9b00; */
+  --c-eternal: #e4a339;
+  --c-inherit: #02D3FF;
+  --c-any: #F282D8;
+}
+
+/* semantic color variables for this project */
+:root {
+  --bgcolor-navigation: var(--c-white-mute);
+  --bgcolor-navigation-icy: var(--c-white-mute-a);
+
+  --color-background: var(--c-white);
+  --color-background-soft: var(--c-white-soft);
+  --color-background-mute: var(--c-white-mute);
+
+  --color-border: var(--c-divider-light-2);
+  --color-border-hover: var(--c-divider-light-1);
+
+  --color-heading: var(--c-theme-wowtw);
+  --color-heading-normal: var(--c-text-light-1);
+  --color-text: var(--c-text-light-1);
+
+  --color-footer: var(--c-white-mute);
+
+  --color-hover: var(--c-theme-wowtw);
+  --color-highlight: var(--c-theme-wowtw);
+
+  --color-opposite: var(--c-white-mute);
+
+  --color-portal: var(--c-blue);
+
+  --color-gear-backgroud: var( --c-white-deep);
+
+  --c-alert: var(--c-red);
+
+  --section-gap: 160px;
+
+  --color-useable-background: var(--c-blue);
+  --color-useable-text: var(--c-text-dark-2);
+  --color-unuseable-background: var(--c-divider-light-2);
+  --color-unuseable-text: var(--c-gray);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bgcolor-navigation: var(--c-black-mute);
+    --bgcolor-navigation-icy: var(--c-black-mute-a);
+
+    --color-background: var(--c-black);
+    --color-background-soft: var(--c-black-soft);
+    --color-background-mute: var(--c-black-mute);
+
+    --color-border: var(--c-divider-dark-2);
+    --color-border-hover: var(--c-divider-dark-1);
+
+    --color-heading: var(--c-theme-wowtw);
+    --color-heading-normal: var(--c-white-mute);
+    --color-text: var(--c-text-dark-2);
+
+    --color-footer: var(--c-black-mute);
+
+    --color-hover: var(--c-theme-wowtw);
+    --color-highlight: var(--c-theme-wowtw);
+
+    --color-hover: var(--c-theme-wowtw);
+
+    --color-opposite: var(--c-black-mute);
+
+    --color-portal: var(--c-blue);
+
+    --color-gear-backgroud: var(--c-black-deep);
+
+    --c-alert: var(--c-red);
+
+
+  --color-useable-background: var(--c-blue);
+  --color-useable-text: var(--c-text-dark-2);
+  --color-unuseable-background: var(--c-gray-a);
+  --color-unuseable-text: var(--c-black-deep);
+  }
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 375px;
+  /* width: 100%; */
+  height: 100%;
+}
+
+html {
+  color: var(--color-text);
+  background: var(--color-background);
+  
+  font-family:
+    /* Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif; */
+    'Microsoft Yahei', 'PingFang SC', 'Avenir', 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;
+  font-size: 14px;
+  line-height: 1.77rem;
+  text-align: justify;
+
+  transition:
+  color 0.5s,
+  background-color 0.5s;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+li,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: var(--color-heading);
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+span {
+  cursor: default;
+}
+
+@media (max-width: 430px) {
+  h1 {
+    font-size: 1.7rem;
+  }
+}
+
+img {
+  width: 100%;
+  /* height: 100%; */
+  vertical-align: middle;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+input {
+  position: relative;
+  border: none;
+  box-shadow: none;
+}
+
+input:focus {
+  outline: none;
+  /* border: none; */
+  /* box-shadow: none; */
+  /* border: 2px solid silver; */
+}
+
+.no-focus {
+  pointer-events: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  font-size: 1rem;
+  -webkit-text-fill-color: var(--color-text);
+  caret-color: var(--color-text) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  /* display: none !important; */
+  /* visibility: hidden; */
+  position: absolute;
+  right: 0;
+}

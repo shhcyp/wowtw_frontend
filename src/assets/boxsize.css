@@ -1,0 +1,19 @@
+.box-size-regular {
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+}
+
+.box-size-light {
+    height: 1.45rem;
+    width: 1.55rem;
+    overflow: hidden;
+}
+
+/* 定制尺寸 */
+.box-size-class-list {
+    width: 22rem;
+    height: 9rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
