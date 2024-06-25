@@ -16,8 +16,8 @@ export const phoneNumberService = (phoneNumber) => {
 }
 
 // 注册
-export const userRegisterService = ({ username, password, phoneNumber, question, answer, inviteIdentifier }) => {
-    return request.post('/user/register', { username, password, phoneNumber, question, answer, inviteIdentifier })
+export const userRegisterService = ({ username, password, phoneNumber, question, answer, inviteIdentifier, paymentInfo }) => {
+    return request.post('/user/register', { username, password, phoneNumber, question, answer, inviteIdentifier, paymentInfo })
 }
 
 // 生成邀请码
@@ -82,19 +82,7 @@ export const createOrderService = (phoneNumber, inviteIdentifier) => {
     return request.post('/alipay/preCreate', { phoneNumber, inviteIdentifier })
 }
 
-// fetch('https://wowtw.serveo.net/alipay/createOrder', {
-//     method: 'POST'
-// })
-// .then(response => response.json())
-// .then(data => {
-//     if (data.success) {
-//         console.log('Order created successfully:', data.tradeNo);
-//     } else {
-//         console.error('Order creation failed:', data.message);
-//         alert('Order creation failed: ' + data.message);
-//     }
-// })
-// .catch(error => {
-//     console.error('Error:', error);
-//     alert('Error occurred: ' + error.message);
-// });
+// 查询支付状态
+export const queryPaymentService = (outTradeNo) => {
+    return request.post('/alipay/query', { outTradeNo })
+}

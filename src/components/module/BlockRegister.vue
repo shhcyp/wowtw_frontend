@@ -1,5 +1,5 @@
 <script setup>
-import {ref, reactive, watch, provide} from 'vue'
+import { ref, reactive, watch, provide } from 'vue'
 import InputPublic from './InputPublic.vue'
 import BarGetCode from './BarGetCode.vue'
 import QRCodeGenerator from "@/components/module/QRCodeGenerator.vue"
@@ -12,9 +12,10 @@ import {
   smsService,
   codeVerifyService,
   checkIdentifierService,
-  createOrderService
+  createOrderService,
+  queryPaymentService
 } from '@/apis/user'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 // 绑定form表单dom
@@ -32,15 +33,16 @@ const orderQrcode = ref(0)
 const alipayQRCodeContent = ref(null)
 
 const registerFormData = reactive({
-  count: {value: 0, state: 1},
-  username: {value: '', state: 0},
-  password: {value: '', state: 0},
-  repassword: {value: '', state: 0},
-  phoneNumber: {value: '', state: 0},
-  verificationCode: {value: '', state: 0},
-  inviteIdentifier: {value: '', state: 1},
-  question: {value: '', state: 0},
-  answer: {value: '', state: 0},
+  count: { value: 0, state: 1 },
+  username: { value: '', state: 0 },
+  password: { value: '', state: 0 },
+  repassword: { value: '', state: 0 },
+  question: { value: '', state: 0 },
+  answer: { value: '', state: 0 },
+  phoneNumber: { value: '', state: 0 },
+  verificationCode: { value: '', state: 0 },
+  inviteIdentifier: { value: '', state: 1 },
+  paymentInfo: { value: '', state: 0 }
 })
 
 const {
@@ -48,12 +50,14 @@ const {
   username,
   password,
   repassword,
+  question,
+  answer,
   phoneNumber,
   verificationCode,
   inviteIdentifier,
-  question,
-  answer
+  paymentInfo
 } = registerFormData
+
 const passport = ref(false)
 
 const alertMessageInput = ref(null)
@@ -174,13 +178,43 @@ const handleInviteIdentifier = async (inputValue) => {
 //     handleCreateOrder()
 // })
 
+// 支付状态轮询
+const paymentPollQuery = (outTradeNo) => {
+  let retries = 0;
+  const maxRetries = 10;
+
+  const intervalId = setInterval( async () => {
+    const result = await queryPaymentService(outTradeNo)
+    const tradeStatus = result.data.data
+    const code = result.data.code
+    if (tradeStatus === 'TRADE_SUCCESS') {
+      alert("Payment successful!");
+      clearInterval(intervalId)
+      // 处理支付成功逻辑
+      paymentInfo.value = outTradeNo
+      paymentInfo.state = code
+    } else if (tradeStatus === 'TRADE_CLOSED') {
+      alert("Payment failed or closed.");
+      clearInterval(intervalId);
+      // 处理支付失败或关闭逻辑
+    } else {
+      retries++;
+      if (retries >= maxRetries) {
+        clearInterval(intervalId)
+        alert("Payment status unknown. Please contact support.");
+      }
+    }
+  }, 3000); // 每3秒查询一次
+}
+
+
 // 提交按钮状态配合项
 const updateBarState = (newValue) => {
   barSmsState.value = newValue
   isPhoneNumberUpdated = false
 }
 
-// 用户名占用、手机号是否可用验证
+// 用户名占用、手机号是否可用、支付状态验证
 watch(registerFormData, async () => {
   console.log('表单form实时数据', registerFormData);
   // 检查state是不是都是1
@@ -204,6 +238,10 @@ watch(registerFormData, async () => {
       console.log('请求预创建订单返回数据', result)
       alipayQRCodeContent.value = result.data.data.alipayQRCode
       console.log('支付二维码链接', alipayQRCodeContent.value)
+      const outTradeNo = result.data.data.outTradeNo
+      setTimeout( () => {
+        paymentPollQuery(outTradeNo)
+      }, 5000)
     }
   }
   // if (phoneNumber.value && phoneNumber.state === 1 && verificationCode.state === 1) {
@@ -223,7 +261,8 @@ const handleSubmit = async () => {
     phoneNumber: phoneNumber.value,
     question: question.value,
     answer: answer.value,
-    inviteIdentifier: inviteIdentifier.value
+    inviteIdentifier: inviteIdentifier.value,
+    paymentInfo: paymentInfo.value
   }
 
   // 控制台输出状态看一下
@@ -261,18 +300,18 @@ const handleEnter = (event) => {
   <div class="container- wrapper flex-row-align-center">
     <!-- <form @submit.prevent="handleSubmit" class="flex-column" id="register-form-container"> -->
     <form @submit.prevent="handleSubmit" ref="registerForm" class="flex-column space-evenly"
-          id="register-form-container">
+      id="register-form-container">
       <div id="register-form-input">
         <InputPublic :alertMessageInput="alertMessageInput" @keydown.enter="handleEnter" @blur="updateUsername"
-                     autocomplete="true" type="text" name="username">
+          autocomplete="true" type="text" name="username">
           账号
         </InputPublic>
         <div class="placeholder"></div>
         <InputPublic @keydown.enter="handleEnter" @blur="updatePassword" :isMatch="isMatch" autocomplete="true"
-                     type="password" name="password">密码
+          type="password" name="password">密码
         </InputPublic>
         <InputPublic @keydown.enter="handleEnter" @blur="updateRepassword" :isMatch="isMatch" type="password"
-                     name="repassword">
+          name="repassword">
           重复密码
         </InputPublic>
         <InputPublic @keydown.enter="handleEnter" @blur="updateQuestion" type="text" name="question">
@@ -281,15 +320,14 @@ const handleEnter = (event) => {
         <InputPublic @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer">密保答案
         </InputPublic>
         <InputPublic @keydown.enter="handleEnter" @clear="notPhoneNumber" @request="updatePhoneNumber"
-                     @notPhoneNumber="notPhoneNumber" type="text" name="phoneNumber" :maxlength="11">手机号码
+          @notPhoneNumber="notPhoneNumber" type="text" name="phoneNumber" :maxlength="11">手机号码
         </InputPublic>
         <div class="flex-row-align-center space-between">
-          <InputPublic @keydown.enter="handleEnter" @request="handleCodeVerify" type="text"
-                       name="verificationCode" :maxlength="6" style="flex: 1;">
+          <InputPublic @keydown.enter="handleEnter" @request="handleCodeVerify" type="text" name="verificationCode"
+            :maxlength="6" style="flex: 1;">
             验证码
           </InputPublic>
-          <BarGetCode @updateBarState="updateBarState" :phoneNumberState="phoneNumber.state"
-                      @click="handleSms">
+          <BarGetCode @updateBarState="updateBarState" :phoneNumberState="phoneNumber.state" @click="handleSms">
           </BarGetCode>
         </div>
       </div>
@@ -304,19 +342,19 @@ const handleEnter = (event) => {
               注册成功后，用户可自助生成邀请码，使用该邀请码邀请朋友注册为会员，将获得30元返现，使用次数无限制，系统统计后于每月初发放。
             </li>
           </ul>
-          <InputPublic @request="handleInviteIdentifier" :maxlength="34" name="inviteIdentifier"
-                       placeholder="邀请码（选填）"></InputPublic>
+          <InputPublic @request="handleInviteIdentifier" :maxlength="34" name="inviteIdentifier" placeholder="邀请码（选填）">
+          </InputPublic>
         </div>
         <div class="flex-center-center" id="payment-code">
           <div class="flex-center-center" id="qrcode-container">
-<!--            <img :src="orderQrcode">-->
+            <!--            <img :src="orderQrcode">-->
             <QRCodeGenerator :alipayQRCodeContent="alipayQRCodeContent"></QRCodeGenerator>
           </div>
         </div>
       </div>
       <TheDivider></TheDivider>
       <BarFormSubmit @keydown.enter="handleEnter" @click="handleSubmit" :barState="passport"
-                     :messageForButton="messageForButton" :submitAnimateRun="submitAnimateRun" type="register">
+        :messageForButton="messageForButton" :submitAnimateRun="submitAnimateRun" type="register">
         <!-- id="submit-button" -->
       </BarFormSubmit>
       <PanelFormFooter></PanelFormFooter>
