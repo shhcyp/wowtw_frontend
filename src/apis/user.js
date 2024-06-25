@@ -79,7 +79,7 @@ export const checkIdentifierService = (identifier) => {
 
 // 生成订单
 export const createOrderService = (phoneNumber, inviteIdentifier) => {
-    return request.post('/alipay/precreate', { phoneNumber, inviteIdentifier })
+    return request.post('/alipay/preCreate', { phoneNumber, inviteIdentifier })
 }
 
 // fetch('https://wowtw.serveo.net/alipay/createOrder', {

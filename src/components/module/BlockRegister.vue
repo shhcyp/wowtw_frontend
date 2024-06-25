@@ -202,7 +202,7 @@ watch(registerFormData, async () => {
       // const result = await handleCreateOrder()
       const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
       console.log('请求预创建订单返回数据', result)
-      alipayQRCodeContent.value = result.data.data
+      alipayQRCodeContent.value = result.data.data.alipayQRCode
       console.log('支付二维码链接', alipayQRCodeContent.value)
     }
   }
