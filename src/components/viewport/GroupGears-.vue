@@ -2,13 +2,13 @@
 import {ref, watch} from 'vue'
 import BlockGear from '../module/BlockGear.vue'
 import {useFilterStore} from '@/stores/filter'
-import {infoGroupsStore} from '@/stores'
+import {infoGroupResponseStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 
 const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
 const gearsContainer = ref(null)
 
-const {infoGroupData} = storeToRefs(infoGroupsStore())
+const {infoGroupData} = storeToRefs(infoGroupResponseStore())
 // onMounted(() => {
 //   const itemsArray = Array.from(gearsContainer.value.children);
 //   const columnCount = parseInt(getComputedStyle(gearsContainer.value).columnCount);
@@ -27,14 +27,15 @@ const {infoGroupData} = storeToRefs(infoGroupsStore())
 //   });
 // });
 
-console.log('test2', infoGroupData.value)
+console.log('test2', infoGroupData.data)
 </script>
 
 <template>
-  <div v-for="infoGroup in infoGroupData" :key="infoGroup.id" class="container wrapper">
-    <h3 class="margin-bottom-1rem">{{ infoGroup.title }}</h3>
+  <div v-for="gearsGroup in classData[classIndex].talents[talentIndex].gearsGroup" :key="gearsGroup.id"
+       class="container wrapper">
+    <h3 class="margin-bottom-1rem">{{ gearsGroup.title }}</h3>
     <div ref="gearsContainer" id="gears">
-      <BlockGear v-for="gears in infoGroup.details" :key="gears.id" :extraInfoDisplay="gears.isExtra">
+      <BlockGear v-for="gears in gearsGroup.gears" :key="gears.id" :extraInfoDisplay="gears.isExtraInfo">
         <template #gear-icon>
           <!-- <img src="@/assets/ruby/illimited_iamond.webp"> -->
           <img :src="gears.icon">
@@ -46,7 +47,7 @@ console.log('test2', infoGroupData.value)
           <h3 id="gear-name" :class="gears.quality">{{ gears.name }}</h3>
         </template>
         <template #mark-icon>
-          <div v-for="icon in gears.marks" :key="icon.id" class="flex-row-align-center" id="mark-icon-container">
+          <div v-for="icon in gears.mark" :key="icon.id" class="flex-row-align-center" id="mark-icon-container">
             <img :src="icon.icon">
           </div>
         </template>
@@ -54,11 +55,11 @@ console.log('test2', infoGroupData.value)
           {{ gears.drop }}
         </template>
         <template #extra-info>
-          <li v-for="extra in gears.extras" :key="extra.id" class="flex-row-align-center" id="extra-info">
+          <li v-for="extraInfo in gears.extraInfo" :key="extraInfo.id" class="flex-row-align-center" id="extra-info">
             <div class="flex-center-center" id="extra-info-icon-container">
-              <img :src="extra.icon">
+              <img :src="extraInfo.icon">
             </div>
-            <span id="extra-info-desc" :class="extra.quality"> {{ extra.description }} </span>
+            <span id="extra-info-desc">{{ extraInfo.desc }}</span>
           </li>
         </template>
       </BlockGear>

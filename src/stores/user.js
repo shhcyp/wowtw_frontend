@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import {defineStore} from 'pinia'
 import {ref} from 'vue'
 
 export const useUserStore = defineStore(
@@ -35,8 +35,8 @@ export const useUserStore = defineStore(
             token.value = null
         }
 
-        return { isLogin, id, userID, userAvatar, nickname, identifier, editCount, token, setToken, resetUserData }
-    }, 
+        return {isLogin, id, userID, userAvatar, nickname, identifier, editCount, token, setToken, resetUserData}
+    },
     {
         persist: true
     }

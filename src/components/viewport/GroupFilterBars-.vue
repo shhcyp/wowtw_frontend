@@ -5,14 +5,14 @@ import {useFilterStore} from '@/stores/filter'
 import {storeToRefs} from 'pinia'
 import {useBrowserWidthListenStore} from '@/stores/browserWidthListen'
 import {infoGroupService} from '@/apis/infoGroup.js'
-import {infoGroupsStore} from '@/stores'
+import {infoGroupResponseStore} from '@/stores'
 
 const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
 
 const {innerWidth, isPhone} = storeToRefs(useBrowserWidthListenStore())
 const {addResizeListener, removeResizeListener, updateDeviceState} = useBrowserWidthListenStore()
 
-const {infoGroupData} = storeToRefs(infoGroupsStore())
+const {infoGroupData} = storeToRefs(infoGroupResponseStore())
 
 onMounted(() => {
   addResizeListener()
@@ -27,10 +27,6 @@ onUnmounted(() => {
   removeResizeListener()
 })
 
-const handleClassClick = (index) => {
-  classIndex.value = index
-  talentIndex.value = null
-}
 const handleTalentClick = async (index, talentId) => {
   talentIndex.value = index
   const result = await infoGroupService(talentId)
@@ -43,7 +39,7 @@ const handleTalentClick = async (index, talentId) => {
   <!-- 职业分类按钮 -->
   <div class="container wrapper">
     <div id="class-filter-container">
-      <BarFilter @click="handleClassClick(index)" :class="{ active: classIndex === index }"
+      <BarFilter @click="classIndex = index" :class="{ active: classIndex === index }"
                  v-for="(item, index) in classData" :key="item.id">
         <template #bar-icon>
           <img :src="item.icon" class="class-icon">
@@ -54,17 +50,17 @@ const handleTalentClick = async (index, talentId) => {
     </div>
   </div>
   <!-- 天赋分类按钮 -->
-  <div class="container wrapper">
-    <div id="talent-filter-container">
-      <BarFilter @click="handleTalentClick(index, item.talentId)" :class="{ active: talentIndex === index }"
-                 v-for="(item, index) in classData[classIndex].talents" :key="item.id">
-        <template #bar-icon>
-          <img :src="item.icon" class="talent-icon">
-        </template>
-        <template #bar-name>{{ item.name }}</template>
-      </BarFilter>
-    </div>
-  </div>
+<!--  <div class="container wrapper">-->
+<!--    <div id="talent-filter-container">-->
+<!--      <BarFilter @click="handleTalentClick(index, item.talentId)" :class="{ active: talentIndex === index }"-->
+<!--                 v-for="(item, index) in classData[classIndex].talents" :key="item.id">-->
+<!--        <template #bar-icon>-->
+<!--          <img :src="item.icon" class="talent-icon">-->
+<!--        </template>-->
+<!--        <template #bar-name>{{ item.name }}</template>-->
+<!--      </BarFilter>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <style scoped>

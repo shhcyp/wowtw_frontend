@@ -10,3 +10,6 @@ export default pinia
 export * from './user'
 export * from './counter'
 export * from './avatar'
+export * from './infoGroups.js'
+
+export class infoGroupData {}

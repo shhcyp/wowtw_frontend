@@ -7,17 +7,17 @@ const { classData, classIndex, talentIndex } = storeToRefs(useFilterStore())
 </script>
 
 <template>
-  <div class="container wrapper">
-    <h3 class="margin-bottom-1rem">item.title</h3>
+  <div v-for="item in classData[classIndex].talents[talentIndex].talentTrees" :key="item.id" class="container wrapper">
+    <h3 class="margin-bottom-1rem">{{ item.title }}</h3>
     <BlockTalentTree>
       <template #first-image>
-        <img src="">
+        <img :src="item.image.first">
       </template>
       <template #center-image>
         <!-- <img :src="item.image.first"> -->
       </template>
       <template #last-image>
-        <img src="" alt="">
+        <img :src="item.image.first" alt="">
       </template>
     </BlockTalentTree>
   </div>

@@ -1,16 +1,16 @@
 <script setup>
-import { ref, watch } from 'vue'
+import {ref} from 'vue'
 import BarAvatar from './BarAvatar.vue'
-import { useUserStore } from '@/stores'
-import { useRouter } from 'vue-router'
+import {useUserStore} from '@/stores'
+import {useRouter} from 'vue-router'
 import DialogModal from '@/components/module/DialogModal.vue'
-import { useAvatarStore } from '@/stores'
-import { storeToRefs } from 'pinia'
-import { avatarService, nicknameService } from '@/apis/user'
-import { forbiddenWords } from '@/utils/illegal'
+import {useAvatarStore} from '@/stores'
+import {storeToRefs} from 'pinia'
+import {avatarService, nicknameService} from '@/apis/user'
+import {forbiddenWords} from '@/utils/illegal'
 
 const userStore = useUserStore()
-const { avatar } = storeToRefs(useAvatarStore())
+const {avatar} = storeToRefs(useAvatarStore())
 const router = useRouter()
 
 const isModalOpen = ref(false)
@@ -68,16 +68,16 @@ const copyToClipboard = () => {
   const text = userStore.identifier
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text)
-      .then(() => {
-        isCopied.value = true
-        alertMessage.value = '复制成功'
-        setTimeout(() => {
-          alertMessage.value = ''
-        }, 2000) // 2秒后隐藏提示消息
-      })
-      .catch(() => {
-        fallbackCopyToClipboard(text)
-      })
+        .then(() => {
+          isCopied.value = true
+          alertMessage.value = '复制成功'
+          setTimeout(() => {
+            alertMessage.value = ''
+          }, 2000) // 2秒后隐藏提示消息
+        })
+        .catch(() => {
+          fallbackCopyToClipboard(text)
+        })
   } else {
     fallbackCopyToClipboard(text)
   }
@@ -180,13 +180,13 @@ const cancel = () => {
   </div>
   <div v-else id="bars-right">
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
-    <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }} </div>
+    <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }}</div>
     <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>
     <div @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>
   </div>
 
   <DialogModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" @update:confirm="confirm"
-    @update:cancel="cancel">
+               @update:cancel="cancel">
     <div v-if="target === 'quitBar'" class="text-center slot-content">
       <h3>退出确认</h3>
       <p class="padding-mini">勇士，你确定要退出时光漫游吗？</p>
@@ -204,7 +204,7 @@ const cancel = () => {
       <div class="alert" id="alert-container">{{ alertMessage }}</div>
       <!-- <p class="padding-mini">昵称长度不能超过七个字符</p> -->
       <input v-model="newNickname" @keyup.enter="validateNickname(newNickname)" @blur="validateNickname(newNickname)"
-        @input="handleInput" maxlength="7" autocomplete="false" type="text" id="new-nickname">
+             @input="handleInput" maxlength="7" autocomplete="false" type="text" id="new-nickname">
       <br>
     </div>
 
@@ -213,7 +213,7 @@ const cancel = () => {
       <p class="padding-mini"></p>
       <div id="avatars-container">
         <BarAvatar @click="chooseAvatar(item, index)" v-for="(item, index) in avatar" :key="index" :url="item.url"
-          :class="{ 'active-border': choosenIndex === index }">
+                   :class="{ 'active-border': choosenIndex === index }">
         </BarAvatar>
       </div>
     </div>

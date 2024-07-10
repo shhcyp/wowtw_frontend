@@ -24,6 +24,10 @@
                 <img class="icon-legend" src="/legends/grandfathered.webp">
                 <span>绝版</span>
             </li>
+            <li class="legend">
+                <img class="icon-legend" src="/legends/rare.webp">
+                <span>极稀有</span>
+            </li>
         </ul>
     </div>
 </template>
