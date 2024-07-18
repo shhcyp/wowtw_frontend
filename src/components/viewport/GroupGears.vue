@@ -1,67 +1,73 @@
 <script setup>
-import {ref, watch} from 'vue'
+import {onMounted, ref} from 'vue'
 import BlockGear from '../module/BlockGear.vue'
-import {useFilterStore} from '@/stores/filter'
+import BlockTalentTree from '@/components/module/BlockTalentTree.vue'
+// import {useFilterStore} from '@/stores/filter'
 import {infoGroupsStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 
-const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
+// const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
 const gearsContainer = ref(null)
 
-const {infoGroupData} = storeToRefs(infoGroupsStore())
-// onMounted(() => {
-//   const itemsArray = Array.from(gearsContainer.value.children);
-//   const columnCount = parseInt(getComputedStyle(gearsContainer.value).columnCount);
-//   const columns = Array.from({ length: columnCount }, () => []);
+const {infoGroupData, presentTalent} = storeToRefs(infoGroupsStore())
 
-//   itemsArray.forEach((item, index) => {
-//     columns[index % columnCount].push(item);
-//   });
-
-//   gearsContainer.value.innerHTML = '';
-
-//   columns.forEach(column => {
-//     column.forEach(item => {
-//       gearsContainer.value.appendChild(item);
-//     });
-//   });
-// });
-
-console.log('test2', infoGroupData.value)
+console.log('test2', infoGroupData.value[presentTalent.value])
 </script>
 
 <template>
-  <div v-for="infoGroup in infoGroupData" :key="infoGroup.id" class="container wrapper">
-    <h3 class="margin-bottom-1rem">{{ infoGroup.title }}</h3>
-    <div ref="gearsContainer" id="gears">
-      <BlockGear v-for="gears in infoGroup.details" :key="gears.id" :extraInfoDisplay="gears.isExtra">
-        <template #gear-icon>
-          <!-- <img src="@/assets/ruby/illimited_iamond.webp"> -->
-          <img :src="gears.icon">
-        </template>
-        <template #gear-part>
-          {{ gears.part }}
-        </template>
-        <template #gear-name>
-          <h3 id="gear-name" :class="gears.quality">{{ gears.name }}</h3>
-        </template>
-        <template #mark-icon>
-          <div v-for="icon in gears.marks" :key="icon.id" class="flex-row-align-center" id="mark-icon-container">
-            <img :src="icon.icon">
-          </div>
-        </template>
-        <template #gear-drop>
-          {{ gears.drop }}
-        </template>
-        <template #extra-info>
-          <li v-for="extra in gears.extras" :key="extra.id" class="flex-row-align-center" id="extra-info">
-            <div class="flex-center-center" id="extra-info-icon-container">
-              <img :src="extra.icon">
+  <div v-if="presentTalent && infoGroupData[presentTalent]">
+    <div v-for="infoGroup in infoGroupData[presentTalent]" :key="infoGroup.id" class="container wrapper">
+      <h3 class="margin-bottom-1rem">{{ infoGroup.title }}</h3>
+
+      <!--装备模板-->
+      <div v-if="infoGroup.title !== '天赋'" ref="gearsContainer" id="gears">
+        <BlockGear v-for="gears in infoGroup.details" :key="gears.id" :extraInfoDisplay="gears.isExtra">
+          <template #gear-icon>
+            <!-- <img src="@/assets/ruby/illimited_iamond.webp"> -->
+            <img :src="gears.icon">
+          </template>
+          <template #gear-part>
+            {{ gears.part }}
+          </template>
+          <template #gear-name>
+            <h3 id="gear-name" :class="gears.quality">{{ gears.name }}</h3>
+          </template>
+          <template #mark-icon>
+            <div v-for="icon in gears.marks" :key="icon.id" class="flex-row-align-center" id="mark-icon-container">
+              <img :src="icon.icon">
             </div>
-            <span id="extra-info-desc" :class="extra.quality"> {{ extra.description }} </span>
-          </li>
-        </template>
-      </BlockGear>
+          </template>
+          <template #gear-drop>
+            {{ gears.drop }}
+          </template>
+          <template #extra-info>
+            <li v-for="extra in gears.extras" :key="extra.id" class="flex-row-align-center" id="extra-info">
+              <div class="flex-center-center" id="extra-info-icon-container">
+                <img :src="extra.icon">
+              </div>
+              <span id="extra-info-desc" :class="extra.quality"> {{ extra.description }} </span>
+            </li>
+          </template>
+        </BlockGear>
+      </div>
+
+      <!--天赋模板-->
+      <div v-else>
+        <BlockTalentTree v-for="tree in infoGroup.details" :key="tree.id">
+          <template #talent-name>
+            <h4 class="margin-bottom-1rem">{{ tree.talentName }}</h4>
+          </template>
+          <template #first-image>
+            <img v-if="tree.specializationTrees.length > 0" :src="tree.specializationTrees[0].treeImage">
+          </template>
+          <template #center-image>
+            <img v-if="tree.specializationTrees.length > 1" :src="tree.specializationTrees[1].treeImage">
+          </template>
+          <template #last-image>
+            <img v-if="tree.specializationTrees.length > 2" :src="tree.specializationTrees[2].treeImage">
+          </template>
+        </BlockTalentTree>
+      </div>
     </div>
   </div>
 </template>

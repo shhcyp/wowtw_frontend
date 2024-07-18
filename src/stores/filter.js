@@ -193,7 +193,7 @@ export const useFilterStore = defineStore('filter', () => {
         },
     ])
 
-    const classIndex = ref(0)
+    const classIndex = ref(null)
 
     const talentIndex = ref(null)
 

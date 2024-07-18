@@ -2,9 +2,6 @@
 </script>
 
 <template>
-  <slot name="talent-name">
-    <h3>123</h3>
-  </slot>
   <div id="talent-tree-image-container">
     <div id="first-image-container">
       <slot name="first-image"></slot>
@@ -24,7 +21,6 @@
   background-color: var(--color-gear-backgroud);
   padding: 2rem 0;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
 
   display: grid;
   place-items: center;
@@ -32,7 +28,6 @@
 }
 
 #first-image-container,
-#center-image-container,
 #last-image-container {
   width: 77%;
   border-radius: 0.3rem;

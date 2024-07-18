@@ -2,10 +2,23 @@ import {defineStore} from "pinia"
 import {ref} from "vue";
 
 export const infoGroupsStore = defineStore("infoGroupResponse", () => {
-    const infoGroupData = ref(null)
+        const infoGroupData = ref({0: []})
 
-    return {infoGroupData}
-},
+        const presentTalent = ref(null)
+
+        const setInfoGroupData = (id, data) => {
+            infoGroupData.value = {
+                ...infoGroupData.value,
+                [id]: data
+            }
+        }
+
+        const resetPresentTalent = () => {
+            presentTalent.value = 0
+        }
+
+        return {infoGroupData, presentTalent, resetPresentTalent, setInfoGroupData}
+    },
     {
-    persist: true
-})
+        persist: true
+    })
