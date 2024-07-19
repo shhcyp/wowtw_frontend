@@ -8,6 +8,9 @@ import {useAvatarStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 import {avatarService, nicknameService} from '@/apis/user'
 import {forbiddenWords} from '@/utils/illegal'
+import {infoGroupsStore} from '@/stores'
+import {useFilterStore} from '@/stores/filter.js'
+import DialogModalOverlay from '@/components/module/DialogModalOverlay.vue'
 
 const userStore = useUserStore()
 const {avatar} = storeToRefs(useAvatarStore())
@@ -23,6 +26,11 @@ const isAccess = ref(false)
 const textToCopy = ref(null)
 const isCopied = ref(false)
 
+const inforStore = infoGroupsStore()
+const filterStore = useFilterStore()
+
+const isOverlayShow = ref(false)
+
 const openModal = (value) => {
   isModalOpen.value = true
   target.value = value
@@ -30,11 +38,13 @@ const openModal = (value) => {
   console.log(userStore.identifier);
 }
 
+// 修改头像
 const chooseAvatar = (item, index) => {
   avatarUrl.value = item.url
   choosenIndex.value = index
 }
 
+// 修改昵称
 const validateNickname = (nickname) => {
   const validNicknamePattern = /^[a-zA-Z0-9\u4e00-\u9fa5]+$/
 
@@ -106,12 +116,15 @@ const fallbackCopyToClipboard = (text) => {
   document.body.removeChild(textArea)
 }
 
+// 退出、头像、昵称、邀请码
 const confirm = async () => {
   if (target.value === 'quitBar') {
     userStore.resetUserData()
     userStore.isLogin = false
     router.push('/')
     isModalOpen.value = false
+    inforStore.resetPresentTalent()
+    filterStore.resetState()
 
     document.body.style.overflow = 'auto'  // 恢复滚动
   }
@@ -162,14 +175,36 @@ const cancel = () => {
     alertMessage.value = ''
   }
 }
+
+const isLogin = (tagName) => {
+  if (!userStore.isLogin) {
+    isOverlayShow.value = true
+    setTimeout(() => {
+      isOverlayShow.value = false
+    }, 2345) // 2秒后隐藏提示消息
+  } else if (tagName === 'guidance'){
+    // isOverlayShow.value = false
+    router.push('/prompt')
+  } else if (tagName === 'gears'){
+    // isOverlayShow.value = false
+    router.push('/gear')
+  } else if (tagName === 'match'){
+    // isOverlayShow.value = false
+    router.push('/match')
+  }
+}
+
+const closeDialog = () => {
+  isOverlayShow.value = false
+}
 </script>
 
 <template>
   <div id="bars-left">
     <RouterLink :to="`/`">首页</RouterLink>
-    <RouterLink :to="`/prompt`">指引</RouterLink>
-    <RouterLink :to="`/gear`">装配</RouterLink>
-    <RouterLink :to="`/match`">竞速赛</RouterLink>
+    <a @click="isLogin('guidance')">指引</a>
+    <a @click="isLogin('gears')">装配</a>
+    <a @click="isLogin('match')">竞速赛</a>
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 
@@ -218,6 +253,9 @@ const cancel = () => {
       </div>
     </div>
   </DialogModal>
+  <DialogModalOverlay :is-open="isOverlayShow" @update:close-dialog="closeDialog">
+    <span>该资源仅对会员开放，期待您的加入！</span>
+  </DialogModalOverlay>
 </template>
 
 <style scoped>

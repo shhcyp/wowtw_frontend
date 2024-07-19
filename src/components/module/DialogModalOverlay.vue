@@ -26,12 +26,12 @@ defineProps({
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
 
-  z-index: 40;
+  z-index: 6;
 }
 
 #modal {
@@ -41,7 +41,7 @@ defineProps({
 }
 
 #modal-content {
-  padding: 2rem;
+  padding: 2.7rem 3.7rem;
   height: 100%;
 }
 </style>

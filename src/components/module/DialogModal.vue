@@ -70,16 +70,16 @@ const confirm = () => {
     cursor: pointer;
 }
 
+#modal-content {
+  padding: 1rem 3rem;
+  height: 100%;
+}
+
 #bar-container {
     width: 100%;
     padding: 0.7rem 1rem 0.3rem 1rem;
     display: flex;
 
     justify-content: space-around;
-}
-
-#modal-content {
-    padding: 1rem;
-    height: 100%;
 }
 </style>
