@@ -197,6 +197,12 @@ export const useFilterStore = defineStore('filter', () => {
 
     const talentIndex = ref(null)
 
+    const resetState = () => {
+        classIndex.value = null
+        talentIndex.value = null
+    }
 
-    return {classData, classIndex, talentIndex}
+    return {classData, classIndex, talentIndex, resetState}
+},{
+    persist: true
 })

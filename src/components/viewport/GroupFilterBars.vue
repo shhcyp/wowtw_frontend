@@ -1,11 +1,13 @@
 <script setup>
 import BarFilter from '../module/BarFilter.vue'
-import {onMounted, watch, onUnmounted} from 'vue'
+import DialogModalOverlay from '@/components/module/DialogModalOverlay.vue'
+import {onMounted, watch, onUnmounted, ref} from 'vue'
 import {useFilterStore} from '@/stores/filter'
 import {storeToRefs} from 'pinia'
 import {useBrowserWidthListenStore} from '@/stores/browserWidthListen'
 import {infoGroupService} from '@/apis/infoGroup.js'
 import {infoGroupsStore} from '@/stores'
+import {useUserStore} from '@/stores'
 
 const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
 
@@ -13,10 +15,19 @@ const {innerWidth, isPhone} = storeToRefs(useBrowserWidthListenStore())
 
 const {addResizeListener, removeResizeListener, updateDeviceState} = useBrowserWidthListenStore()
 
+const userStore = useUserStore()
+
 const store = infoGroupsStore()
 const {infoGroupData, presentTalent} = storeToRefs(infoGroupsStore())
 
+const isOverlayShow = ref(false)
+
 onMounted(() => {
+  console.log(classIndex.value)
+  console.log(talentIndex.value)
+  // if (classIndex.value && talentIndex.value)
+  // classIndex.value = null
+
   if (typeof addResizeListener === 'function') {
     addResizeListener()
   } else {
@@ -29,11 +40,11 @@ onMounted(() => {
     console.warn('updateDeviceState method is not defined.')
   }
 
-  if (typeof store.resetPresentTalent === 'function') {
-    store.resetPresentTalent()
-  } else {
-    console.warn('resetPresentTalent method is not defined.')
-  }
+  // if (typeof store.resetPresentTalent === 'function') {
+  //   store.resetPresentTalent()
+  // } else {
+  //   console.warn('resetPresentTalent method is not defined.')
+  // }
 })
 
 watch(innerWidth, () => {
@@ -45,6 +56,8 @@ watch(innerWidth, () => {
 })
 
 onUnmounted(() => {
+  // classIndex.value = null
+
   if (typeof removeResizeListener === 'function') {
     removeResizeListener()
   } else {
@@ -55,6 +68,7 @@ onUnmounted(() => {
 const handleClassClick = (index) => {
   classIndex.value = index
   talentIndex.value = null
+  console.log(classIndex.value)
 }
 
 // 请求装备、天赋数据
@@ -65,19 +79,28 @@ const handleTalentClick = async (index, talentId) => {
   }
 
   talentIndex.value = index
+  console.log(talentIndex.value)
 
-  // 检查是否已经有缓存数据
-  if (store.infoGroupData[talentId]) {
-    // infoGroupData.value = store.infoGroupData[talentId]
+  // 检查是否已经有缓存数据且登陆
+  if (store.infoGroupData[talentId] && userStore.isLogin) {
     console.log('Using cached data', infoGroupData.value)
     presentTalent.value = talentId
   } else {
+    isOverlayShow.value = true
+    document.body.style.overflow = 'hidden'
     // 如果没有缓存数据，则发起请求
-    const result = await infoGroupService(talentId)
-    // infoGroupData.value = result.data.data
-    store.setInfoGroupData(talentId, result.data.data)
-    console.log('Fetched data', infoGroupData.value)
-    presentTalent.value = talentId
+    try {
+      const result = await infoGroupService(talentId)
+      store.setInfoGroupData(talentId, result.data.data)
+      console.log('Fetched data', infoGroupData.value)
+      presentTalent.value = talentId
+    } catch (error) {
+      console.log('Error fetching data:', error)
+      isOverlayShow.value = false
+    } finally {
+      isOverlayShow.value = false
+      document.body.style.overflow = 'auto'  // 恢复滚动
+    }
   }
 }
 </script>
@@ -108,6 +131,10 @@ const handleTalentClick = async (index, talentId) => {
       </BarFilter>
     </div>
   </div>
+
+  <DialogModalOverlay :is-open="isOverlayShow">
+    <span>翻找中......请稍候......</span>
+  </DialogModalOverlay>
 </template>
 
 <style scoped>

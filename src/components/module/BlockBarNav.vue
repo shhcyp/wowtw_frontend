@@ -167,9 +167,9 @@ const cancel = () => {
 <template>
   <div id="bars-left">
     <RouterLink :to="`/`">首页</RouterLink>
-    <!-- <RouterLink :to="`/prompt`">指引</RouterLink> -->
-    <!-- <RouterLink :to="`/gear`">装配</RouterLink> -->
-    <!-- <RouterLink :to="`/match`">竞速赛</RouterLink> -->
+    <RouterLink :to="`/prompt`">指引</RouterLink>
+    <RouterLink :to="`/gear`">装配</RouterLink>
+    <RouterLink :to="`/match`">竞速赛</RouterLink>
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 

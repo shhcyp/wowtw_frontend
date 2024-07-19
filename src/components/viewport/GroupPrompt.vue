@@ -7,16 +7,6 @@ import PromptGetSet from '../module/PromptGetSet.vue'
 import PromptTableRuby from '../module/PromptTableRuby.vue'
 import PromptTableLevel from '../module/PromptTableLevel.vue'
 import IconVerticalArrow from '../module/IconVerticalArrow.vue'
-// import { ref, provide } from 'vue'
-
-
-// const items = ref([
-//   { title: '标题1' },
-//   { title: '标题2' },
-//   { title: '标题3' }
-// ])
-
-
 </script>
 
 <template>
@@ -25,7 +15,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
   <div id="prompts">
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>职业排行参考</template>
       <template #prompt-arrow>
@@ -39,7 +29,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
     <!-- 如何获取“克罗米时间线”装备 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>如何获取“克罗米时间线”装备</template>
       <template #details>
@@ -50,7 +40,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
     <!-- 一些需要注意的装备 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>一些需要注意的装备</template>
       <template #details>
@@ -61,7 +51,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
     <!-- 如何获取10.0职业套装 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>如何获取10.0职业套装</template>
       <template #details>
@@ -72,7 +62,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
     <!-- 宝石属性一览 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>宝石属性一览</template>
       <template #details>
@@ -83,7 +73,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
     <!-- 时光周角色等级|装备等级压缩一览 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp">
+        <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>时光周角色等级|装备等级压缩一览</template>
       <template #details>

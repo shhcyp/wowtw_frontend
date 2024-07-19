@@ -1,12 +1,10 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {ref} from 'vue'
 import BlockGear from '../module/BlockGear.vue'
 import BlockTalentTree from '@/components/module/BlockTalentTree.vue'
-// import {useFilterStore} from '@/stores/filter'
 import {infoGroupsStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 
-// const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
 const gearsContainer = ref(null)
 
 const {infoGroupData, presentTalent} = storeToRefs(infoGroupsStore())
@@ -23,8 +21,7 @@ console.log('test2', infoGroupData.value[presentTalent.value])
       <div v-if="infoGroup.title !== '天赋'" ref="gearsContainer" id="gears">
         <BlockGear v-for="gears in infoGroup.details" :key="gears.id" :extraInfoDisplay="gears.isExtra">
           <template #gear-icon>
-            <!-- <img src="@/assets/ruby/illimited_iamond.webp"> -->
-            <img :src="gears.icon">
+            <img :src="gears.icon" alt="">
           </template>
           <template #gear-part>
             {{ gears.part }}
@@ -34,7 +31,7 @@ console.log('test2', infoGroupData.value[presentTalent.value])
           </template>
           <template #mark-icon>
             <div v-for="icon in gears.marks" :key="icon.id" class="flex-row-align-center" id="mark-icon-container">
-              <img :src="icon.icon">
+              <img :src="icon.icon" alt="">
             </div>
           </template>
           <template #gear-drop>
@@ -43,7 +40,7 @@ console.log('test2', infoGroupData.value[presentTalent.value])
           <template #extra-info>
             <li v-for="extra in gears.extras" :key="extra.id" class="flex-row-align-center" id="extra-info">
               <div class="flex-center-center" id="extra-info-icon-container">
-                <img :src="extra.icon">
+                <img :src="extra.icon" alt="">
               </div>
               <span id="extra-info-desc" :class="extra.quality"> {{ extra.description }} </span>
             </li>
@@ -58,13 +55,13 @@ console.log('test2', infoGroupData.value[presentTalent.value])
             <h4 class="margin-bottom-1rem">{{ tree.talentName }}</h4>
           </template>
           <template #first-image>
-            <img v-if="tree.specializationTrees.length > 0" :src="tree.specializationTrees[0].treeImage">
+            <img v-if="tree.specializationTrees.length > 0" :src="tree.specializationTrees[0].treeImage" alt="">
           </template>
           <template #center-image>
-            <img v-if="tree.specializationTrees.length > 1" :src="tree.specializationTrees[1].treeImage">
+            <img v-if="tree.specializationTrees.length > 1" :src="tree.specializationTrees[1].treeImage" alt="">
           </template>
           <template #last-image>
-            <img v-if="tree.specializationTrees.length > 2" :src="tree.specializationTrees[2].treeImage">
+            <img v-if="tree.specializationTrees.length > 2" :src="tree.specializationTrees[2].treeImage" alt="">
           </template>
         </BlockTalentTree>
       </div>

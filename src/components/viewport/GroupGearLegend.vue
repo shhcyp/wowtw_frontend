@@ -5,28 +5,32 @@
         <h3 id="legends-title">特殊标记</h3>
         <ul id="legends">
             <li class="legend">
-                <img class="icon-legend" src="/legends/chromietime.webp">
+                <img class="icon-legend" src="/legends/chromietime.webp" alt="">
                 <span>克罗米时间线</span>
             </li>
             <li class="legend">
-                <img class="icon-legend" src="/legends/socket.webp">
+                <img class="icon-legend" src="/legends/socket.webp" alt="">
                 <span>额外插槽</span>
             </li>
             <li class="legend">
-                <img class="icon-legend" src="/legends/alliance.webp">
+                <img class="icon-legend" src="/legends/alliance.webp" alt="">
                 <span>限联盟</span>
             </li>
             <li class="legend">
-                <img class="icon-legend" src="/legends/horde.webp">
+                <img class="icon-legend" src="/legends/horde.webp" alt="">
                 <span>限部落</span>
             </li>
             <li class="legend">
-                <img class="icon-legend" src="/legends/grandfathered.webp">
+                <img class="icon-legend" src="/legends/grandfathered.webp" alt="">
                 <span>绝版</span>
             </li>
             <li class="legend">
-                <img class="icon-legend" src="/legends/rare.webp">
+                <img class="icon-legend" src="/legends/rare.webp" alt="">
                 <span>极稀有</span>
+            </li>
+          <li class="legend">
+                <img class="icon-legend" src="/legends/group.webp" alt="">
+                <span>配套标记</span>
             </li>
         </ul>
     </div>

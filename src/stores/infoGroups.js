@@ -2,7 +2,8 @@ import {defineStore} from "pinia"
 import {ref} from "vue";
 
 export const infoGroupsStore = defineStore("infoGroupResponse", () => {
-        const infoGroupData = ref({0: []})
+        // const infoGroupData = ref({0: []})
+        const infoGroupData = ref({})
 
         const presentTalent = ref(null)
 
@@ -14,7 +15,7 @@ export const infoGroupsStore = defineStore("infoGroupResponse", () => {
         }
 
         const resetPresentTalent = () => {
-            presentTalent.value = 0
+            presentTalent.value = null
         }
 
         return {infoGroupData, presentTalent, resetPresentTalent, setInfoGroupData}

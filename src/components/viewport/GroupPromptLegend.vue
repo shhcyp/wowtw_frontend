@@ -5,27 +5,27 @@
     <h3 id="legends-title">版本缩写</h3>
     <ul id="legends">
       <li class="legend">
-        <img class="icon-legend" src="/legends/chromietime.webp">
+        <img class="icon-legend" src="/legends/chromietime.webp" alt="">
         <span>燃烧的远征（TBC）</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/socket.webp">
+        <img class="icon-legend" src="/legends/socket.webp" alt="">
         <span>巫妖王之怒（WLK）</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/alliance.webp">
+        <img class="icon-legend" src="/legends/alliance.webp" alt="">
         <span>大地的裂变（CTM）</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/horde.webp">
+        <img class="icon-legend" src="/legends/horde.webp" alt="">
         <span>熊猫人之谜（MOP）</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/grandfathered.webp">
+        <img class="icon-legend" src="/legends/grandfathered.webp" alt="">
         <span>德拉诺之王（WOD）</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/grandfathered.webp">
+        <img class="icon-legend" src="/legends/grandfathered.webp" alt="">
         <span>军团再临（LEG）</span>
       </li>
     </ul>

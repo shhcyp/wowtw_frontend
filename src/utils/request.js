@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useUserStore } from '@/stores'
+import {useUserStore} from '@/stores'
 import router from "@/router"
 
 // const baseURL = `${window.location.origin}/api`
@@ -19,7 +19,7 @@ instance.interceptors.request.use(
         // 1.携带token
         const userStore = useUserStore()
         if (userStore.token) {
-            config.headers.Authorization = userStore.token
+            config.headers.Authorization = `Bearer ${userStore.token}`
         }
         return config
     },
@@ -56,4 +56,4 @@ instance.interceptors.response.use(
 
 export default instance
 
-export { baseURL }
+export {baseURL}
