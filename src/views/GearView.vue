@@ -3,11 +3,6 @@ import GroupPageHeader from '@/components/viewport/GroupPageHeader.vue'
 import GroupGearLegend from '@/components/viewport/GroupGearLegend.vue'
 import GroupFilterBars from '@/components/viewport/GroupFilterBars.vue'
 import GroupGears from '@/components/viewport/GroupGears.vue'
-// import GroupTalentTree from '@/components/viewport/GroupTalentTree.vue'
-// import { useFilterStore } from '@/stores/filter'
-// import { storeToRefs } from 'pinia'
-
-// const { classData, classIndex, talentIndex } = storeToRefs(useFilterStore())
 </script>
 
 <template>
@@ -26,7 +21,6 @@ import GroupGears from '@/components/viewport/GroupGears.vue'
             <GroupGearLegend></GroupGearLegend>
             <GroupFilterBars></GroupFilterBars>
             <GroupGears></GroupGears>
-            <!--<GroupTalentTree></GroupTalentTree>-->
         </template>
     </TheLayout>
 
