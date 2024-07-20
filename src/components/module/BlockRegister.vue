@@ -36,7 +36,7 @@ const registerFormData = reactive({
   phoneNumber: {value: '', state: 0},
   verificationCode: {value: '', state: 0},
   inviteIdentifier: {value: '', state: 0},
-  paymentInfo: {value: '', state: 0}
+  paymentInfo: {value: '', state: null}
 })
 
 const {
@@ -254,6 +254,7 @@ const paymentPollQuery = (outTradeNo) => {
       clearInterval(intervalId.value);
       intervalId.value = null; // 清空轮询标识符
       // 处理支付失败或关闭逻辑
+      paymentInfo.state = 0
     } else {
       retries++;
       if (retries >= maxRetries) {
@@ -269,10 +270,11 @@ const paymentPollQuery = (outTradeNo) => {
             console.log("支付成功！感谢您的支持！")
             // 处理支付成功逻辑
             paymentInfo.value = outTradeNo
-            paymentInfo.state = 1
+            paymentInfo.state = code
           } else {
             await cancelPaymentService(outTradeNo)
             console.log("支付时间超时，交易已关闭")
+            paymentInfo.state = 0
           }
         }, 180000); // 3分钟后进行最终检查
       }
@@ -311,7 +313,7 @@ watch(() => ({
     }
     await createOrder()
   }
-},{
+}, {
   deep: true
 })
 
@@ -438,8 +440,7 @@ const handleEnter = (event) => {
         </div>
         <div class="flex-center-center" id="payment-code">
           <div class="flex-center-center" id="qrcode-container">
-            <!--            <img :src="orderQrcode">-->
-            <QRCodeGenerator :alipayQRCodeContent="alipayQRCodeContent"></QRCodeGenerator>
+            <QRCodeGenerator :alipayQRCodeContent="alipayQRCodeContent" :paymentInfo="paymentInfo.state"></QRCodeGenerator>
           </div>
         </div>
       </div>
@@ -514,11 +515,7 @@ const handleEnter = (event) => {
 #qrcode-container {
   width: 150px;
   height: 150px;
-  border: 1px solid palegreen;
-  border-radius: 5px;
-}
 
-#submit-button {
-  margin-top: 1.5rem;
+  background-color: var(--bgcolor-navigation);
 }
 </style>
