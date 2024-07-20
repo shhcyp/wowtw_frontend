@@ -1,21 +1,21 @@
 <script setup>
-import { ref, reactive, watch, provide } from 'vue'
+import {provide, reactive, ref, watch} from 'vue'
+import {useRouter} from 'vue-router'
 import InputPublic from './InputPublic.vue'
 import BarGetCode from './BarGetCode.vue'
 import QRCodeGenerator from "@/components/module/QRCodeGenerator.vue"
 import BarFormSubmit from './BarFormSubmit.vue'
 import PanelFormFooter from './PanelFormFooter.vue'
 import {
+  checkIdentifierService,
+  codeVerifyService,
   phoneNumberService,
+  smsService,
   usernameService,
   userRegisterService,
-  smsService,
-  codeVerifyService,
-  checkIdentifierService,
-  createOrderService,
-  queryPaymentService
 } from '@/apis/user'
-import { useRouter } from 'vue-router'
+import {cancelPaymentService, createOrderService, queryPaymentService} from '@/apis/order'
+
 
 const router = useRouter()
 // 绑定form表单dom
@@ -25,24 +25,18 @@ const submitAnimateRun = ref(false)
 const messageForButton = ref(null)
 // 验证码消息
 const verificationCodeResponseData = ref(null)
-// 生成订单
-const orderStatus = ref(null)
-// 订单二维码地址
-const orderQrcode = ref(0)
-// 支付宝二维码地址
-const alipayQRCodeContent = ref(null)
 
 const registerFormData = reactive({
-  count: { value: 0, state: 1 },
-  username: { value: '', state: 0 },
-  password: { value: '', state: 0 },
-  repassword: { value: '', state: 0 },
-  question: { value: '', state: 0 },
-  answer: { value: '', state: 0 },
-  phoneNumber: { value: '', state: 0 },
-  verificationCode: { value: '', state: 0 },
-  inviteIdentifier: { value: '', state: 1 },
-  paymentInfo: { value: '', state: 0 }
+  count: {value: 0, state: 1},
+  username: {value: '', state: 0},
+  password: {value: '', state: 0},
+  repassword: {value: '', state: 0},
+  question: {value: '', state: 0},
+  answer: {value: '', state: 0},
+  phoneNumber: {value: '', state: 0},
+  verificationCode: {value: '', state: 0},
+  inviteIdentifier: {value: '', state: 0},
+  paymentInfo: {value: '', state: 0}
 })
 
 const {
@@ -71,11 +65,11 @@ const submitBarState = ref(false)
 // var isDataUpdated = false
 
 // 用于判断数据是否更新
-var isUsernameUpdated = false
-var isPhoneNumberUpdated = false
+let isUsernameUpdated = false
+let isPhoneNumberUpdated = false
 
 // 用于判断前后密码是否匹配
-var isMatch = ref(true)
+const isMatch = ref(true);
 
 // 用于存储响应结果数据
 const usernameResponseData = ref(null)
@@ -96,11 +90,7 @@ const updateUsername = (inputValue) => {
   isUsernameUpdated = true
 }
 const matchPassword = () => {
-  if (password.value !== repassword.value) {
-    isMatch.value = false
-  } else {
-    isMatch.value = true
-  }
+  isMatch.value = password.value === repassword.value
 }
 const updatePassword = (inputValue) => {
   password.value = inputValue
@@ -119,6 +109,39 @@ const updatePhoneNumber = (inputValue) => {
   phoneNumber.value = inputValue
   count.value++
   isPhoneNumberUpdated = true
+}
+// 清空input
+const clearUserName = (value) => {
+  username.value = value
+  username.state = 0
+}
+const clearPassword = (value) => {
+  password.value = value
+  password.state = 0
+}
+const clearRePassword = (value) => {
+  repassword.value = value
+  repassword.state = 0
+}
+const clearQuestion = (value) => {
+  question.value = value
+  question.state = 0
+}
+const clearAnswer = (value) => {
+  answer.value = value
+  answer.state = 0
+}
+const clearPhoneNumber = (value) => {
+  phoneNumber.value = value
+  phoneNumber.state = 0
+}
+const clearVerificationCode = (value) => {
+  verificationCode.value = value
+  verificationCode.state = 0
+}
+const clearInviteIdentifier = (value) => {
+  inviteIdentifier.value = value
+  inviteIdentifier.state = 0
 }
 const notPhoneNumber = () => {
   phoneNumber.value = ''
@@ -155,99 +178,152 @@ const handleCodeVerify = async (inputValue) => {
   }
 }
 
-// 邀请码验证请求
-const handleInviteIdentifier = async (inputValue) => {
-  inviteIdentifier.value = inputValue
-  const result = await checkIdentifierService(inviteIdentifier.value)
-  inviteIdentifierResponseData.value = result.data
-  orderStatus.value = result.data.code
-  // inviteIdentifier.state = result.data.code
-}
-
-// 生成二维码请求
-// const handleCreateOrder = async () => {
-//   const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
-//   orderQrcode.value = result.data.data
-// }
-
-// onMounted(() => {
-//     handleCreateOrder()
-// })
-
-// watch(orderStatus, () => {
-//     handleCreateOrder()
-// })
-
-// 支付状态轮询
-const paymentPollQuery = (outTradeNo) => {
-  let retries = 0;
-  const maxRetries = 10;
-
-  const intervalId = setInterval( async () => {
-    const result = await queryPaymentService(outTradeNo)
-    const tradeStatus = result.data.data
-    const code = result.data.code
-    if (tradeStatus === 'TRADE_SUCCESS') {
-      alert("Payment successful!");
-      clearInterval(intervalId)
-      // 处理支付成功逻辑
-      paymentInfo.value = outTradeNo
-      paymentInfo.state = code
-    } else if (tradeStatus === 'TRADE_CLOSED') {
-      alert("Payment failed or closed.");
-      clearInterval(intervalId);
-      // 处理支付失败或关闭逻辑
-    } else {
-      retries++;
-      if (retries >= maxRetries) {
-        clearInterval(intervalId)
-        alert("Payment status unknown. Please contact support.");
-      }
-    }
-  }, 3000); // 每3秒查询一次
-}
-
-
 // 提交按钮状态配合项
 const updateBarState = (newValue) => {
   barSmsState.value = newValue
   isPhoneNumberUpdated = false
 }
 
-// 用户名占用、手机号是否可用、支付状态验证
-watch(registerFormData, async () => {
-  console.log('表单form实时数据', registerFormData);
-  // 检查state是不是都是1
-  passport.value = Object.values(registerFormData).every(field => field.state === 1)
-
+// 用户名占用、手机号是否可用
+watch(() => registerFormData.username.value, async () => {
   if (username.value && isUsernameUpdated) {
     const result = await usernameService(username.value)
     usernameResponseData.value = result.data
     isUsernameUpdated = false
     username.state = result.data.code
   }
+})
+watch(() => registerFormData.phoneNumber.value, async () => {
   if (phoneNumber.value && isPhoneNumberUpdated) {
     console.log('发送电话号码验证请求');
     const result = await phoneNumberService(phoneNumber.value)
     phoneNumberResponseData.value = result.data
     isPhoneNumberUpdated = false
     phoneNumber.state = result.data.code
-    if (phoneNumber.value && phoneNumber.state === 1) {
-      // const result = await handleCreateOrder()
-      const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
-      console.log('请求预创建订单返回数据', result)
-      alipayQRCodeContent.value = result.data.data.alipayQRCode
-      console.log('支付二维码链接', alipayQRCodeContent.value)
-      const outTradeNo = result.data.data.outTradeNo
-      setTimeout( () => {
-        paymentPollQuery(outTradeNo)
-      }, 5000)
-    }
   }
-  // if (phoneNumber.value && phoneNumber.state === 1 && verificationCode.state === 1) {
-  // if (phoneNumber.value && phoneNumber.state === 1) {
-  //     handleCreateOrder()
-  // }
+})
+
+// 邀请码验证请求
+const handleInviteIdentifier = async (inputValue) => {
+  const result = await checkIdentifierService(inputValue)
+  inviteIdentifierResponseData.value = result.data
+  if (result.data.code === 1) {
+    inviteIdentifier.value = inputValue
+  }
+  inviteIdentifier.state = result.data.code
+}
+
+// 支付宝二维码生成
+const outTradeNo = ref(null)
+const alipayQRCodeContent = ref(null)
+const intervalId = ref(null); // 存储轮询任务的标识符
+
+const createOrder = async () => {
+  const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
+  console.log('请求预创建订单返回数据', result)
+  alipayQRCodeContent.value = result.data.data.alipayQRCode
+  console.log('支付二维码链接', alipayQRCodeContent.value)
+  outTradeNo.value = result.data.data.outTradeNo
+  setTimeout(async () => {
+    paymentPollQuery(outTradeNo.value)
+  }, 7000)
+}
+
+// 支付状态轮询
+const paymentPollQuery = (outTradeNo) => {
+  if (intervalId.value) {
+    clearInterval(intervalId.value); // 清除之前的轮询任务
+  }
+  let retries = 0;
+  const maxRetries = 10;
+
+  intervalId.value = setInterval(async () => {
+    const result = await queryPaymentService(outTradeNo)
+    const tradeStatus = result.data.data
+    const code = result.data.code
+
+    if (tradeStatus === 'TRADE_SUCCESS') {
+      console.log("支付成功！感谢您的支持！");
+      clearInterval(intervalId.value)
+      intervalId.value = null; // 清空轮询标识符
+      // 处理支付成功逻辑
+      paymentInfo.value = outTradeNo
+      paymentInfo.state = code
+    } else if (tradeStatus === 'TRADE_CLOSED') {
+      console.log("Payment failed or closed.");
+      clearInterval(intervalId.value);
+      intervalId.value = null; // 清空轮询标识符
+      // 处理支付失败或关闭逻辑
+    } else {
+      retries++;
+      if (retries >= maxRetries) {
+        clearInterval(intervalId.value)
+        intervalId.value = null; // 清空轮询标识符
+
+        // 设置3分钟后的最终检查
+        setTimeout(async () => {
+          const finalResult = await queryPaymentService(outTradeNo)
+          const finalTradeStatus = finalResult.data.data;
+
+          if (finalTradeStatus === 'TRADE_SUCCESS') {
+            console.log("支付成功！感谢您的支持！")
+            // 处理支付成功逻辑
+            paymentInfo.value = outTradeNo
+            paymentInfo.state = 1
+          } else {
+            await cancelPaymentService(outTradeNo)
+            console.log("支付时间超时，交易已关闭")
+          }
+        }, 180000); // 3分钟后进行最终检查
+      }
+    }
+  }, 5000); // 每5秒查询一次
+}
+
+watch(() => ({
+  phoneNumber: registerFormData.phoneNumber,
+  verificationCode: registerFormData.verificationCode,
+  inviteIdentifier: registerFormData.inviteIdentifier
+}), async () => {
+  const conditionI = phoneNumber.value && phoneNumber.state === 1
+  const conditionII = verificationCode.value && verificationCode.state === 1
+  const conditionIII = !inviteIdentifier.value && inviteIdentifier.state === 0
+  const conditionIV = inviteIdentifier.value && inviteIdentifier.state === 1
+  const fullPayPassport = conditionI && conditionII && conditionIII
+  const discountPassport = conditionI && conditionII && conditionIV
+
+  // 没有邀请码
+  if (fullPayPassport) {
+    if (outTradeNo.value) {
+      console.log("准备取消前面的订单:", outTradeNo.value);
+      const cancelPastTrade = await cancelPaymentService(outTradeNo.value)
+      console.log("有新二维码取消前面的订单", cancelPastTrade)
+    }
+    await createOrder()
+  }
+
+  // 有邀请码
+  if (discountPassport) {
+    if (outTradeNo.value) {
+      console.log("准备取消前面的订单:", outTradeNo.value);
+      const cancelPastTrade = await cancelPaymentService(outTradeNo.value)
+      console.log("有新二维码取消前面的订单", cancelPastTrade)
+    }
+    await createOrder()
+  }
+},{
+  deep: true
+})
+
+watch(registerFormData, () => {
+  console.log('表单form实时数据', registerFormData);
+})
+
+// 检查state是不是都是1
+watch(registerFormData, () => {
+  passport.value = Object.entries(registerFormData)
+      .filter(([key]) => key !== 'inviteIdentifier' && key !== 'paymentInfo') // 过滤掉 inviteIdentifier 和 paymentInfo
+      .every(([, field]) => field.state === 1)
 }, {
   deep: true
 })
@@ -265,28 +341,35 @@ const handleSubmit = async () => {
     paymentInfo: paymentInfo.value
   }
 
-  // 控制台输出状态看一下
-  // Object.values(registerFormData).forEach((field, index) => {
-  //     console.log(`Field ${index} state: `, field.state);
-  // });
+  const paymentStatus = await queryPaymentService(outTradeNo.value)
+  const finalTradeStatus = paymentStatus.data.data;
 
-  if (passport.value && submitAnimateRun.value === false) {
-    // console.log('表单提交了', submitData);
-    submitAnimateRun.value = !submitAnimateRun.value
-    const result = await userRegisterService(submitData)
-    // alertMessageInput.value = '注册成功，即将跳转'
+  if (finalTradeStatus === 'TRADE_SUCCESS') {
+    console.log("支付成功！感谢您的支持！")
+    // 处理支付成功逻辑
+    paymentInfo.value = outTradeNo
+    paymentInfo.state = 1
 
-    setTimeout(() => {
-      // 注册成功，即将跳转
-      if (result.data.code === 1) {
-        messageForButton.value = result.data.message
-        router.push('/login')
-      }
-      // 注册失败，请重试
-      if (result.data.code === 0) {
-        messageForButton.value = result.data.data ? result.data.data : result.data.message
-      }
-    }, 2000)
+    if (passport.value && submitAnimateRun.value === false) {
+      // console.log('表单提交了', submitData);
+      submitAnimateRun.value = !submitAnimateRun.value
+      const result = await userRegisterService(submitData)
+      // alertMessageInput.value = '注册成功，即将跳转'
+
+      setTimeout(() => {
+        // 注册成功，即将跳转
+        if (result.data.code === 1) {
+          messageForButton.value = result.data.message
+          router.push('/login')
+        }
+        // 注册失败，请重试
+        if (result.data.code === 0) {
+          messageForButton.value = result.data.data ? result.data.data : result.data.message
+        }
+      }, 2000)
+    }
+  } else {
+    console.log("还没有付款")
   }
 }
 
@@ -300,31 +383,37 @@ const handleEnter = (event) => {
   <div class="container- wrapper flex-row-align-center">
     <!-- <form @submit.prevent="handleSubmit" class="flex-column" id="register-form-container"> -->
     <form @submit.prevent="handleSubmit" ref="registerForm" class="flex-column space-evenly"
-      id="register-form-container">
+          id="register-form-container">
       <div id="register-form-input">
-        <InputPublic :alertMessageInput="alertMessageInput" @keydown.enter="handleEnter" @blur="updateUsername"
-          autocomplete="true" type="text" name="username">
+        <InputPublic :alertMessageInput="alertMessageInput" @clear="clearUserName" @keydown.enter="handleEnter"
+                     @blur="updateUsername"
+                     autocomplete="true" type="text" name="username">
           账号
         </InputPublic>
         <div class="placeholder"></div>
-        <InputPublic @keydown.enter="handleEnter" @blur="updatePassword" :isMatch="isMatch" autocomplete="true"
-          type="password" name="password">密码
+        <InputPublic @clear="clearPassword" @keydown.enter="handleEnter" @blur="updatePassword" :isMatch="isMatch"
+                     autocomplete="true"
+                     type="password" name="password">密码
         </InputPublic>
-        <InputPublic @keydown.enter="handleEnter" @blur="updateRepassword" :isMatch="isMatch" type="password"
-          name="repassword">
+        <InputPublic @clear="clearRePassword" @keydown.enter="handleEnter" @blur="updateRepassword" :isMatch="isMatch"
+                     type="password"
+                     name="repassword">
           重复密码
         </InputPublic>
-        <InputPublic @keydown.enter="handleEnter" @blur="updateQuestion" type="text" name="question">
+        <InputPublic @clear="clearQuestion" @keydown.enter="handleEnter" @blur="updateQuestion" type="text"
+                     name="question">
           密保问题
         </InputPublic>
-        <InputPublic @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer">密保答案
+        <InputPublic @clear="clearAnswer" @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer">
+          密保答案
         </InputPublic>
-        <InputPublic @keydown.enter="handleEnter" @clear="notPhoneNumber" @request="updatePhoneNumber"
-          @notPhoneNumber="notPhoneNumber" type="text" name="phoneNumber" :maxlength="11">手机号码
+        <InputPublic @clear="clearPhoneNumber" @keydown.enter="handleEnter" @request="updatePhoneNumber"
+                     @notPhoneNumber="notPhoneNumber" type="text" name="phoneNumber" :maxlength="11">手机号码
         </InputPublic>
         <div class="flex-row-align-center space-between">
-          <InputPublic @keydown.enter="handleEnter" @request="handleCodeVerify" type="text" name="verificationCode"
-            :maxlength="6" style="flex: 1;">
+          <InputPublic @clear="clearVerificationCode" @keydown.enter="handleEnter" @request="handleCodeVerify"
+                       type="text" name="verificationCode"
+                       :maxlength="6" style="flex: 1;">
             验证码
           </InputPublic>
           <BarGetCode @updateBarState="updateBarState" :phoneNumberState="phoneNumber.state" @click="handleSms">
@@ -342,7 +431,9 @@ const handleEnter = (event) => {
               注册成功后，用户可自助生成邀请码，使用该邀请码邀请朋友注册为会员，将获得30元返现，使用次数无限制，系统统计后于每月初发放。
             </li>
           </ul>
-          <InputPublic @request="handleInviteIdentifier" :maxlength="34" name="inviteIdentifier" placeholder="邀请码（选填）">
+          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"
+                       name="inviteIdentifier"
+                       placeholder="邀请码（选填）">
           </InputPublic>
         </div>
         <div class="flex-center-center" id="payment-code">
@@ -354,7 +445,7 @@ const handleEnter = (event) => {
       </div>
       <TheDivider></TheDivider>
       <BarFormSubmit @keydown.enter="handleEnter" @click="handleSubmit" :barState="passport"
-        :messageForButton="messageForButton" :submitAnimateRun="submitAnimateRun" type="register">
+                     :messageForButton="messageForButton" :submitAnimateRun="submitAnimateRun" type="register">
         <!-- id="submit-button" -->
       </BarFormSubmit>
       <PanelFormFooter></PanelFormFooter>
