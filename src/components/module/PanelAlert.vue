@@ -6,7 +6,7 @@ defineProps({
 
 <template>
   <div>
-        <span :class="{ 'in-green': switchGreen }" class="alert" id="alert-message">
+        <span :class="{ 'in-green': switchGreen }" style="text-align: left" class="alert" id="alert-message">
             <slot></slot>
         </span>
   </div>

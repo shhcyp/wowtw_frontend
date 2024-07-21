@@ -107,7 +107,7 @@ const handleTalentClick = async (index, talentId) => {
 
 <template>
   <!-- 职业分类按钮 -->
-  <div class="container wrapper">
+  <div class="container wrapper no-select">
     <div id="class-filter-container">
       <BarFilter @click="handleClassClick(index)" :class="{ active: classIndex === index }"
                  v-for="(item, index) in classData" :key="item.id">
@@ -120,7 +120,7 @@ const handleTalentClick = async (index, talentId) => {
     </div>
   </div>
   <!-- 天赋分类按钮 -->
-  <div class="container wrapper" v-if="classIndex !== null && classData[classIndex]">
+  <div class="container wrapper no-select" v-if="classIndex !== null && classData[classIndex]">
     <div id="talent-filter-container">
       <BarFilter @click="handleTalentClick(index, item.talentId)" :class="{ active: talentIndex === index }"
                  v-for="(item, index) in classData[classIndex].talents" :key="item.id">
@@ -174,7 +174,7 @@ const handleTalentClick = async (index, talentId) => {
   #class-filter-container {
     font-size: 0.87rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   #talent-filter-container {

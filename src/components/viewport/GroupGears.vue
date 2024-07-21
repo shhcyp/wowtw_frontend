@@ -15,7 +15,7 @@ console.log('test2', infoGroupData.value[presentTalent.value])
 <template>
   <div v-if="presentTalent && infoGroupData[presentTalent]">
     <div v-for="infoGroup in infoGroupData[presentTalent]" :key="infoGroup.id" class="container wrapper">
-      <h3 class="margin-bottom-1rem">{{ infoGroup.title }}</h3>
+      <h3 style="text-align: left" class="margin-bottom-1rem">{{ infoGroup.title }}</h3>
 
       <!--装备模板-->
       <div v-if="infoGroup.title !== '天赋'" ref="gearsContainer" id="gears">
@@ -52,7 +52,7 @@ console.log('test2', infoGroupData.value[presentTalent.value])
       <div v-else>
         <BlockTalentTree v-for="tree in infoGroup.details" :key="tree.id">
           <template #talent-name>
-            <h4 class="margin-bottom-1rem">{{ tree.talentName }}</h4>
+            <h4 style="text-align: left" class="margin-bottom-1rem">{{ tree.talentName }}</h4>
           </template>
           <template #first-image>
             <img v-if="tree.specializationTrees.length > 0" :src="tree.specializationTrees[0].treeImage" alt="">

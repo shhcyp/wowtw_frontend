@@ -15,6 +15,7 @@ import {
   userRegisterService,
 } from '@/apis/user'
 import {cancelPaymentService, createOrderService, queryPaymentService} from '@/apis/order'
+import PanelAlert from "@/components/module/PanelAlert.vue";
 
 
 const router = useRouter()
@@ -58,9 +59,6 @@ const alertMessageInput = ref(null)
 
 // 发送验证码bar状态
 const barSmsState = ref(0)
-
-// 提交bar状态
-const submitBarState = ref(false)
 
 // var isDataUpdated = false
 
@@ -216,7 +214,9 @@ const handleInviteIdentifier = async (inputValue) => {
 // 支付宝二维码生成
 const outTradeNo = ref(null)
 const alipayQRCodeContent = ref(null)
-const intervalId = ref(null); // 存储轮询任务的标识符
+// 存储轮询任务的标识符
+/** @type {import('vue').Ref<number | null>} */
+const intervalId = ref(0)
 
 const createOrder = async () => {
   const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
@@ -243,14 +243,12 @@ const paymentPollQuery = (outTradeNo) => {
     const code = result.data.code
 
     if (tradeStatus === 'TRADE_SUCCESS') {
-      console.log("支付成功！感谢您的支持！");
       clearInterval(intervalId.value)
       intervalId.value = null; // 清空轮询标识符
       // 处理支付成功逻辑
       paymentInfo.value = outTradeNo
       paymentInfo.state = code
     } else if (tradeStatus === 'TRADE_CLOSED') {
-      console.log("Payment failed or closed.");
       clearInterval(intervalId.value);
       intervalId.value = null; // 清空轮询标识符
       // 处理支付失败或关闭逻辑
@@ -330,6 +328,20 @@ watch(registerFormData, () => {
   deep: true
 })
 
+// 支付状态提示消息
+const switchGreen = ref(false)
+const paymentAlert = ref('')
+watch(() => registerFormData.paymentInfo.state, () => {
+  if (paymentInfo.state === 1) {
+    switchGreen.value = true
+    paymentAlert.value = '支付成功，感谢您的支持！请点击提交完成注册'
+  }
+  if (paymentInfo.value === 0) {
+    switchGreen.value = false
+    paymentAlert.value = '订单已过期，请刷新页面重新填写表单！'
+  }
+})
+
 // 提交表单
 const handleSubmit = async () => {
   // 把要提交的字段重新打包，别写到方法外面去了
@@ -347,7 +359,7 @@ const handleSubmit = async () => {
   const finalTradeStatus = paymentStatus.data.data;
 
   if (finalTradeStatus === 'TRADE_SUCCESS') {
-    console.log("支付成功！感谢您的支持！")
+    console.log("支付成功，感谢您的支持！")
     // 处理支付成功逻辑
     paymentInfo.value = outTradeNo
     paymentInfo.state = 1
@@ -423,16 +435,8 @@ const handleEnter = (event) => {
         </div>
       </div>
       <TheDivider></TheDivider>
-      <div class="flex-column" id="payment-container">
+      <div id="payment-container">
         <div class="flex-column space-between" id="payment-tips">
-
-          <ul style="font-size: 12px;" id="payment-announcement">
-            <li>付款方式仅支持<span style="color: var(--c-blue);font-weight: bold;">支付宝</span>。</li>
-            <li>会员价格为人民币345元，使用邀请码价格为315元。</li>
-            <li>
-              注册成功后，用户可自助生成邀请码，使用该邀请码邀请朋友注册为会员，将获得30元返现，使用次数无限制，系统统计后于每月初发放。
-            </li>
-          </ul>
           <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"
                        name="inviteIdentifier"
                        placeholder="邀请码（选填）">
@@ -440,14 +444,23 @@ const handleEnter = (event) => {
         </div>
         <div class="flex-center-center" id="payment-code">
           <div class="flex-center-center" id="qrcode-container">
-            <QRCodeGenerator :alipayQRCodeContent="alipayQRCodeContent" :paymentInfo="paymentInfo.state"></QRCodeGenerator>
+            <QRCodeGenerator :alipayQRCodeContent="alipayQRCodeContent"
+                             :paymentInfo="paymentInfo.state"></QRCodeGenerator>
           </div>
         </div>
+        <PanelAlert :switch-green="switchGreen">{{ paymentAlert }}</PanelAlert>
+
+        <ul style="font-size: 12px;" id="payment-announcement">
+          <li>本站会员价格为人民币345元，使用邀请码价格为315元。付款方式仅支持<span style="color: var(--c-blue);font-weight: bold;">支付宝</span>。</li>
+          <li></li>
+          <li>
+            注册后，系统会自动为用户生成专属邀请码，使用邀请码邀请好友注册为会员，你将获得30元返现，邀请码使用次数无限制，返现收益系统统计后于每月初发放。
+          </li>
+        </ul>
       </div>
       <TheDivider></TheDivider>
       <BarFormSubmit @keydown.enter="handleEnter" @click="handleSubmit" :barState="passport"
                      :messageForButton="messageForButton" :submitAnimateRun="submitAnimateRun" type="register">
-        <!-- id="submit-button" -->
       </BarFormSubmit>
       <PanelFormFooter></PanelFormFooter>
     </form>
@@ -464,7 +477,6 @@ const handleEnter = (event) => {
 
   background: var(--color-gear-backgroud);
   width: 850px;
-  /* border-radius: 0.5rem; */
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 
   padding: 3rem 7rem;
@@ -473,34 +485,19 @@ const handleEnter = (event) => {
 }
 
 #register-form-input {
-  /* width: 100%; */
-  /* height: 500px; */
-  /* margin: 0 auto; */
-
-  /* justify-content: space-between; */
-  padding: 1rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  /* gap: 3rem; */
+  grid-template-columns:  repeat(2, 1fr);
   column-gap: 3rem;
 }
 
 #payment-container {
-  /* margin-top: 1rem; */
-  /* margin-bottom: 1rem; */
-  /* border-top: 1px solid var(--color-border); */
-  /* border-bottom: 1px solid var(--color-border); */
-  padding-top: 1.7rem;
-  padding-bottom: 1.7rem;
-
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  column-gap: 3rem;
-  place-items: start start;
+  margin-top: 1rem;
+//padding-top: 1.7rem; //padding-bottom: 1.7rem; //display: grid; //grid-template-columns: repeat(2, auto); //column-gap: 3rem; //place-items: start start;
 }
 
 #payment-announcement {
-  padding-bottom: 1.3rem;
+//padding-bottom: 1.3rem; margin-top: 1rem;
+  text-align: left;
 }
 
 #payment-code {
@@ -508,14 +505,37 @@ const handleEnter = (event) => {
 
   background: var(--bgcolor-navigation);
   border: 1px solid var(--color-border);
-  aspect-ratio: 1;
-  height: 100%;
+  margin-top: 0.7rem;
+//aspect-ratio: 1; //height: 30%;
 }
 
 #qrcode-container {
   width: 150px;
   height: 150px;
-
   background-color: var(--bgcolor-navigation);
+  margin: 1rem;
+}
+
+@media (max-width: 760px) {
+  #register-form-container {
+    width: auto;
+  }
+
+  #register-form-input {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 550px) {
+  #register-form-container {
+    width: auto;
+    padding: 3rem;
+  }
+
+  #register-form-input {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

@@ -26,9 +26,6 @@
 
 #bar-name {
   cursor: pointer;
-  /* white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
 }
 
 #bar-filter:hover {
@@ -46,14 +43,19 @@
   justify-content: center;
 
   overflow: hidden;
-
-  /* background-color: black; */
 }
 
 @media (max-width: 430px) {
   #icon-container {
     width: 1.5rem;
     height: 1.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  #bar-filter {
+    padding: 0.3rem;
+    margin: 0;
   }
 }
 </style>

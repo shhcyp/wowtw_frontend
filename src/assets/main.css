@@ -22,33 +22,13 @@
 
 /* 只负责处理版心 */
 .wrapper {
-  max-width: 1024px;
+  max-width: 1080px;
   width: 90%;
   margin: 0 auto;
 }
 
 .short-row-wrapper {
   text-align: center;
-}
-
-@media (max-width: 1920px) {
-  body {
-    /* display: flex; */
-    /* place-items: center; */
-  }
-
-  #app {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
-    /* padding: 0 2rem; */
-  }
-
-  /* 只负责处理版心 */
-  .wrapper {
-    /* width: 97%; */
-    /* max-width: 1024px; */
-    /* margin: 0 auto; */
-  }
 }
 
 .last-child {
@@ -61,15 +41,11 @@ a {
   color: var(--color-text);
   transition: 0.4s;
   cursor: pointer;
-  /* padding: 3px; */
-  
 }
 
 @media (hover: hover) {
   a:hover {
-    /* background-color: hsla(160, 100%, 37%, 0.2); */
     color: var(--color-hover);
-    /* font-weight: bold; */
   }
   .custom-button:hover,
   .pointer:hover {
@@ -285,4 +261,19 @@ a {
   background: var(--color-unuseable-background);
   cursor: not-allowed;
   color: var(--color-unuseable-text);
+}
+
+.no-wrap {
+  white-space: nowrap;
+  overflow: hidden; /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 在文本超出时显示省略号 */
+}
+
+.center-justify {
+  text-align: justify;
+  text-align-last: left; /* 最后一行左对齐 */
+}
+
+.no-select {
+  user-select: none; /* 禁止用户选择文本 */
 }

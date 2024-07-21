@@ -61,9 +61,6 @@ defineProps({
   -webkit-column-break-inside: avoid;
   page-break-inside: avoid;
   break-inside: avoid;
-  /* width: 47.777%; */
-  /* flex: 1; */
-  /* background: #434343; */
   background: var(--color-gear-backgroud);
   padding: 0.5rem 0;
   border-radius: 0.3rem;
@@ -99,9 +96,9 @@ defineProps({
 }
 
 #gear-name {
-  /* margin-right: 1rem; */
   font-size: 1.1rem;
-  text-shadow: 0 0px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 
 #gear-drop {
@@ -109,6 +106,7 @@ defineProps({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 #marks {
@@ -166,7 +164,6 @@ defineProps({
 #extra-info-icon-container {
   width: 1.3rem;
   height: 1.3rem;
-  /* background-color: black; */
   margin-right: 0.5rem;
 }
 
@@ -176,10 +173,6 @@ defineProps({
 
 @media (max-width: 1024px) {
   #gear {
-    /* width: 47.777%; */
-    /* flex: 1; */
-    /* padding: 0.7rem; */
-    /* margin-bottom: 1rem; */
   }
 }
 </style>

@@ -30,7 +30,8 @@ header {
 main {
   padding-top: 60px;
   flex: 1;
-  /* min-height: 100vh; */
   z-index: 6;
+
+  text-align: center;
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="container wrapper" id="legend-container">
+  <div class="container wrapper no-select" id="legend-container">
     <h3 id="legends-title">版本缩写</h3>
     <ul id="legends">
       <li class="legend">
@@ -34,6 +34,8 @@
 
 <style scoped>
 #legend-container {
+  text-align: left;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,29 +43,37 @@
 }
 
 #legends-title {
-  padding-bottom: 0.7rem;
+  padding-bottom: 1rem;
+  width: 100%;
 }
 
 #legends {
-  /* min-width: 1366px; */
-  width: 90%;
-  display: grid;
-  grid-auto-flow: row;
-  place-items: end center;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 3rem;
+  width: 100%;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
 
   margin-left: 1rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  margin-right: 0.7rem;
 }
 
 .icon-legend {
   width: 1.7rem;
   height: 1.7rem;
-  margin: 0 1rem 0 0;
+  margin-right: 0.7rem;
 }
 
 @media (max-width: 1366px) {
   #legends {
+    display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 2.3rem 2.3rem;
     place-items: end start;
@@ -72,33 +82,59 @@
 
 @media (max-width: 1024px) {
   #legends {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 2.3rem 2.3rem;
     place-items: end start;
+    font-size: 0.87rem;
   }
 }
 
 @media (max-width: 820px) {
   #legends {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 2.3rem 2.3rem;
     place-items: end start;
+    font-size: 0.87rem;
   }
 }
 
 @media (max-width: 630px) {
   #legends {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 2rem 2rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2rem 2rem;
     place-items: end start;
     font-size: 0.87rem;
-    /* margin-left: 2rem; */
   }
 
   .icon-legend {
     width: 1.3rem;
     height: 1.3rem;
-    margin: 0 0.7rem 0 0;
+    margin-right: 0.37rem;
+  }
+}
+
+@media (max-width: 550px) {
+  #legends {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 2rem 2rem 2rem;
+    place-items: end start;
+    font-size: 0.87rem;
+  }
+}
+
+@media (max-width: 413px) {
+  #legends {
+    margin-left: 0.37rem;
+  }
+
+  .icon-legend {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-right: 0.23rem;
   }
 }
 </style>

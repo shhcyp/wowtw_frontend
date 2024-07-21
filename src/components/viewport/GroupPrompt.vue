@@ -6,21 +6,16 @@ import PromptSpecialGear from '../module/PromptSpecialGear.vue'
 import PromptGetSet from '../module/PromptGetSet.vue'
 import PromptTableRuby from '../module/PromptTableRuby.vue'
 import PromptTableLevel from '../module/PromptTableLevel.vue'
-import IconVerticalArrow from '../module/IconVerticalArrow.vue'
 </script>
 
 <template>
-  <!-- 职业排行参考 -->
-  <!-- <div v-for="(item, index) in items" :key="index"> -->
   <div id="prompts">
+    <!-- 职业排行参考 -->
     <BlockPrompt>
       <template #prompt-icon>
         <img src="/legends/alliance.webp" alt="">
       </template>
       <template #prompt-title>职业排行参考</template>
-      <template #prompt-arrow>
-        <IconVerticalArrow></IconVerticalArrow>
-      </template>
       <template #details>
         <PromptClassList></PromptClassList>
       </template>
@@ -83,26 +78,7 @@ import IconVerticalArrow from '../module/IconVerticalArrow.vue'
   </div>
 </template>
 
-
-
 <style scoped>
-/* 混合多个组件的样式 */
-@media (max-width: 430px) {
-  .container {
-    padding: 1.3rem;
-  }
-
-  .prompt-details-container,
-  .prompt-details-container-text {
-    margin-left: 0;
-    justify-content: center;
-  }
-
-  .prompt-details {
-    padding: 1rem 0 0 0;
-  }
-}
-
 #prompts ul:last-child {
   margin-bottom: 2rem;
 }

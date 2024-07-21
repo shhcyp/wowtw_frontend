@@ -269,10 +269,10 @@ onMounted(() => {
   <!-- <label :for="'input-' + inputName"> -->
   <!-- <label style="width: 100%;"> -->
   <label>
-    <h5>
+    <h5 style="text-align: left">
       <slot></slot>
     </h5>
-    <PanelAlert v-if="props.name === 'inviteIdentifier'" :switchGreen="switchGreen">{{ alertMessage }}</PanelAlert>
+<!--    <PanelAlert v-if="props.name === 'inviteIdentifier'" :switchGreen="switchGreen">{{ alertMessage }}</PanelAlert>-->
     <div class="flex-row-align-center position-relative" id="group-input">
       <input v-model="inputValue" @keydown.enter="keydownEnter" @input="handleInput" @blur="updateInput"
              ref="domInput" :type="type" :class="{ 'no-focus': readonly }" :tabindex="readonly ? -1 : 0"
@@ -298,7 +298,8 @@ onMounted(() => {
     </div>
     <!-- <PanelAlert v-if="name === 'repassword'">{{ messageForRepassword }}</PanelAlert> -->
     <!-- <PanelAlert v-else :switchGreen="switchGreen">{{ alertMessage }}</PanelAlert> -->
-    <PanelAlert v-if="!(props.name === 'inviteIdentifier')" :switchGreen="switchGreen">{{ alertMessage }}
+<!--    <PanelAlert v-if="!(props.name === 'inviteIdentifier')" :switchGreen="switchGreen">{{ alertMessage }}-->
+    <PanelAlert :switchGreen="switchGreen">{{ alertMessage }}
     </PanelAlert>
   </label>
 </template>
