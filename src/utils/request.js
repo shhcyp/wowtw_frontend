@@ -21,6 +21,10 @@ instance.interceptors.request.use(
         if (userStore.token) {
             config.headers.Authorization = `Bearer ${userStore.token}`
         }
+        // 2.携带sessionId
+        if (userStore.sessionId) {
+            config.headers['X-Session-Id'] = userStore.sessionId
+        }
         return config
     },
     (error) => {
@@ -31,10 +35,9 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     (response) => {
-        // 2.处理响应
+        // 1.处理响应/获取响应数据
         console.log('后端响应的数据', response.data);
         if (response.data.code === 1) {
-            // 3.获取响应数据
             return response
         }
         if (response.data.code === 0) {
@@ -43,13 +46,20 @@ instance.interceptors.response.use(
         return Promise.reject(response.data)
     },
     (error) => {
-        // 5.401错误（权限不足或token过期，需要拦截得到登录）
+        // 2.处理错误响应
+        const userStore = useUserStore()
+
+        // 401错误（权限不足或token过期或会话失效，需要拦截到登录）
         if (error.response?.status === 401) {
-            router.push('/login')
+            if (error.response.data.message === "Session invalid") {
+                userStore.resetUserData()
+            }
+            router.push('/login').catch(err => {
+                console.log(err)
+            })
         }
 
-        // 6.默认错误提示
-        // responseMessage.value = error.response.data.message
+        // 默认错误
         return Promise.reject(error)
     }
 )

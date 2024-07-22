@@ -9,11 +9,12 @@ export const infoGroupService = (talentId) => {
         return Promise.reject('用户未登录')
     }
 
-    const token = userStore.token
+    // const token = userStore.token
 
     return request.get(`/infoGroup/${talentId}`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userStore.token}`,
+            'X-Session-Id': userStore.sessionId
         }
     })
 }
@@ -27,11 +28,12 @@ export const latestTalentsService = () => {
         return Promise.reject('用户未登录')
     }
 
-    const token = userStore.token
+    // const token = userStore.token
 
     return request.get('/infoGroup/latestTalents', {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${userStore.token}`,
+            'X-Session-Id': userStore.sessionId
         }
     })
 }

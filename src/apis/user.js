@@ -16,8 +16,8 @@ export const phoneNumberService = (phoneNumber) => {
 }
 
 // 注册
-export const userRegisterService = ({ username, password, phoneNumber, question, answer, inviteIdentifier, paymentInfo }) => {
-    return request.post('/user/register', { username, password, phoneNumber, question, answer, inviteIdentifier, paymentInfo })
+export const userRegisterService = ({ username, password, phoneNumber, question, answer, avatar, nickname, inviteIdentifier, paymentInfo }) => {
+    return request.post('/user/register', { username, password, phoneNumber, question, answer, avatar, nickname, inviteIdentifier, paymentInfo })
 }
 
 // 生成邀请码

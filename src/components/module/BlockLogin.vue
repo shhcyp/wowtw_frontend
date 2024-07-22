@@ -85,6 +85,7 @@ const handleSubmit = async () => {
         // 登录成功，直接跳转
         if (result.data.code === 1) {
           userStore.isLogin = true
+          userStore.setUsername(username.value)
           messageForButton.value = result.data.message
           userStore.id = result.data.data.id
           userStore.userID = result.data.data.userID
@@ -92,8 +93,11 @@ const handleSubmit = async () => {
           userStore.nickname = result.data.data.nickname || '时光漫游靓仔'
           userStore.identifier = result.data.data.identifier
           userStore.setToken(result.data.data.token)
-          userStore.editCount = result.data.data.editCount
+          userStore.setSessionId(result.data.data.sessionId)
           filterStore.resetState()
+
+          // 建立 WebSocket 连接
+          userStore.connectWebSocket()
 
           await router.push('/prompt')
 

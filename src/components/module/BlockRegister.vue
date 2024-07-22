@@ -351,6 +351,8 @@ const handleSubmit = async () => {
     phoneNumber: phoneNumber.value,
     question: question.value,
     answer: answer.value,
+    avatar: '/avatar/grandfathered.webp',
+    nickname: '时光漫游靓仔',
     inviteIdentifier: inviteIdentifier.value,
     paymentInfo: paymentInfo.value
   }
