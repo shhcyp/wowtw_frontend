@@ -8,9 +8,15 @@ import {useRouter} from 'vue-router'
 import {userLoginService} from '@/apis/user'
 import {useUserStore} from '@/stores'
 import {useFilterStore} from '@/stores/filter.js'
+import {latestTalentsService} from '@/apis/infoGroup.js'
+import {useTalentsVersionStore} from '@/stores/talentsVersion.js'
+import {useInfoGroupsStore} from '@/stores'
+
 
 const userStore = useUserStore()
 const filterStore = useFilterStore()
+const talentsVersionStore = useTalentsVersionStore()
+const infoGroupStore = useInfoGroupsStore()
 
 const loginFormData = reactive({
   username: {value: '', state: 0},
@@ -54,7 +60,7 @@ provide('messageForInput', alertMessageInput)
 
 // 提交表单
 const loginForm = ref(null)
-const alertMessage = ref(null)
+const alertMessage = ref('')
 const submitAnimateRun = ref(false)
 const messageForButton = ref(null)
 const router = useRouter()
@@ -71,34 +77,62 @@ const handleSubmit = async () => {
     console.log('表单提交了', submitData);
     submitAnimateRun.value = !submitAnimateRun.value
 
-    const result = await userLoginService(submitData)
-    console.log('result:', result);
+    try {
+      const result = await userLoginService(submitData)
+      console.log('result:', result);
 
-    setTimeout(() => {
-      // 登录成功，直接跳转
-      if (result.data.code === 1) {
-        userStore.isLogin = true
-        messageForButton.value = result.data.message
-        userStore.id = result.data.data.id
-        userStore.userID = result.data.data.userID
-        userStore.userAvatar = result.data.data.userAvatar || 'public/avatar/grandfathered.webp'
-        userStore.nickname = result.data.data.nickname || '时光漫游靓仔'
-        userStore.identifier = result.data.data.identifier
-        userStore.setToken(result.data.data.token)
-        userStore.editCount = result.data.data.editCount
-        filterStore.resetState()
+      setTimeout(async () => {
+        // 登录成功，直接跳转
+        if (result.data.code === 1) {
+          userStore.isLogin = true
+          messageForButton.value = result.data.message
+          userStore.id = result.data.data.id
+          userStore.userID = result.data.data.userID
+          userStore.userAvatar = result.data.data.userAvatar || 'public/avatar/grandfathered.webp'
+          userStore.nickname = result.data.data.nickname || '时光漫游靓仔'
+          userStore.identifier = result.data.data.identifier
+          userStore.setToken(result.data.data.token)
+          userStore.editCount = result.data.data.editCount
+          filterStore.resetState()
 
-        router.push('/prompt')
-        // setTimeout(() => {
-        //     router.push('/private')
-        // }, 1234)
-      }
-      // 登录失败，账号或密码错误，请重试
-      if (result.data.code === 0) {
-        alertMessage.value = result.data.message
-        submitAnimateRun.value = false
-      }
-    }, 777)
+          await router.push('/prompt')
+
+          // 调用 latestTalentsService获取最新的天赋数据并等待结果
+          const latestTalents = await latestTalentsService()
+          console.log(latestTalents.data.data)
+
+          // 更新latestTalentsVersionData
+          talentsVersionStore.latestTalentsVersionData = latestTalents.data.data
+
+          if (!Object.keys(talentsVersionStore.talentsVersionData).length) {
+            // talentsVersionData 为空，直接设置 latestTalentsVersionData
+            talentsVersionStore.setTalentsVersionData()
+          } else {
+            // talentsVersionData 不为空，进行版本比对和删除操作
+
+            // 获取不一致的 id 列表
+            const mismatchedIds = talentsVersionStore.getMismatchedIds()
+
+            // 删除 infoGroupData 中对应的项
+            mismatchedIds.forEach(id => {
+              delete infoGroupStore.infoGroupData[id]
+            })
+
+            // 更新 talentsVersionData
+            talentsVersionStore.setTalentsVersionData()
+          }
+        }
+        // 登录失败，账号或密码错误，请重试
+        if (result.data.code === 0) {
+          alertMessage.value = result.data.message
+          submitAnimateRun.value = false
+        }
+      }, 777)
+    } catch (error) {
+      console.error('登录请求失败:', error)
+      alertMessage.value = '登录请求失败，请稍后再试'
+      submitAnimateRun.value = false
+    }
   }
 }
 
@@ -168,10 +202,6 @@ watch([loginFormData, alertMessage], () => {
   justify-content: space-between;
 }
 
-#submit-button {
-  margin-top: 10rem;
-}
-
 @media (max-width: 1180px) {
   .container- {
     padding-top: 0;
@@ -184,10 +214,6 @@ watch([loginFormData, alertMessage], () => {
   #login-form {
     height: 400px;
   }
-
-  #submit-button {
-    margin-top: 7rem;
-  }
 }
 
 /* @media (orientation: landscape) and (max-width: 1180px) {} */
@@ -199,10 +225,6 @@ watch([loginFormData, alertMessage], () => {
 
   #login-form {
     width: 77%;
-  }
-
-  #submit-button {
-    margin-top: 5rem;
   }
 }
 
@@ -231,13 +253,7 @@ watch([loginFormData, alertMessage], () => {
     width: 87%;
     height: 43vh;
   }
-
-  #submit-button {
-    margin-top: 1rem;
-  }
 }
-
-/* @media (max-width: 390px) {} */
 
 @media (max-width: 375px) {
   #login-form-container {

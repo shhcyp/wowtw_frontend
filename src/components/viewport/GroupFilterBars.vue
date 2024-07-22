@@ -6,7 +6,7 @@ import {useFilterStore} from '@/stores/filter'
 import {storeToRefs} from 'pinia'
 import {useBrowserWidthListenStore} from '@/stores/browserWidthListen'
 import {infoGroupService} from '@/apis/infoGroup.js'
-import {infoGroupsStore} from '@/stores'
+import {useInfoGroupsStore} from '@/stores'
 import {useUserStore} from '@/stores'
 
 const {classData, classIndex, talentIndex} = storeToRefs(useFilterStore())
@@ -17,8 +17,8 @@ const {addResizeListener, removeResizeListener, updateDeviceState} = useBrowserW
 
 const userStore = useUserStore()
 
-const store = infoGroupsStore()
-const {infoGroupData, presentTalent} = storeToRefs(infoGroupsStore())
+const store = useInfoGroupsStore()
+const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 
 const isOverlayShow = ref(false)
 

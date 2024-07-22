@@ -2,12 +2,12 @@
 import {ref} from 'vue'
 import BlockGear from '../module/BlockGear.vue'
 import BlockTalentTree from '@/components/module/BlockTalentTree.vue'
-import {infoGroupsStore} from '@/stores'
+import {useInfoGroupsStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 
 const gearsContainer = ref(null)
 
-const {infoGroupData, presentTalent} = storeToRefs(infoGroupsStore())
+const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 
 console.log('test2', infoGroupData.value[presentTalent.value])
 </script>

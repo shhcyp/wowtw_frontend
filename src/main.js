@@ -11,7 +11,7 @@ import App from './App.vue'
 import router from './router'
 
 import {useFilterStore} from '@/stores/filter.js'
-import {infoGroupsStore} from '@/stores/index'
+import {useInfoGroupsStore} from '@/stores/index'
 
 const app = createApp(App)
 pinia.use(piniaPersist)
@@ -24,7 +24,7 @@ app.component('TheDivider', TheDivider)
 app.use(autoAnimatePlugin)
 
 const filterStore = useFilterStore()
-const infoStore = infoGroupsStore()
+const infoStore = useInfoGroupsStore()
 window.addEventListener('beforeunload', () => {
     filterStore.resetState()
     infoStore.resetPresentTalent()

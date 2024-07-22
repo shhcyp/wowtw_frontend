@@ -12,7 +12,7 @@ const charts = ref([
 </script>
 
 <template>
-  <li class="prompt-details-container-image">
+  <li class="prompt-details-container-image no-select">
     <div v-for="item in charts" :key="item.id" id="prompt-details">
       <span style="text-align: left">{{ item.name }}</span>
       <img :src="item.image" class="box-size-class-list" alt="">

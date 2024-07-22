@@ -1,8 +1,7 @@
 import {defineStore} from "pinia"
 import {ref} from "vue";
 
-export const infoGroupsStore = defineStore("infoGroupResponse", () => {
-        // const infoGroupData = ref({0: []})
+export const useInfoGroupsStore = defineStore("infoGroupResponse", () => {
         const infoGroupData = ref({})
 
         const presentTalent = ref(null)

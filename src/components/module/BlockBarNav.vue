@@ -8,7 +8,7 @@ import {useAvatarStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 import {avatarService, nicknameService} from '@/apis/user'
 import {forbiddenWords} from '@/utils/illegal'
-import {infoGroupsStore} from '@/stores'
+import {useInfoGroupsStore} from '@/stores'
 import {useFilterStore} from '@/stores/filter.js'
 import DialogModalOverlay from '@/components/module/DialogModalOverlay.vue'
 
@@ -26,7 +26,7 @@ const isAccess = ref(false)
 const textToCopy = ref(null)
 const isCopied = ref(false)
 
-const inforStore = infoGroupsStore()
+const inforStore = useInfoGroupsStore()
 const filterStore = useFilterStore()
 
 const isOverlayShow = ref(false)

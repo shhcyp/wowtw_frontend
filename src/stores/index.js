@@ -11,5 +11,3 @@ export * from './user'
 export * from './counter'
 export * from './avatar'
 export * from './infoGroups'
-
-export class infoGroupData {}
