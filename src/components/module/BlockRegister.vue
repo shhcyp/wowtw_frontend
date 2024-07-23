@@ -37,7 +37,7 @@ const registerFormData = reactive({
   phoneNumber: {value: '', state: 0},
   verificationCode: {value: '', state: 0},
   inviteIdentifier: {value: '', state: 0},
-  paymentInfo: {value: '', state: null}
+  paymentInfo: {value: '', state: -1}
 })
 
 const {
@@ -60,8 +60,6 @@ const alertMessageInput = ref(null)
 // 发送验证码bar状态
 const barSmsState = ref(0)
 
-// var isDataUpdated = false
-
 // 用于判断数据是否更新
 let isUsernameUpdated = false
 let isPhoneNumberUpdated = false
@@ -75,7 +73,6 @@ const phoneNumberResponseData = ref(null)
 const inviteIdentifierResponseData = ref(null)
 
 // 传递给input组件的provide都在这里
-// provide('messageForInput', alertMessageInput)
 provide('usernameVerifyResponse', usernameResponseData)
 provide('phoneNumberVerifyResponse', phoneNumberResponseData)
 provide('codeVerifyResponse', verificationCodeResponseData)
@@ -159,7 +156,7 @@ const codeVerifyPassport = ref(false)
 const handleSms = async () => {
   console.log(phoneNumber.state, barSmsState.value);
   if (phoneNumber.state === 1 && !isPhoneNumberUpdated && barSmsState.value === 0) {
-    console.log(phoneNumber.value, '发送发送验证码请求');
+    // console.log(phoneNumber.value, '发送发送验证码请求')
     await smsService(phoneNumber.value)
     barSmsState.value = 1
     codeVerifyPassport.value = true
@@ -193,7 +190,7 @@ watch(() => registerFormData.username.value, async () => {
 })
 watch(() => registerFormData.phoneNumber.value, async () => {
   if (phoneNumber.value && isPhoneNumberUpdated) {
-    console.log('发送电话号码验证请求');
+    // console.log('发送电话号码验证请求')
     const result = await phoneNumberService(phoneNumber.value)
     phoneNumberResponseData.value = result.data
     isPhoneNumberUpdated = false
@@ -220,9 +217,9 @@ const intervalId = ref(0)
 
 const createOrder = async () => {
   const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
-  console.log('请求预创建订单返回数据', result)
+  // console.log('请求预创建订单返回数据', result)
   alipayQRCodeContent.value = result.data.data.alipayQRCode
-  console.log('支付二维码链接', alipayQRCodeContent.value)
+  // console.log('支付二维码链接', alipayQRCodeContent.value)
   outTradeNo.value = result.data.data.outTradeNo
   setTimeout(async () => {
     paymentPollQuery(outTradeNo.value)
@@ -265,13 +262,13 @@ const paymentPollQuery = (outTradeNo) => {
           const finalTradeStatus = finalResult.data.data;
 
           if (finalTradeStatus === 'TRADE_SUCCESS') {
-            console.log("支付成功！感谢您的支持！")
+            // console.log("支付成功！感谢您的支持！")
             // 处理支付成功逻辑
             paymentInfo.value = outTradeNo
             paymentInfo.state = code
           } else {
             await cancelPaymentService(outTradeNo)
-            console.log("支付时间超时，交易已关闭")
+            // console.log("支付时间超时，交易已关闭")
             paymentInfo.state = 0
           }
         }, 180000); // 3分钟后进行最终检查
@@ -295,9 +292,9 @@ watch(() => ({
   // 没有邀请码
   if (fullPayPassport) {
     if (outTradeNo.value) {
-      console.log("准备取消前面的订单:", outTradeNo.value);
-      const cancelPastTrade = await cancelPaymentService(outTradeNo.value)
-      console.log("有新二维码取消前面的订单", cancelPastTrade)
+      // console.log("准备取消前面的订单:", outTradeNo.value)
+      await cancelPaymentService(outTradeNo.value)
+      // console.log("有新二维码取消前面的订单", cancelPastTrade)
     }
     await createOrder()
   }
@@ -305,18 +302,14 @@ watch(() => ({
   // 有邀请码
   if (discountPassport) {
     if (outTradeNo.value) {
-      console.log("准备取消前面的订单:", outTradeNo.value);
-      const cancelPastTrade = await cancelPaymentService(outTradeNo.value)
-      console.log("有新二维码取消前面的订单", cancelPastTrade)
+      // console.log("准备取消前面的订单:", outTradeNo.value);
+      await cancelPaymentService(outTradeNo.value)
+      // console.log("有新二维码取消前面的订单", cancelPastTrade)
     }
     await createOrder()
   }
 }, {
   deep: true
-})
-
-watch(registerFormData, () => {
-  console.log('表单form实时数据', registerFormData);
 })
 
 // 检查state是不是都是1
@@ -361,7 +354,7 @@ const handleSubmit = async () => {
   const finalTradeStatus = paymentStatus.data.data;
 
   if (finalTradeStatus === 'TRADE_SUCCESS') {
-    console.log("支付成功，感谢您的支持！")
+    // console.log("支付成功")
     // 处理支付成功逻辑
     paymentInfo.value = outTradeNo
     paymentInfo.state = 1
@@ -397,7 +390,6 @@ const handleEnter = (event) => {
 
 <template>
   <div class="container- wrapper flex-row-align-center">
-    <!-- <form @submit.prevent="handleSubmit" class="flex-column" id="register-form-container"> -->
     <form @submit.prevent="handleSubmit" ref="registerForm" class="flex-column space-evenly"
           id="register-form-container">
       <div id="register-form-input">
@@ -494,11 +486,9 @@ const handleEnter = (event) => {
 
 #payment-container {
   margin-top: 1rem;
-//padding-top: 1.7rem; //padding-bottom: 1.7rem; //display: grid; //grid-template-columns: repeat(2, auto); //column-gap: 3rem; //place-items: start start;
 }
 
 #payment-announcement {
-//padding-bottom: 1.3rem; margin-top: 1rem;
   text-align: left;
 }
 
@@ -508,7 +498,6 @@ const handleEnter = (event) => {
   background: var(--bgcolor-navigation);
   border: 1px solid var(--color-border);
   margin-top: 0.7rem;
-//aspect-ratio: 1; //height: 30%;
 }
 
 #qrcode-container {

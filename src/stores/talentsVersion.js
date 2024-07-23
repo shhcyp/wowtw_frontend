@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {ref} from "vue";
+import {ref} from 'vue'
 
 export const useTalentsVersionStore = defineStore('talentsVersion', () => {
     const talentsVersionData = ref({})

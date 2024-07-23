@@ -23,11 +23,6 @@ const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 const isOverlayShow = ref(false)
 
 onMounted(() => {
-  console.log(classIndex.value)
-  console.log(talentIndex.value)
-  // if (classIndex.value && talentIndex.value)
-  // classIndex.value = null
-
   if (typeof addResizeListener === 'function') {
     addResizeListener()
   } else {
@@ -39,12 +34,6 @@ onMounted(() => {
   } else {
     console.warn('updateDeviceState method is not defined.')
   }
-
-  // if (typeof store.resetPresentTalent === 'function') {
-  //   store.resetPresentTalent()
-  // } else {
-  //   console.warn('resetPresentTalent method is not defined.')
-  // }
 })
 
 watch(innerWidth, () => {
@@ -56,8 +45,6 @@ watch(innerWidth, () => {
 })
 
 onUnmounted(() => {
-  // classIndex.value = null
-
   if (typeof removeResizeListener === 'function') {
     removeResizeListener()
   } else {

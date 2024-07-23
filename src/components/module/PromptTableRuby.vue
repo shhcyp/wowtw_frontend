@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <td>
-          <div class="ruby-icon"><img src="/ruby/leviathans_eye_of_agility.webp">
+          <div class="ruby-icon"><img src="/ruby/leviathans_eye_of_agility.webp" alt="">
           </div>
         </td>
         <td>海兽之眼</td>
@@ -26,7 +26,7 @@
       </tr>
       <tr>
         <td>
-          <div class="ruby-icon"><img src="/ruby/illimited_iamond.webp"></div>
+          <div class="ruby-icon"><img src="/ruby/illimited_iamond.webp" alt=""></div>
         </td>
         <td>无限钻石</td>
         <td>+3 +3</td>
@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td>
-          <div class="ruby-icon"><img src="/ruby/queens_garnet.webp"></div>
+          <div class="ruby-icon"><img src="/ruby/queens_garnet.webp" alt=""></div>
         </td>
         <td>皇后榴石</td>
         <td>+3</td>
@@ -46,7 +46,7 @@
       </tr>
       <tr>
         <td>
-          <div class="ruby-icon"><img src="/ruby/delicate_primordial_ruby.webp"></div>
+          <div class="ruby-icon"><img src="/ruby/delicate_primordial_ruby.webp" alt=""></div>
         </td>
         <td>源红石</td>
         <td>+3</td>

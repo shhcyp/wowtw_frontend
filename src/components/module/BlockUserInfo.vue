@@ -4,7 +4,7 @@
 <template>
   <div id="user-info">
     <div id="avatar-container">
-      <img src="/legends/grandfathered.webp">
+      <img src="/legends/grandfathered.webp" alt="">
     </div>
     <RouterLink :to="`/private`">MCYP</RouterLink>
   </div>
@@ -14,7 +14,6 @@
 #user-info {
   display: flex;
   align-items: center;
-  /* cursor: pointer; */
 }
 
 #avatar-container {

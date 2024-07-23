@@ -58,10 +58,4 @@ th,
 td {
   text-align: center;
 }
-
-.ruby-icon {
-  width: 1.3rem;
-  height: 1.3rem;
-  margin: auto;
-}
 </style>

@@ -17,13 +17,13 @@ const {avatar} = storeToRefs(useAvatarStore())
 const router = useRouter()
 
 const isModalOpen = ref(false)
-const target = ref(false)
-const avatarUrl = ref(null)
-const choosenIndex = ref(null)
-const newNickname = ref(null)
-const alertMessage = ref(null)
+const target = ref('')
+const avatarUrl = ref('')
+const choosenIndex = ref('')
+const newNickname = ref('')
+const alertMessage = ref('')
 const isAccess = ref(false)
-const textToCopy = ref(null)
+const textToCopy = ref('')
 const isCopied = ref(false)
 
 const inforStore = useInfoGroupsStore()
@@ -35,7 +35,6 @@ const openModal = (value) => {
   isModalOpen.value = true
   target.value = value
   document.body.style.overflow = 'hidden'  // 禁止滚动
-  console.log(userStore.identifier);
 }
 
 // 修改头像
@@ -121,7 +120,7 @@ const confirm = async () => {
   if (target.value === 'quitBar') {
     userStore.resetUserData()
     userStore.isLogin = false
-    router.push('/')
+    await router.push('/')
     isModalOpen.value = false
     inforStore.resetPresentTalent()
     filterStore.resetState()
@@ -132,7 +131,7 @@ const confirm = async () => {
   if (target.value === 'avatar' && choosenIndex.value !== null) {
     const result = await avatarService(userStore.id, avatarUrl.value)
     if (result.data.code === 1) {
-      userStore.userAvatar = avatarUrl.value
+      userStore.userAvatar = avatarUrl
       isModalOpen.value = false
       choosenIndex.value = null
     }
@@ -145,7 +144,7 @@ const confirm = async () => {
     await nicknameService(userStore.id, newNickname.value)
     isModalOpen.value = false
     isAccess.value = false
-    userStore.nickname = newNickname.value
+    userStore.nickname = newNickname
     newNickname.value = ''
 
     document.body.style.overflow = 'auto'  // 恢复滚动
@@ -182,13 +181,13 @@ const isLogin = (tagName) => {
     setTimeout(() => {
       isOverlayShow.value = false
     }, 2345) // 2秒后隐藏提示消息
-  } else if (tagName === 'guidance'){
+  } else if (tagName === 'guidance') {
     // isOverlayShow.value = false
     router.push('/prompt')
-  } else if (tagName === 'gears'){
+  } else if (tagName === 'gears') {
     // isOverlayShow.value = false
     router.push('/gear')
-  } else if (tagName === 'match'){
+  } else if (tagName === 'match') {
     // isOverlayShow.value = false
     router.push('/match')
   }
@@ -200,7 +199,7 @@ const closeDialog = () => {
 </script>
 
 <template>
-  <div id="bars-left">
+  <div class="no-select" id="bars-left">
     <RouterLink :to="`/`">首页</RouterLink>
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
@@ -217,14 +216,16 @@ const closeDialog = () => {
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
     <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }}</div>
     <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>
+<!--    <div @click="openModal('changepwd')" class="custom-button" id="generate-identifier">修改密码</div>-->
+    <div @click="$router.push('/resetpassword')" class="custom-button">重置密码</div>
     <div @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>
   </div>
 
   <DialogModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" @update:confirm="confirm"
-               @update:cancel="cancel">
+               @update:cancel="cancel" class="no-select">
     <div v-if="target === 'quitBar'" class="text-center slot-content">
       <h3>退出确认</h3>
-      <p class="padding-mini">勇士，你确定要退出时光漫游吗？</p>
+      <p class="padding-mini">勇士，你确定要退出登录吗？</p>
     </div>
 
     <div v-if="target === 'identifier'" class="text-center slot-content">
@@ -272,10 +273,6 @@ const closeDialog = () => {
   padding: 0.85rem 2rem;
 }
 
-/* #bars-right :nth-child(3) {
-  padding: 0 2rem;
-} */
-
 .slot-content {
   padding: 1rem 1rem 0 1rem;
 }
@@ -287,8 +284,11 @@ const closeDialog = () => {
   grid-template-columns: repeat(14, 2rem);
 }
 
-#new-nickname,
-#user-identifier {
+#nickname {
+  color: var(--c-good);
+}
+
+#new-nickname {
   background: none;
   font-size: 1.3rem;
   width: 77%;
@@ -297,13 +297,6 @@ const closeDialog = () => {
   margin-bottom: 0.5rem;
   text-align: center;
   color: var(--color-text);
-}
-
-#bar-copy-container {
-  width: 2rem;
-  height: 2rem;
-  background: gray;
-  cursor: pointer;
 }
 
 #alert-container {
@@ -316,17 +309,12 @@ const closeDialog = () => {
 }
 
 @media (max-width: 1240px) and (min-width: 1024px) {
-
   #bars-left a,
   #bars-right a,
   #quit-button {
     line-height: 1;
     padding: 0.85rem 1.7rem;
   }
-
-  /* #bars-right :nth-child(3) {
-    padding: 0 1.7rem;
-  } */
 }
 
 @media (max-width: 1024px) and (min-width: 820px) {
@@ -337,10 +325,6 @@ const closeDialog = () => {
     line-height: 1;
     padding: 0.85rem 1.3rem;
   }
-
-  /* #bars-right :nth-child(3) {
-    padding: 0 1.3rem;
-  } */
 }
 
 @media (max-width: 820px) {
@@ -351,9 +335,5 @@ const closeDialog = () => {
     line-height: 1;
     padding: 0.85rem 1rem;
   }
-
-  /* #bars-right :nth-child(3) {
-    padding: 0 1rem;
-  } */
 }
 </style>

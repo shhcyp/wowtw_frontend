@@ -11,4 +11,3 @@ export const forbiddenWords = [
     // 英文非法词汇
     'drugs', 'terrorist', 'bomb', 'murder', 'rape', 'kill', 'weapon', 'attack', 'hacker', 'virus'
 ]
-  

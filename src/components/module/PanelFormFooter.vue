@@ -17,7 +17,7 @@ const linkKeyWords = formType === 'login' ? ['没有账号？去注册', '忘记
 <style scoped>
 #form-footer {
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 0.87rem;
     padding: 1rem 0;
 }
 </style>

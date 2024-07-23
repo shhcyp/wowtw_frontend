@@ -5,17 +5,21 @@ defineProps({
 </script>
 
 <template>
-  <div>
-        <span :class="{ 'in-green': switchGreen }" style="text-align: left" class="alert" id="alert-message">
+  <div id="alert-container">
+        <span :class="{ 'in-green': switchGreen }" class="alert" id="alert-message">
             <slot></slot>
         </span>
   </div>
 </template>
 
 <style scoped>
+#alert-container {
+  height: 1.77rem;
+}
 #alert-message {
   display: inline-block;
   width: 100%;
-  font-size: 12px;
+  font-size: 0.83rem;
+  text-align: left;
 }
 </style>

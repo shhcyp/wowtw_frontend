@@ -6,7 +6,7 @@ export const useSchemeStore = defineStore('scheme', () => {
   const isdark = ref('false')
   function toggleScheme() {
     scheme.value = scheme.value === 'light' ? 'dark' : 'light'
-    isdark.value = scheme.value === 'light' ? false : true
+    isdark.value = scheme.value !== 'light'
     console.log(scheme.value);
   }
 

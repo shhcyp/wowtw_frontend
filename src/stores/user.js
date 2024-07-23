@@ -59,9 +59,9 @@ export const useUserStore = defineStore(
             const host = window.location.host
             if (username.value) {
                 // 开发环境
-                // socket = new WebSocket(`${protocol}://192.168.1.170:8080/websocket?username=${username.value}`)
+                socket = new WebSocket(`${protocol}://192.168.1.170:8080/websocket?username=${username.value}`)
                 // 生产环境
-                socket = new WebSocket(`${protocol}://${host}:8080/websocket?username=${username.value}`)
+                // socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
                 socket.onopen = function () {
                     console.log('WebSocket connection opened')
                 }
@@ -98,7 +98,24 @@ export const useUserStore = defineStore(
             }
         }
 
-        return {isLogin, id, userID, userAvatar, nickname, identifier, token, sessionId, username, setToken, setSessionId, setUsername, resetUserData, connectWebSocket, handleBeforeUnload, checkSessionStorage}
+        return {
+            isLogin,
+            id,
+            userID,
+            userAvatar,
+            nickname,
+            identifier,
+            token,
+            sessionId,
+            username,
+            setToken,
+            setSessionId,
+            setUsername,
+            resetUserData,
+            connectWebSocket,
+            handleBeforeUnload,
+            checkSessionStorage
+        }
     },
     {
         persist: true

@@ -4,11 +4,4 @@
     </svg>
 </template>
 
-<style scoped>
-/* @media (max-width: 430px) {
-    #navigation {
-        height: 3.3572rem;
-        padding-top: 0.3rem;
-    }
-} */
-</style>
+<style scoped></style>

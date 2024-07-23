@@ -55,6 +55,7 @@ a {
 
 .custom-button {
   cursor: pointer;
+  user-select: none;
 }
 
 .pointer {

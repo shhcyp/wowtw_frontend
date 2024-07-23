@@ -36,7 +36,7 @@ import IconLogoTW from './IconLogoTW.vue'
   justify-content: center;
 }
 
-.logo {
+#logo {
   position: relative;
 }
 

@@ -10,7 +10,7 @@ defineProps({
       <ul class="flex-column-align-center" id="left-part-main-info">
         <li class="flex-center-center" id="gear-icon-contrainer">
           <!-- 装备图标 -->
-          <slot name="gear-icon"><img src="/ruby/illimited_iamond.webp"></slot>
+          <slot name="gear-icon"><img src="/ruby/illimited_iamond.webp" alt=""></slot>
         </li>
         <!-- 装备栏位 -->
         <li id="gear-part">
@@ -25,11 +25,7 @@ defineProps({
           </slot>
           <div class="flex-row-align-center" id="marks">
             <!-- *装备标记 -->
-            <slot name="mark-icon">
-              <!-- <div v-for="item in 2" :key="item.id" id="mark-icon-container">
-                <img src="/legends/chromietime.webp">
-              </div> -->
-            </slot>
+            <slot name="mark-icon"></slot>
           </div>
         </li>
         <!-- 装备出处 -->
@@ -43,14 +39,7 @@ defineProps({
       <span id="left-extra-info">其他</span>
       <ul id="right-extra-info-list">
         <!-- *详细装备额外信息 -->
-        <slot name="extra-info">
-          <!-- <li v-for="item in 5" :key="item.id" class="flex-row-align-center" id="extra-info">
-            <div class="flex-center-center" id="extra-info-icon-container">
-              <img src="#">
-            </div>
-            <span id="extra-info-desc">文字说明</span>
-          </li> -->
-        </slot>
+        <slot name="extra-info"></slot>
       </ul>
     </li>
   </ul>
@@ -65,8 +54,6 @@ defineProps({
   padding: 0.5rem 0;
   border-radius: 0.3rem;
   margin-bottom: 1rem;
-
-  /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.1); */
 }
 
 #main-block {
@@ -102,7 +89,6 @@ defineProps({
 }
 
 #gear-drop {
-  /* max-width: 220px; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -120,7 +106,6 @@ defineProps({
 }
 
 /* 额外信息 */
-
 #extra-info-container {
   margin-left: 0.35rem;
   padding-left: 0.35rem;

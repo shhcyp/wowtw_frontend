@@ -4,17 +4,15 @@ import TheDivider from '@/components/module/TheDivider.vue'
 
 import { createApp } from 'vue'
 import pinia from './stores/index'
-import piniaPersist from 'pinia-plugin-persistedstate'
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 import App from './App.vue'
 import router from './router'
 
-import {useFilterStore} from '@/stores/filter.js'
-import {useInfoGroupsStore} from '@/stores/index'
+import {useFilterStore} from '@/stores'
+import {useInfoGroupsStore} from '@/stores'
 
 const app = createApp(App)
-pinia.use(piniaPersist)
 
 app.use(pinia)
 app.use(router)

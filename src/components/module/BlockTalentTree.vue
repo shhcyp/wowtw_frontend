@@ -42,7 +42,6 @@
 @media (max-width: 768px) {
   #talent-tree-image-container {
     padding: 1.7rem 0;
-    /* grid-row-gap: 0.85rem; */
     grid-gap: 0.85rem;
     place-content: center;
     grid-template-columns: 1fr;

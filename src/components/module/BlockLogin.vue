@@ -74,12 +74,12 @@ const handleSubmit = async () => {
   const passport = Object.values(loginFormData).every(field => field.state === 1) && username && password && !alertMessage.value
 
   if (passport && submitAnimateRun.value === false) {
-    console.log('表单提交了', submitData);
+    // console.log('表单提交了', submitData)
     submitAnimateRun.value = !submitAnimateRun.value
 
     try {
       const result = await userLoginService(submitData)
-      console.log('result:', result);
+      // console.log('result:', result)
 
       setTimeout(async () => {
         // 登录成功，直接跳转
@@ -103,7 +103,7 @@ const handleSubmit = async () => {
 
           // 调用 latestTalentsService获取最新的天赋数据并等待结果
           const latestTalents = await latestTalentsService()
-          console.log(latestTalents.data.data)
+          // console.log(latestTalents.data.data)
 
           // 更新latestTalentsVersionData
           talentsVersionStore.latestTalentsVersionData = latestTalents.data.data
@@ -140,10 +140,6 @@ const handleSubmit = async () => {
   }
 }
 
-// const focusNextInput = () => {
-//     passwordInput.value.focus()
-// }
-
 const handleEnter = (event) => {
   event.target.blur()
   handleSubmit()
@@ -161,12 +157,8 @@ watch([loginFormData, alertMessage], () => {
 
 <template>
   <div class="container- wrapper flex-row-align-center">
-    <!-- <form @submit.prevent="handleSubmit" class="flex-column" id="login-form-container"> -->
     <form @submit.prevent="handleSubmit" ref="loginForm" class="flex-column" id="login-form-container">
       <div class="flex-column" id="login-form">
-        <!-- v-model="loginFormData.username"似乎是无效的 -->
-        <!-- <InputPublic @blur="updateUsername" v-model="loginFormData.username" type="username">账号
-        </InputPublic> -->
         <InputPublic @keydown.enter="handleEnter" @clear="clearUsername" @input="clearAlert"
                      @blur="updateUsername" @submitBar:state="updateUsername" type="text" name="username">账号
         </InputPublic>
@@ -187,14 +179,10 @@ watch([loginFormData, alertMessage], () => {
 <style scoped>
 #login-form-container {
   margin: 0 auto;
-
   background: var(--color-gear-backgroud);
   width: 850px;
-  /* border-radius: 0.5rem; */
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-
   padding: 3rem 7rem;
-
   user-select: none;
 }
 
@@ -219,8 +207,6 @@ watch([loginFormData, alertMessage], () => {
     height: 400px;
   }
 }
-
-/* @media (orientation: landscape) and (max-width: 1180px) {} */
 
 @media (max-width: 820px) {
   #login-form-container {

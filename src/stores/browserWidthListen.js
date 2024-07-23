@@ -20,19 +20,11 @@ export const useBrowserWidthListenStore = defineStore('browserWidthListen', () =
     }
 
     function updateInnerWidthState() {
-      if (innerWidth.value >= 768) {
-        showBarNav.value = true
-      } else {
-        showBarNav.value = false
-      }
+      showBarNav.value = innerWidth.value >= 768;
     }
 
     function updateDeviceState() {
-      if(innerWidth.value <= 520) {
-          isPhone.value = true
-      } else {
-          isPhone.value = false
-      }
+      isPhone.value = innerWidth.value <= 520;
 }
 
   return { innerWidth, showBarNav, isPhone, 

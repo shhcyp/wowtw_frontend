@@ -14,7 +14,7 @@ const {currenBoolean} = storeToRefs(useSwitchStore())
 const {toggleBoolean} = useSwitchStore()
 
 const isModalOpen = ref(false)
-const target = ref(false)
+const target = ref('')
 
 const confirm = () => {
   if (target.value === 'quitBar') {
@@ -105,10 +105,6 @@ const openModal = (value) => {
   #list-navigation {
     padding-top: 3rem;
     padding-bottom: 1.7rem;
-  }
-
-  #userinfo-container {
-    margin-bottom: 3.3rem;
   }
 
   #quit-button {

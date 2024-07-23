@@ -23,7 +23,6 @@ import GroupGears from '@/components/viewport/GroupGears.vue'
       <GroupGears></GroupGears>
     </template>
   </TheLayout>
-
 </template>
 
 <style scoped></style>

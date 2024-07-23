@@ -203,6 +203,6 @@ export const useFilterStore = defineStore('filter', () => {
     }
 
     return {classData, classIndex, talentIndex, resetState}
-},{
+}, {
     persist: true
 })
