@@ -5,7 +5,7 @@ import {onMounted, watch, onUnmounted, ref} from 'vue'
 import {useFilterStore} from '@/stores/filter'
 import {storeToRefs} from 'pinia'
 import {useBrowserWidthListenStore} from '@/stores/browserWidthListen'
-import {infoGroupService} from '@/apis/infoGroup.js'
+import {infoGroupService} from '@/apis/infoGroup'
 import {useInfoGroupsStore} from '@/stores'
 import {useUserStore} from '@/stores'
 
@@ -17,8 +17,8 @@ const {addResizeListener, removeResizeListener, updateDeviceState} = useBrowserW
 
 const userStore = useUserStore()
 
-const store = useInfoGroupsStore()
-const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
+const infoGroupsStore = useInfoGroupsStore()
+const {presentTalent} = storeToRefs(useInfoGroupsStore())
 
 const isOverlayShow = ref(false)
 
@@ -55,7 +55,7 @@ onUnmounted(() => {
 const handleClassClick = (index) => {
   classIndex.value = index
   talentIndex.value = null
-  console.log(classIndex.value)
+  infoGroupsStore.resetPresentTalent()
 }
 
 // 请求装备、天赋数据
@@ -66,11 +66,9 @@ const handleTalentClick = async (index, talentId) => {
   }
 
   talentIndex.value = index
-  console.log(talentIndex.value)
 
   // 检查是否已经有缓存数据且登陆
-  if (store.infoGroupData[talentId] && userStore.isLogin) {
-    console.log('Using cached data', infoGroupData.value)
+  if (infoGroupsStore.infoGroupData[talentId] && userStore.isLogin) {
     presentTalent.value = talentId
   } else {
     isOverlayShow.value = true
@@ -78,8 +76,8 @@ const handleTalentClick = async (index, talentId) => {
     // 如果没有缓存数据，则发起请求
     try {
       const result = await infoGroupService(talentId)
-      store.setInfoGroupData(talentId, result.data.data)
-      console.log('Fetched data', infoGroupData.value)
+      infoGroupsStore.setInfoGroupData(talentId, result.data.data)
+      console.log('Fetched data')
       presentTalent.value = talentId
     } catch (error) {
       console.log('Error fetching data:', error)

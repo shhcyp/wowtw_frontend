@@ -21,9 +21,11 @@ export const useUserStore = defineStore(
 
         const sessionId = ref(null)
 
-        const username = ref(null);
+        const username = ref(null)
 
-        let socket = null;
+        let socket
+
+        let heartbeatInterval
 
         const setToken = (newToken) => {
             token.value = newToken
@@ -59,11 +61,12 @@ export const useUserStore = defineStore(
             const host = window.location.host
             if (username.value) {
                 // 开发环境
-                socket = new WebSocket(`${protocol}://192.168.1.170:8080/websocket?username=${username.value}`)
+                // socket = new WebSocket(`${protocol}://192.168.2.73:8080/websocket?username=${username.value}`)
                 // 生产环境
-                // socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
-                socket.onopen = function () {
-                    console.log('WebSocket connection opened')
+                socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
+                socket.onopen = function (event) {
+                    console.log('WebSocket connection opened', event)
+                    startHeartbeat();
                 }
                 socket.onmessage = function (event) {
                     console.log('Message from server ', event.data)
@@ -74,11 +77,37 @@ export const useUserStore = defineStore(
                         })
                     }
                 }
-                socket.onclose = function () {
-                    console.log('WebSocket connection closed')
+                socket.onclose = function (event) {
+                    console.log('WebSocket connection closed', event)
+                    console.log("Code:", event.code)
+                    console.log("Reason:", event.reason)
+                    console.log("Was clean?:", event.wasClean)
+                    stopHeartbeat(); // 停止心跳
+                    socket = null // 清除 socket 对象
                 }
                 socket.onerror = function (event) {
                     console.error('WebSocket error: ', event)
+                    stopHeartbeat() // 停止心跳
+                    socket = null // 清除 socket 对象
+                }
+
+                // eslint-disable-next-line no-inner-declarations
+                function startHeartbeat() {
+                    setInterval(() => {
+                        if (socket && socket.readyState === WebSocket.OPEN) {
+                            socket.send("ping")
+                            console.log("Ping sent to server")
+                        }
+                    }, 30000); // 每30秒发送一次心跳消息
+                }
+
+                // eslint-disable-next-line no-inner-declarations
+                function stopHeartbeat() {
+                    if (heartbeatInterval) {
+                        clearInterval(heartbeatInterval);
+                        heartbeatInterval = null;
+                        console.log("Heartbeat stopped")
+                    }
                 }
             }
         }

@@ -13,7 +13,7 @@ defineProps({
           <slot name="gear-icon"><img src="/ruby/illimited_iamond.webp" alt=""></slot>
         </li>
         <!-- 装备栏位 -->
-        <li id="gear-part">
+        <li class="no-select" id="gear-part">
           <slot name="gear-part">部位</slot>
         </li>
       </ul>
@@ -36,7 +36,7 @@ defineProps({
     </li>
     <!-- 额外信息 -->
     <li v-if="extraInfoDisplay" class="flex-row" id="extra-info-container">
-      <span id="left-extra-info">其他</span>
+      <span class="no-select" id="left-extra-info">其他</span>
       <ul id="right-extra-info-list">
         <!-- *详细装备额外信息 -->
         <slot name="extra-info"></slot>

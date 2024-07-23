@@ -96,6 +96,10 @@ const routes = [
             }, 123)
         }
     },
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/'
+    }
 ]
 
 const router = createRouter({

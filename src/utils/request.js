@@ -3,11 +3,11 @@ import {useUserStore} from '@/stores'
 import router from "@/router"
 
 // 生产环境
-// const baseURL = `${window.location.origin}/api`
+const baseURL = `${window.location.origin}/api`
 
 // 开发环境
 // const baseURL = 'http://localhost:8080/api'
-const baseURL = 'http://192.168.1.170:8080/api'
+// const baseURL = 'http://192.168.2.73:8080/api'
 
 const instance = axios.create({
     baseURL,

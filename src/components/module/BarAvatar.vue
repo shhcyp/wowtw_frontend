@@ -12,8 +12,8 @@ defineProps({
 
 <style scoped>
 #avatar-container {
-  width: 2rem;
-  height: 2rem;
+  width: 1.77rem;
+  height: 1.77rem;
   border-radius: 0.3rem;
   margin-right: 0.7rem;
   overflow: hidden;
