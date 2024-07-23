@@ -54,8 +54,14 @@ export const useUserStore = defineStore(
         }
 
         const connectWebSocket = () => {
+            const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+            // 生产环境
+            const host = window.location.host
             if (username.value) {
-                socket = new WebSocket(`ws://localhost:8080/websocket?username=${username.value}`)
+                // 开发环境
+                // socket = new WebSocket(`${protocol}://192.168.1.170:8080/websocket?username=${username.value}`)
+                // 生产环境
+                socket = new WebSocket(`${protocol}://${host}:8080/websocket?username=${username.value}`)
                 socket.onopen = function () {
                     console.log('WebSocket connection opened')
                 }
