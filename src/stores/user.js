@@ -1,6 +1,9 @@
 import {defineStore} from 'pinia'
 import {ref} from 'vue'
-import router from "@/router/index.js";
+import router from '@/router/index.js'
+import {useInfoGroupsStore} from '@/stores'
+import {useFilterStore} from '@/stores'
+
 
 export const useUserStore = defineStore(
     'wowtw-user',
@@ -64,12 +67,12 @@ export const useUserStore = defineStore(
                 // socket = new WebSocket(`${protocol}://192.168.2.73:8080/websocket?username=${username.value}`)
                 // 生产环境
                 socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
-                socket.onopen = function (event) {
-                    console.log('WebSocket connection opened', event)
+                socket.onopen = function () {
+                    // console.log('WebSocket connection opened')
                     startHeartbeat();
                 }
                 socket.onmessage = function (event) {
-                    console.log('Message from server ', event.data)
+                    // console.log('Message from server ', event.data)
                     if (event.data === 'Session invalid') {
                         resetUserData()
                         router.push('/login').catch(err => {
@@ -77,11 +80,11 @@ export const useUserStore = defineStore(
                         })
                     }
                 }
-                socket.onclose = function (event) {
-                    console.log('WebSocket connection closed', event)
-                    console.log("Code:", event.code)
-                    console.log("Reason:", event.reason)
-                    console.log("Was clean?:", event.wasClean)
+                socket.onclose = function () {
+                    // console.log('WebSocket connection closed', event)
+                    // console.log("Code:", event.code)
+                    // console.log("Reason:", event.reason)
+                    // console.log("Was clean?:", event.wasClean)
                     stopHeartbeat(); // 停止心跳
                     socket = null // 清除 socket 对象
                 }
@@ -96,7 +99,7 @@ export const useUserStore = defineStore(
                     setInterval(() => {
                         if (socket && socket.readyState === WebSocket.OPEN) {
                             socket.send("ping")
-                            console.log("Ping sent to server")
+                            // console.log("Ping sent to server")
                         }
                     }, 30000); // 每30秒发送一次心跳消息
                 }
@@ -112,18 +115,47 @@ export const useUserStore = defineStore(
             }
         }
 
+
+        const filterStore = useFilterStore()
+        const infoGroupStore = useInfoGroupsStore()
+
         const handleBeforeUnload = () => {
             // 在页面刷新时设置 sessionStorage 标志位
             sessionStorage.setItem('isPageRefresh', 'true')
+            filterStore.resetState()
+            infoGroupStore.resetPresentTalent()
+            if (socket) {
+                socket.close()
+            }
+        }
+
+        const handlePageHide = () => {
+            if (document.visibilityState === 'hidden') {
+                sessionStorage.setItem('isPageHidden', 'true')
+            } else {
+                sessionStorage.removeItem('isPageHidden')
+            }
         }
 
         const checkSessionStorage = () => {
             // 检查 sessionStorage 标志位
             const isPageRefresh = sessionStorage.getItem('isPageRefresh')
-            if (!isPageRefresh) {
-                isLogin.value = false
+            const isPageHidden = sessionStorage.getItem('isPageHidden')
+
+            if (!isPageRefresh && !isPageHidden) {
+                // 重置userData
+                resetUserData()
+                // 重置bar状态
+                filterStore.resetState()
+                // 重置当前天赋
+                infoGroupStore.resetPresentTalent()
             } else {
                 sessionStorage.removeItem('isPageRefresh')
+            }
+
+            // 重新连接 WebSocket
+            if (username.value) {
+                connectWebSocket()
             }
         }
 
@@ -143,6 +175,7 @@ export const useUserStore = defineStore(
             resetUserData,
             connectWebSocket,
             handleBeforeUnload,
+            handlePageHide,
             checkSessionStorage
         }
     },
