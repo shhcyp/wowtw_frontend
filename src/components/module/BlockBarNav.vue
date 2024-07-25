@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue'
+import {onMounted, onUnmounted, ref} from 'vue'
 import BarAvatar from './BarAvatar.vue'
 import {useUserStore} from '@/stores'
 import {useRouter} from 'vue-router'
@@ -15,6 +15,8 @@ import DialogModalOverlay from '@/components/module/DialogModalOverlay.vue'
 const userStore = useUserStore()
 const {avatar} = storeToRefs(useAvatarStore())
 const router = useRouter()
+
+
 
 const isModalOpen = ref(false)
 const target = ref('')
@@ -35,6 +37,7 @@ const openModal = (value) => {
   isModalOpen.value = true
   target.value = value
   document.body.style.overflow = 'hidden'  // 禁止滚动
+  document.addEventListener('touchmove', preventDefault, {passive: false})
 }
 
 // 修改头像
@@ -126,6 +129,7 @@ const confirm = async () => {
     filterStore.resetState()
 
     document.body.style.overflow = 'auto'  // 恢复滚动
+    document.removeEventListener('touchmove', preventDefault, {passive: false})
   }
 
   if (target.value === 'avatar' && choosenIndex.value !== null) {
@@ -137,6 +141,7 @@ const confirm = async () => {
     }
 
     document.body.style.overflow = 'auto'  // 恢复滚动
+    document.removeEventListener('touchmove', preventDefault, {passive: false})
   }
 
   if (target.value === 'nickname' && isAccess.value) {
@@ -148,17 +153,20 @@ const confirm = async () => {
     newNickname.value = ''
 
     document.body.style.overflow = 'auto'  // 恢复滚动
+    document.removeEventListener('touchmove', preventDefault, {passive: false})
   }
 
   if (target.value === 'identifier') {
     isModalOpen.value = false
 
     document.body.style.overflow = 'auto'  // 恢复滚动
+    document.removeEventListener('touchmove', preventDefault, {passive: false})
   }
 }
 
 const cancel = () => {
   document.body.style.overflow = 'auto'  // 恢复滚动
+  document.removeEventListener('touchmove', preventDefault, {passive: false})
   if (target.value === 'quitBar') {
     isModalOpen.value = false
   }
@@ -178,8 +186,12 @@ const cancel = () => {
 const isLogin = (tagName) => {
   if (!userStore.isLogin) {
     isOverlayShow.value = true
+    document.body.style.overflow = 'hidden'  // 禁止滚动
+    document.addEventListener('touchmove', preventDefault, {passive: false})
     setTimeout(() => {
       isOverlayShow.value = false
+      document.body.style.overflow = 'auto'  // 恢复滚动
+      document.removeEventListener('touchmove', preventDefault, {passive: false})
     }, 2345) // 2秒后隐藏提示消息
   } else if (tagName === 'guidance') {
     // isOverlayShow.value = false
@@ -195,7 +207,27 @@ const isLogin = (tagName) => {
 
 const closeDialog = () => {
   isOverlayShow.value = false
+  document.body.style.overflow = 'auto'  // 恢复滚动
+  document.removeEventListener('touchmove', preventDefault, {passive: false})
 }
+
+const preventDefault = (e) => {
+  e.preventDefault()
+}
+
+const handleKeyDown = (event) => {
+  if (event.key === 'Escape') {
+    closeDialog()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown)
+})
 </script>
 
 <template>
@@ -203,7 +235,7 @@ const closeDialog = () => {
     <RouterLink :to="`/`">首页</RouterLink>
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
-    <a @click="isLogin('match')">竞速赛</a>
+    <a @click="isLogin('match')">漫游杯</a>
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 

@@ -5,5 +5,3 @@
           fill="var(--color-text)"/>
   </svg>
 </template>
-
-<style scoped></style>

@@ -1,0 +1,55 @@
+.temp-placeholder {
+    height: 13rem;
+}
+
+.home-portal {
+    color: var(--color-portal);
+    line-height: 2rem;
+    cursor: pointer;
+}
+
+.theme {
+    color: var(--c-theme-wowtw);
+    font-weight: bold;
+}
+
+
+.container-dark {
+    background-color: var(--c-black);
+}
+
+.title-dark {
+    font-size: 2.3rem;
+    line-height: 2.3rem;
+    padding-top: 2.3rem;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    color: var(--c-white);
+}
+
+.subtitle-dark {
+    color: var(--c-white);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+
+.container-light {
+    background-color: var(--c-white-soft2);
+    /*margin: 1rem;*/
+}
+
+.title-light {
+    font-size: 2.3rem;
+    line-height: 2.3rem;
+    padding-top: 2.3rem;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    color: var(--c-black-pure);
+}
+
+.subtitle-light {
+    color: var(--c-black-pure);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}

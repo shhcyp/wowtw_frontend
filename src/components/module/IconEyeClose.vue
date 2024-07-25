@@ -5,5 +5,3 @@
           transform="translate(0 -0.207)" fill="var(--color-text)"/>
   </svg>
 </template>
-
-<style scoped></style>

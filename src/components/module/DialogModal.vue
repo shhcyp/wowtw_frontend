@@ -1,4 +1,6 @@
 <script setup>
+import {onMounted} from "vue";
+
 defineProps({
   isOpen: {
     type: Boolean,
@@ -16,6 +18,16 @@ const cancel = () => {
 const confirm = () => {
   emit('update:confirm')
 }
+
+const handleKeydown = (event) => {
+  if (event.key === 'Escape') {
+    cancel()
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
