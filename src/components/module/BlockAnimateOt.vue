@@ -32,12 +32,12 @@ onMounted(() => {
         }, 567); // O跳动结束后T开始跳动的时间
       }, 2345); // 透明度降低后O开始跳动的时间
     }, 2345); // 初始淡入后停顿时间
-  }, 1500); // 初始淡入动画时间
+  }, 2345); // 初始淡入动画时间
 });
 </script>
 
 <template>
-  <div class="ot-container" :class="{ 'initial-fade-in': isInitialFadeIn }">
+  <div class="ot-container wrapper" :class="{ 'initial-fade-in': isInitialFadeIn }">
     <span :class="{ fade: isFading }">W</span>
     <span :class="[isJumpingO ? 'jumpO' : '', isFadingOT ? 'fadeOT' : '']">O</span>
     <span :class="{ fade: isFading }">W</span>
@@ -52,18 +52,16 @@ onMounted(() => {
   line-height: 6rem;
   font-weight: 900;
   color: var(--c-text-light-1);
-  margin-top: 3rem;
+  //margin-top: 3rem;
   margin-bottom: 2rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   opacity: 0;
   transition: opacity 1.5s ease-in-out;
 }
 
-span {
-  padding: 2.7rem;
-}
+
 
 .initial-fade-in {
   opacity: 1;
@@ -100,6 +98,13 @@ span:not(.fade) {
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 430px) {
+  .ot-container {
+    font-size: 4.3rem;
+    margin-bottom: 1.3rem;
   }
 }
 </style>

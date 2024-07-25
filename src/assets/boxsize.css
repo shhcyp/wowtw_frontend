@@ -10,6 +10,12 @@
     overflow: hidden;
 }
 
+.box-size-tiny {
+    height: 1.3rem;
+    width: 1.3rem;
+    overflow: hidden;
+}
+
 /* 定制尺寸 */
 .box-size-class-list {
     width: 22rem;

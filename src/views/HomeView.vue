@@ -96,10 +96,6 @@ router.beforeEach((to, from, next) => {
   user-select: none;
 }
 
-#page-header {
-//background-color: var(--c-white-soft2); background-color: var(--c-white);
-}
-
 #welcome {
   padding: 10rem 0;
   font-size: 2.7rem;
@@ -134,4 +130,25 @@ router.beforeEach((to, from, next) => {
   gap: 1rem;
 }
 
+@media (max-width: 820px) {
+  #part-IV {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  #welcome {
+    padding: 7rem 0 3.7rem 0;
+    font-size: 2.3rem;
+    line-height: 2.3rem;
+  }
+
+  #welcome-subtitle {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+  }
+}
 </style>

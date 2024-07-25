@@ -1,6 +1,8 @@
-@import './base.css';
-@import './boxsize.css';
-@import './home.css';
+@import "base.css";
+@import "boxsize.css";
+@import "home.css";
+@import "space.css";
+@import "text-align.css";
 /* @import './zindex.css'; */
 
 #app {

@@ -1,0 +1,24 @@
+.margin-right-normal {
+    margin-right: 1rem;
+}
+
+.margin-right-light {
+    margin-right: 0.7rem;
+}
+
+.margin-right-tiny {
+    margin-right: 0.3rem;
+}
+
+
+.padding-right-normal {
+    padding-right: 1rem;
+}
+
+.padding-right-light {
+    padding-right: 0.7rem;
+}
+
+.padding-right-tiny {
+    padding-right: 0.3rem;
+}
