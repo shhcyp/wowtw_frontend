@@ -1,15 +1,17 @@
 <script setup>
-const emits = defineEmits(['open-modal'])
+import {useHomeModalStore} from '@/stores/index'
 
-const openModal = () => {
-  emits('open-modal')
+const homeModalStore = useHomeModalStore()
+
+const openModal = (value) => {
+  homeModalStore.openHomeModal(value)
 }
 </script>
 
 <template>
   <div class="container-dark">
     <div class="title-dark">漫游杯排行榜</div>
-    <div @click="openModal" class="home-portal">> 什么是漫游杯 ></div>
+    <div @click="openModal('roamingCup')" class="home-portal">> 什么是漫游杯 ></div>
     <div id="block-raids">
       <div v-for="item in 3" :key="item" class="raid">
         <div id="raid-title">
@@ -79,7 +81,7 @@ const openModal = () => {
 
 <style scoped>
 #block-raids {
-  width: 50%;
+  width: 57%;
   margin: 0 auto;
   color: var(--c-white);
   padding: 1.7rem 0;

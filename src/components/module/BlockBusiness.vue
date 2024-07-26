@@ -1,17 +1,19 @@
 <script setup>
-const emits = defineEmits(['open-modal'])
+import {useHomeModalStore} from '@/stores/index'
 
-const openModal = () => {
-  emits('open-modal')
+const homeModalStore = useHomeModalStore()
+
+const openModal = (value) => {
+  homeModalStore.openHomeModal(value)
 }
 </script>
 
 <template>
-  <div class="container-light">
-    <div class="title-light">会员策略</div>
-    <div @click="openModal" class="home-portal">> 了解更多 ></div>
+  <div class="container-dark">
+    <div class="title-dark">会员策略</div>
+    <div @click="openModal('membershipPolicy')" class="home-portal">> 了解更多 ></div>
     <div class="temp-placeholder"></div>
-    <div class="title-light">终身会员制</div>
+    <div class="title-dark">终身会员制</div>
   </div>
 </template>
 

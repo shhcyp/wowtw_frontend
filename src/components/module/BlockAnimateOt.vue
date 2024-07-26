@@ -48,11 +48,10 @@ onMounted(() => {
 
 <style scoped>
 .ot-container {
-  font-size: 6rem;
-  line-height: 6rem;
+  font-size: 7rem;
+  line-height: 7rem;
   font-weight: 900;
   color: var(--c-text-light-1);
-  //margin-top: 3rem;
   margin-bottom: 2rem;
   display: flex;
   justify-content: space-evenly;

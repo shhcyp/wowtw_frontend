@@ -1,8 +1,10 @@
 <script setup>
-const emits = defineEmits(['open-modal'])
+import {useHomeModalStore} from '@/stores/index'
 
-const openModal = () => {
-  emits('open-modal')
+const homeModalStore = useHomeModalStore()
+
+const openModal = (value) => {
+  homeModalStore.openHomeModal(value)
 }
 </script>
 
@@ -10,7 +12,7 @@ const openModal = () => {
   <div class="container-dark">
     <div class="title-dark">漫游杯</div>
 
-    <div @click="openModal" class="home-portal">> 了解更多 ></div>
+    <div @click="openModal('match')" class="home-portal">> 了解更多 ></div>
     <div class="temp-placeholder"></div>
 
     <div class="title-dark">组建战队，一同穿越</div>

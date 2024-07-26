@@ -1,15 +1,17 @@
 <script setup>
-const emits = defineEmits(['open-modal'])
+import {useHomeModalStore} from '@/stores/index'
 
-const openModal = () => {
-  emits('open-modal')
+const homeModalStore = useHomeModalStore()
+
+const openModal = (value) => {
+  homeModalStore.openHomeModal(value)
 }
 </script>
 
 <template>
   <div class="container-light">
     <div class="title-light">站内资源</div>
-    <div @click="openModal" class="home-portal">> 资源简介 ></div>
+    <div @click="openModal('webResources')" class="home-portal">> 资源简介 ></div>
     <div class="temp-placeholder"></div>
     <div class="title-light">
       <div>绝对不会让你失望</div>
