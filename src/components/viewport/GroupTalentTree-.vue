@@ -1,5 +1,5 @@
 <script setup>
-import BlockTalentTree from '@/components/module/BlockTalentTree.vue'
+import BlockTalentTree from '@/components/module/BlockTalentTree--.vue'
 import { useFilterStore } from '@/stores/filter'
 import { storeToRefs } from 'pinia'
 

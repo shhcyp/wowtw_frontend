@@ -2,67 +2,42 @@
 </script>
 
 <template>
-  <slot name="talent-name">
-    <h3>123</h3>
-  </slot>
-  <div id="talent-tree-image-container">
-    <div id="first-image-container">
-      <slot name="first-image"></slot>
-    </div>
-    <div id="center-image-container">
-      <slot name="center-image"></slot>
-    </div>
-    <div id="last-image-container">
-      <slot name="last-image"></slot>
-    </div>
+
+  <div id="talent-tree-string">
+    <slot name="talent-name"><h3>123</h3></slot>
+    <div class="flex-grow flex-center-center" id="talent-string"><slot name="talent-string"></slot></div>
+    <span class="flex-column" id="notice">单击复制</span>
   </div>
 </template>
 
 <style scoped>
-#talent-tree-image-container {
-  flex: 1;
+#talent-tree-string {
+  padding: 1.3rem;
+  margin-bottom: 3rem;
+  width: 100%;
   background-color: var(--color-gear-backgroud);
-  padding: 2rem 0;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
 
-  display: grid;
-  place-items: center;
-  grid-template-columns: repeat(3, auto);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
-#first-image-container,
-#center-image-container,
-#last-image-container {
-  width: 77%;
-  border-radius: 0.3rem;
-  overflow: hidden;
+#talent-string {
+  text-align: justify;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  padding: 0.7rem 0 0.3rem 0;
+}
+
+#notice {
+  font-size: 0.87rem;
+  align-items: end;
 }
 
 @media (max-width: 768px) {
-  #talent-tree-image-container {
-    padding: 1.7rem 0;
-    grid-gap: 0.85rem;
-    place-content: center;
-    grid-template-columns: 1fr;
-  }
-
-  #first-image-container,
-  #last-image-container {
-    width: 87%;
-  }
 }
 
 @media (max-width: 430px) {
-  #talent-tree-image-container {
-    padding: 1rem 0;
-    grid-row-gap: 0.5rem;
-    grid-template-columns: 1fr;
-  }
-
-  #first-image-container,
-  #last-image-container {
-    width: 91.3%;
-  }
 }
 </style>

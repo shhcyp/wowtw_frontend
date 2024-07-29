@@ -13,7 +13,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 职业排行参考 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/legends/rank.webp" alt="">
       </template>
       <template #prompt-title>职业排行参考</template>
       <template #details>
@@ -24,7 +24,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 如何获取“克罗米时间线”装备 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/legends/chromietime.webp" alt="">
       </template>
       <template #prompt-title>如何获取“克罗米时间线”装备</template>
       <template #details>
@@ -35,7 +35,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 一些需要注意的装备 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/legends/attention.webp" alt="">
       </template>
       <template #prompt-title>一些需要注意的装备</template>
       <template #details>
@@ -46,7 +46,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 如何获取10.0职业套装 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/legends/X.webp" alt="">
       </template>
       <template #prompt-title>如何获取10.0职业套装</template>
       <template #details>
@@ -57,7 +57,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 宝石属性一览 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/ruby/illimited_iamond.webp" alt="">
       </template>
       <template #prompt-title>宝石属性一览</template>
       <template #details>
@@ -68,7 +68,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
     <!-- 时光周角色等级|装备等级压缩一览 -->
     <BlockPrompt>
       <template #prompt-icon>
-        <img src="/legends/alliance.webp" alt="">
+        <img src="/legends/yaso.webp" alt="">
       </template>
       <template #prompt-title>时光周角色等级|装备等级压缩一览</template>
       <template #details>

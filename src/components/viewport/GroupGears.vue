@@ -1,13 +1,57 @@
 <script setup>
 import {ref} from 'vue'
 import BlockGear from '../module/BlockGear.vue'
-import BlockTalentTree from '@/components/module/BlockTalentTree.vue'
 import {useInfoGroupsStore} from '@/stores'
 import {storeToRefs} from 'pinia'
 
 const gearsContainer = ref(null)
 
 const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
+
+const isCopied = ref(false)
+const alertMessage = ref('')
+
+// 复制天赋
+const copyToClipboard = (content) => {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(content)
+        .then(() => {
+          isCopied.value = true
+          alertMessage.value = '复制成功'
+          setTimeout(() => {
+            alertMessage.value = ''
+          }, 2000) // 2秒后隐藏提示消息
+        })
+        .catch(() => {
+          fallbackCopyToClipboard(content)
+        })
+  } else {
+    fallbackCopyToClipboard(content)
+  }
+}
+
+const fallbackCopyToClipboard = (text) => {
+  const textArea = document.createElement('textarea')
+  textArea.value = text
+  textArea.style.position = 'fixed'
+  document.body.appendChild(textArea)
+  textArea.focus()
+  textArea.select()
+
+  try {
+    document.execCommand('copy')
+    isCopied.value = true
+    alertMessage.value = '复制成功'
+    setTimeout(() => {
+      alertMessage.value = ''
+    }, 2000) // 2秒后隐藏提示消息
+  } catch (err) {
+    isCopied.value = false
+    alertMessage.value = '复制失败'
+  }
+
+  document.body.removeChild(textArea)
+}
 
 </script>
 
@@ -49,20 +93,14 @@ const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 
       <!--天赋模板-->
       <div v-else>
-        <BlockTalentTree v-for="tree in infoGroup.details" :key="tree.id">
-          <template #talent-name>
-            <h4 style="text-align: left" class="margin-bottom-1rem">{{ tree.talentName }}</h4>
-          </template>
-          <template #first-image>
-            <img v-if="tree.specializationTrees.length > 0" :src="tree.specializationTrees[0].treeImage" alt="">
-          </template>
-          <template #center-image>
-            <img v-if="tree.specializationTrees.length > 1" :src="tree.specializationTrees[1].treeImage" alt="">
-          </template>
-          <template #last-image>
-            <img v-if="tree.specializationTrees.length > 2" :src="tree.specializationTrees[2].treeImage" alt="">
-          </template>
-        </BlockTalentTree>
+        <div @click="copyToClipboard(tree.string)" v-for="tree in infoGroup.details" :key="tree.id" id="talent-tree-string" style="cursor: pointer">
+          <div   class="flex-row space-between" >
+            <h4 style="text-align: left; cursor: pointer">{{ tree.talentName }}</h4>
+            <span style="font-size: 0.87rem; color: var(--c-good)">{{ alertMessage}}</span>
+          </div>
+          <div class="flex-grow flex-center-center" id="talent-string" style="cursor: pointer">{{ tree.string }}</div>
+          <span class="flex-column" id="notice" style="cursor: pointer">单击复制</span>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +113,31 @@ const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 
 #gears {
   columns: 3 auto;
+}
+
+#talent-tree-string {
+  padding: 1.3rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  background-color: var(--color-gear-backgroud);
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+#talent-string {
+  text-align: justify;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  padding: 0.7rem 0 0.3rem 0;
+  cursor: pointer;
+}
+
+#notice {
+  font-size: 0.87rem;
+  align-items: end;
 }
 
 @media (max-width: 932px) {

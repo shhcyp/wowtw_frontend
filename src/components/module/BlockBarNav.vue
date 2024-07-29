@@ -17,7 +17,6 @@ const {avatar} = storeToRefs(useAvatarStore())
 const router = useRouter()
 
 
-
 const isModalOpen = ref(false)
 const target = ref('')
 const avatarUrl = ref('')
@@ -249,7 +248,7 @@ onUnmounted(() => {
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
     <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }}</div>
     <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>
-<!--    <div @click="openModal('changepwd')" class="custom-button" id="generate-identifier">修改密码</div>-->
+    <!--    <div @click="openModal('changepwd')" class="custom-button" id="generate-identifier">修改密码</div>-->
     <div @click="$router.push('/resetpassword')" class="custom-button">重置密码</div>
     <div @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>
   </div>
@@ -351,7 +350,6 @@ onUnmounted(() => {
 }
 
 @media (max-width: 1024px) and (min-width: 820px) {
-
   #bars-left a,
   #bars-right a,
   #quit-button {
@@ -361,7 +359,6 @@ onUnmounted(() => {
 }
 
 @media (max-width: 820px) {
-
   #bars-left a,
   #bars-right a,
   #quit-button {
