@@ -4,6 +4,7 @@ import IconEyeOpen from './IconEyeOpen.vue'
 import IconXmark from './IconXmark.vue'
 import PanelAlert from './PanelAlert.vue'
 import {ref, onMounted, watch, inject} from 'vue'
+import {forbiddenWords} from "@/utils/illegal.js";
 
 const props = defineProps({
   type: String,
@@ -47,6 +48,9 @@ const regexDelta = /^1\d{10}$/
 const regexEta = /^\d{6}$/
 // 长度为34位，由数字和字母构成，每4个字符为一组，每组都需要同时包含数字和字母，字母全部为大写，不限制每组数字和字母的个数，只要有就可以，一共7组，中间用-分隔，-也计算在长度内
 const regexFix = /^((?=.*[A-Z])(?=.*\d)[A-Z0-9]{4}-){6}((?=.*[A-Z])(?=.*\d)[A-Z0-9]{4})$/
+const regexGamma = /^.{3,24}$/
+const regexHowdy = /^.{1,24}$/
+
 const alertMessage = ref('')
 const switchGreen = ref(false)
 let alertKeywords = ''
@@ -114,6 +118,10 @@ const handleInput = (event) => {
     }
   }
 
+  if (props.name === 'question' && inputValue.value.length < 3) {
+    alertMessage.value = alertKeywords + '太短'
+  }
+
   if (props.name === 'phoneNumber' && inputValue.value.length === 11) {
     regexDelta.test(inputValue.value) ? emits('request', inputValue.value) : alertMessage.value = '这不是一个手机号'
   }
@@ -154,10 +162,22 @@ const updateInput = (event) => {
   if (!props.readonly && props.name === 'phoneNumber' && inputValue.value.length > 0 && inputValue.value.length < 11) {
     alertMessage.value = '这不是一个手机号'
   }
-  if (!props.readonly && props.name === 'question' && regexChi.test(inputValue.value)) {
+  if (!props.readonly && props.name === 'question' && regexGamma.test(inputValue.value)) {
+    for (const word of forbiddenWords) {
+      if (inputValue.value.includes(word)) {
+        alertMessage.value = '不能含有非法字符'
+        return
+      }
+    }
     emits('blur', inputValue.value)
   }
-  if (!props.readonly && props.name === 'answer' && regexChi.test(inputValue.value)) {
+  if (!props.readonly && props.name === 'answer' && regexHowdy.test(inputValue.value)) {
+    for (const word of forbiddenWords) {
+      if (inputValue.value.includes(word)) {
+        alertMessage.value = '不能含有非法字符'
+        return
+      }
+    }
     emits('blur', inputValue.value)
   }
   if (!props.readonly && props.name === 'verificationCode' && inputValue.value.length > 0 && inputValue.value.length < 6) {

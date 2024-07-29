@@ -277,6 +277,7 @@ const paymentPollQuery = (outTradeNo) => {
   }, 5000); // 每5秒查询一次
 }
 
+// 创建订单生成二维码
 watch(() => ({
   phoneNumber: registerFormData.phoneNumber,
   verificationCode: registerFormData.verificationCode,
@@ -314,6 +315,7 @@ watch(() => ({
 
 // 检查state是不是都是1
 watch(registerFormData, () => {
+  console.log("表单实时数据:", registerFormData)
   passport.value = Object.entries(registerFormData)
       .filter(([key]) => key !== 'inviteIdentifier' && key !== 'paymentInfo') // 过滤掉 inviteIdentifier 和 paymentInfo
       .every(([, field]) => field.state === 1)
@@ -393,44 +395,54 @@ const handleEnter = (event) => {
     <form @submit.prevent="handleSubmit" ref="registerForm" class="flex-column space-evenly"
           id="register-form-container">
       <div id="register-form-input">
+        <!--账号-->
         <InputPublic :alertMessageInput="alertMessageInput" @clear="clearUserName" @keydown.enter="handleEnter"
                      @blur="updateUsername"
-                     autocomplete="true" type="text" name="username">
+                     autocomplete="true" type="text" name="username" :maxlength="24">
           账号
         </InputPublic>
         <div class="placeholder"></div>
+        <!--密码-->
         <InputPublic @clear="clearPassword" @keydown.enter="handleEnter" @blur="updatePassword" :isMatch="isMatch"
                      autocomplete="true"
-                     type="password" name="password">密码
+                     type="password" name="password" :maxlength="24">密码
         </InputPublic>
+        <!--重复密码-->
         <InputPublic @clear="clearRePassword" @keydown.enter="handleEnter" @blur="updateRepassword" :isMatch="isMatch"
                      type="password"
-                     name="repassword">
+                     name="repassword" :maxlength="24">
           重复密码
         </InputPublic>
+        <!--问题-->
         <InputPublic @clear="clearQuestion" @keydown.enter="handleEnter" @blur="updateQuestion" type="text"
-                     name="question">
+                     name="question" :maxlength="24">
           密保问题
         </InputPublic>
-        <InputPublic @clear="clearAnswer" @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer">
+        <!--答案-->
+        <InputPublic @clear="clearAnswer" @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer" :maxlength="24">
           密保答案
         </InputPublic>
+        <!--手机号-->
         <InputPublic @clear="clearPhoneNumber" @keydown.enter="handleEnter" @request="updatePhoneNumber"
                      @notPhoneNumber="notPhoneNumber" type="text" name="phoneNumber" :maxlength="11">手机号码
         </InputPublic>
-        <div class="flex-row-align-center space-between">
+        <!--验证码-->
+        <div class="flex-row-align-center" id="verification-get-bar-container">
           <InputPublic @clear="clearVerificationCode" @keydown.enter="handleEnter" @request="handleCodeVerify"
                        type="text" name="verificationCode"
                        :maxlength="6" style="flex: 1;">
             验证码
           </InputPublic>
+          <!--获取验证码按钮-->
           <BarGetCode @updateBarState="updateBarState" :phoneNumberState="phoneNumber.state" @click="handleSms">
           </BarGetCode>
         </div>
       </div>
       <TheDivider></TheDivider>
+      <!--支付部分-->
       <div id="payment-container">
         <div class="flex-column space-between" id="payment-tips">
+          <!--邀请码-->
           <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"
                        name="inviteIdentifier"
                        placeholder="邀请码（选填）">
@@ -494,8 +506,6 @@ const handleEnter = (event) => {
 
 #payment-code {
   place-self: center;
-
-  background: var(--bgcolor-navigation);
   border: 1px solid var(--color-border);
   margin-top: 0.7rem;
 }
@@ -503,8 +513,18 @@ const handleEnter = (event) => {
 #qrcode-container {
   width: 150px;
   height: 150px;
-  background-color: var(--bgcolor-navigation);
   margin: 1rem;
+}
+
+@media (max-width: 820px) {
+  #register-form-container {
+    width: 100%;
+    padding: 3rem 3rem;
+  }
+
+  .wrapper {
+    width: 100%;
+  }
 }
 
 @media (max-width: 760px) {
@@ -527,6 +547,12 @@ const handleEnter = (event) => {
   #register-form-input {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 430px) {
+  #register-form-container {
+    padding: 3rem 1.7rem;
   }
 }
 </style>

@@ -34,4 +34,14 @@ const openModal = (value) => {
   border: 1px solid white;
   border-radius: 2.7rem 2.7rem;
 }
+
+@media (max-width: 430px) {
+  #about-resources {
+    font-size: 0.87rem;
+    width: 6rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
+  }
+}
 </style>

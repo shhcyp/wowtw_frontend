@@ -47,4 +47,14 @@ const openModal = (value) => {
 #cup-description {
   margin-bottom: 1.3rem;
 }
+
+@media (max-width: 430px) {
+  #about-cup {
+    font-size: 0.87rem;
+    width: 6rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
+  }
+}
 </style>

@@ -33,7 +33,6 @@ header {
 }
 
 main {
-  //padding-top: 60px;
   flex: 1;
   z-index: 6;
 

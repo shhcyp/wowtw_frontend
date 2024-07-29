@@ -236,7 +236,7 @@ onUnmounted(() => {
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
     <a @click="isLogin('match')">漫游杯</a>
-    <a @click="$router.push('/rank')">排行榜</a>
+    <a @click="$router.push('/rank')">漫游榜</a>
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 
@@ -288,7 +288,7 @@ onUnmounted(() => {
     </div>
   </DialogModal>
   <DialogModalOverlay :is-open="isOverlayShow" @update:close-dialog="closeDialog">
-    <span>该资源仅对会员开放，期待您的加入！</span>
+    <span>该资源仅对会员开放！</span>
   </DialogModalOverlay>
 </template>
 

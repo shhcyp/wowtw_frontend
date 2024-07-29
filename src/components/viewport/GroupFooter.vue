@@ -20,15 +20,14 @@ const openModal = (value) => {
       <li class="no-select"><a @click="openModal('contact')">联系方式</a></li>
       <li class="no-select"><span>|</span></li>
       <li class="no-select"><a href="https://beian.miit.gov.cn" target="_blank">滇ICP备2024031975号</a></li>
-      <li class="no-select"><span>|</span></li>
-      <li class="no-select"><span>本网站是一个非魔兽世界官方的粉丝站点，站内所有《魔兽世界》相关的内容均归暴雪娱乐公司所有</span></li>
+<!--      <li class="no-select"><span>|</span></li>-->
+      <!--      <li class="no-select"><span>本网站是一个非魔兽世界官方的粉丝站点，站内所有《魔兽世界》相关的内容均归暴雪娱乐公司所有</span></li>-->
     </ul>
   </div>
 </template>
 
 <style scoped>
 #footer-container {
-  //height: 2.6rem;
   line-height: 2.6rem;
   background-color: var(--color-footer);
   font-size: 0.8rem;
@@ -42,5 +41,16 @@ const openModal = (value) => {
 
 li {
   padding: 0 0.5rem;
+}
+
+@media (max-width: 430px) {
+  #footer-container {
+    line-height: 1.7rem;
+    font-size: 0.7rem;
+  }
+
+  li {
+    padding: 0 0.3rem;
+  }
 }
 </style>

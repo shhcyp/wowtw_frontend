@@ -20,7 +20,6 @@
   align-items: center;
   padding: 0.35rem 1rem 0.35rem 0.5rem;
   margin: 0.1rem;
-  border-radius: 0.36rem;
   cursor: pointer;
 }
 

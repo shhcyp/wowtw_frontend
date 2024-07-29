@@ -43,7 +43,6 @@ const openModal = (value) => {
 
 #value-container {
   width: 100%;
-  //display: flex;
   margin: 3.3rem 0 2rem 0;
 
   display: grid;
@@ -55,6 +54,15 @@ const openModal = (value) => {
     grid-template-columns: 1fr;
     row-gap: 3rem;
   }
+}
 
+@media (max-width: 430px) {
+  #about-value {
+    font-size: 0.87rem;
+    width: 7.7rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
+  }
 }
 </style>

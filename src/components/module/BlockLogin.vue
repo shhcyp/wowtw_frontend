@@ -12,7 +12,6 @@ import {latestTalentsService} from '@/apis/infoGroup.js'
 import {useTalentsVersionStore} from '@/stores/talentsVersion.js'
 import {useInfoGroupsStore} from '@/stores'
 
-
 const userStore = useUserStore()
 const filterStore = useFilterStore()
 const talentsVersionStore = useTalentsVersionStore()
@@ -95,6 +94,7 @@ const handleSubmit = async () => {
           userStore.setToken(result.data.data.token)
           userStore.setSessionId(result.data.data.sessionId)
           filterStore.resetState()
+          infoGroupStore.resetPresentTalent()
 
           // 建立 WebSocket 连接
           userStore.connectWebSocket()
@@ -156,7 +156,7 @@ watch([loginFormData, alertMessage], () => {
 </script>
 
 <template>
-  <div class="container- wrapper flex-row-align-center">
+  <div class="container- wrapper flex-center-center">
     <form @submit.prevent="handleSubmit" ref="loginForm" class="flex-column" id="login-form-container">
       <div class="flex-column" id="login-form">
         <InputPublic @keydown.enter="handleEnter" @clear="clearUsername" @input="clearAlert"
@@ -178,17 +178,16 @@ watch([loginFormData, alertMessage], () => {
 
 <style scoped>
 #login-form-container {
-  margin: 0 auto;
   background: var(--color-gear-backgroud);
   width: 850px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   padding: 3rem 7rem;
   user-select: none;
+  margin-bottom: 7rem;
 }
 
 #login-form {
   width: 60%;
-  height: 500px;
   margin: 0 auto;
 
   justify-content: space-between;
@@ -204,7 +203,6 @@ watch([loginFormData, alertMessage], () => {
   }
 
   #login-form {
-    height: 400px;
   }
 }
 
@@ -241,7 +239,6 @@ watch([loginFormData, alertMessage], () => {
 
   #login-form {
     width: 87%;
-    height: 43vh;
   }
 }
 
@@ -252,7 +249,6 @@ watch([loginFormData, alertMessage], () => {
 
   #login-form {
     width: 90%;
-    height: 50vh;
   }
 }
 </style>

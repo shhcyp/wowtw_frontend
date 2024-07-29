@@ -33,17 +33,27 @@ const openModal = (value) => {
 
 <template>
   <div v-if="currenBoolean" class="list-navigation-container">
-    <div id="list-navigation">
-      <div class="flex-row-align-center">
-        <BarAvatar @click="openModal('avatar')"></BarAvatar>
-        <div @click="openModal('nickname')" class="custom-button" id="nickname">MCYP</div>
+    <div class="flex-grow">
+      <div v-if="userStore.isLogin" class="flex-row-align-center justify-center" id="list-header">
+        <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
+        <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }}</div>
       </div>
-      <RouterLink @click="toggleBoolean" :to="`/`">首页</RouterLink>
-      <RouterLink @click="toggleBoolean" :to="`/prompt`">指引</RouterLink>
-      <RouterLink @click="toggleBoolean" :to="`/gear`">装配</RouterLink>
-      <RouterLink @click="toggleBoolean" :to="`/match`">竞速赛</RouterLink>
-      <!-- <RouterLink @click="toggleBoolean" :to="`/shop`">地精商店</RouterLink> -->
-      <div v-if="userStore.isLogin" class="custom-button" id="quit-button" @click="quit">退出</div>
+
+      <div id="list-navigation">
+        <RouterLink v-if="!userStore.isLogin" @click="toggleBoolean" :to="`/register`">注册</RouterLink>
+        <RouterLink v-if="!userStore.isLogin" @click="toggleBoolean" :to="`/login`">登录</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/`">首页</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/prompt`">指引</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/gear`">装配</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/match`">漫游杯</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/rank`">漫游榜</RouterLink>
+        <!-- <RouterLink @click="toggleBoolean" :to="`/shop`">地精商店</RouterLink> -->
+        <div v-if="userStore.isLogin" @click="openModal('identifier')" class="custom-button" id="generate-identifier">
+          邀请码
+        </div>
+        <RouterLink v-if="userStore.isLogin" @click="toggleBoolean" :to="`/resetpassword`">重置密码</RouterLink>
+        <div v-if="userStore.isLogin" @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>
+      </div>
     </div>
   </div>
 
@@ -75,50 +85,32 @@ const openModal = (value) => {
   padding: 47px 0 1.7rem 0;
   background: var(--color-background-mute);
 
-  z-index: 6;
-}
-
-#list-navigation {
-  width: 70%;
-  height: 100%;
-  margin: 0 auto;
   font-size: 1rem;
   font-weight: bold;
 
+  z-index: 6;
+}
+
+#list-header {
+  padding: 1.3rem;
+}
+
+#list-navigation {
+  width: 90%;
+  margin: 0 auto;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-#list-navigation a,
-#quit-button,
-#userinfo-container {
-  flex: 1;
-  display: flex;
   align-items: center;
-  padding-left: 0.7rem;
+  border-top: 1px solid var(--color-border);
+}
+
+#list-navigation * {
+  width: 100%;
+  padding: 1.3rem;
   border-bottom: 1px solid var(--color-border);
+  text-align: center;
 }
 
-@media (orientation: portrait) {
-  #list-navigation {
-    padding-top: 3rem;
-    padding-bottom: 1.7rem;
-  }
-
-  #quit-button {
-    margin-top: 3.3rem;
-  }
-}
-
-@media (orientation: landscape) {
-  .list-navigation-container {
-    padding: 37px 0 17px 0;
-  }
-
-  #list-navigation {
-    font-size: 0.87rem;
-  }
-}
 </style>

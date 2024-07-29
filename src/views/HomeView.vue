@@ -166,18 +166,18 @@ const openModal = (value) => {
   #about-mcyptw {
     font-size: 0.87rem;
     width: 6rem;
-    height: 2rem;
-    line-height: 2rem;
-    border-radius: 2rem 2rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
     margin-right: 0.7rem;
   }
 
   #terms {
     font-size: 0.87rem;
     width: 6rem;
-    height: 2rem;
-    line-height: 2rem;
-    border-radius: 2rem 2rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
     margin-left: 0.7rem;
   }
 

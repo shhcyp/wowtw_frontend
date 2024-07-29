@@ -79,7 +79,15 @@ const openModal = (value) => {
     grid-template-columns: 1fr;
     row-gap: 2rem;
   }
-  
 }
 
+@media (max-width: 430px) {
+  #about-wowtw {
+    font-size: 0.87rem;
+    width: 7.7rem;
+    height: 2.3rem;
+    line-height: 2.3rem;
+    border-radius: 2.3rem 2.3rem;
+  }
+}
 </style>
