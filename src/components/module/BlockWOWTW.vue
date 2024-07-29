@@ -9,25 +9,77 @@ const openModal = (value) => {
 </script>
 
 <template>
-  <div class="container-light">
-    <div class="title-light">魔兽世界时光漫游历程</div>
-    <div class="subtitle-light">不知不觉已经这么长时间了</div>
-    <div @click="openModal('wowTW')" class="home-portal">> 了解更多 ></div>
-    <div class="temp-placeholder"></div>
-    <div class="theme" id="history-container">
-      <div>2015年</div>
-      <div>2017年</div>
-      <div>2021年</div>
-      <div>现在</div>
+  <div class="container-dark flex-column-align-center">
+    <div class="title-dark">时空漫游简史</div>
+    <div @click="openModal('wowTW')" id="about-wowtw">时空漫游温故</div>
+    <div id="wowtw-placeholder"></div>
+    <div id="history-container">
+      <div class="flex-column-align-center">
+        <div id="birth"><img src="/homepage/birthday.webp" alt=""></div>
+        <div class="year">2015年</div>
+        <div class="description-theme">时空漫游正式推出</div>
+      </div>
+      <div class="flex-column-align-center">
+        <div id="mage-tower"><img src="/homepage/join_mage_tower.webp" alt=""></div>
+        <div class="year">2021年</div>
+        <div class="description-theme">法师塔重启加入时空漫游</div>
+      </div>
+      <div class="flex-column-align-center">
+        <div id="nowadays"><img src="/homepage/11coming.webp" alt=""></div>
+        <div class="year">现在</div>
+        <div class="description-theme">11.0即将开启</div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+#about-wowtw {
+  color: white;
+  cursor: pointer;
+  width: 9rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 2.7rem 2.7rem;
+}
+
 #history-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+}
+
+#wowtw-placeholder {
+  height: 4.3rem;
+}
+.year {
+  padding-top: 1.7rem;
+  font-weight: bold;
+  color: white;
+}
+
+#birth {
+  width: 23rem;
+}
+
+#mage-tower {
+  width: 23rem;
+}
+
+#nowadays {
+  width: 23rem;
+}
+
+@media (max-width: 1020px) {
+  #history-container {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+  
 }
 
 </style>

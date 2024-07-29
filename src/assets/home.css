@@ -53,3 +53,25 @@
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
+
+.description-theme {
+    color: var(--c-theme-wowtw);
+    padding: 1.3rem 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+@media (max-width: 430px) {
+    .title-dark {
+        font-size: 1.7rem;
+        line-height: 1.7rem;
+        padding-top: 1.7rem;
+    }
+
+    .title-light {
+        font-size: 1.7rem;
+        line-height: 1.7rem;
+        padding-top: 1.7rem;
+    }
+
+}

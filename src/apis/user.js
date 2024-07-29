@@ -76,3 +76,8 @@ export const checkIdentifierService = (identifier) => {
         params: { identifier }
     })
 }
+
+// 装备数量统计
+export const gearCountService = () => {
+    return request.get('/user/gearCount')
+}

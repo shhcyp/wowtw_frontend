@@ -28,6 +28,7 @@ const fetchMarkdown = async (path) => {
 
 /// 观察 store 中的 postPath 变化
 watch(() => postPath.value, async (newPath) => {
+  console.log("load text", newPath)
   if (newPath) {
     postContent.value = ''  // 先清空内容
     isContentLoaded.value = false
@@ -45,16 +46,46 @@ watch(() => postPath.value, async (newPath) => {
 
 <style>
 .blog-post {
-  //margin-bottom: 3rem;
+  width: 100%;
+  height: 100%;
 }
 
-.blog-post :first-child {
+.blog-post h2 {
   margin-bottom: 3rem;
+  text-align: center;
+}
+
+.blog-post h1:nth-of-type(2) {
+  margin-top: 3.7rem;
+}
+
+.blog-post h3 {
+  text-align: left;
+  text-indent: 1.7em;
+  margin-top: 3.7rem;
+  margin-bottom: 2rem;
 }
 
 .blog-post p {
-  text-align: left;
+  text-align: justify;
   margin-bottom: 2rem;
   text-indent: 2em; /* 设置首行缩进为两个字符 */
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 430px) {
+  .blog-post h2 {
+    margin-bottom: 2rem;
+  }
+
+  .blog-post h3 {
+    text-indent: 0;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .blog-post p {
+    text-indent: 0;
+  }
 }
 </style>

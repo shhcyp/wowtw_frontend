@@ -51,9 +51,10 @@ defineProps({
   page-break-inside: avoid;
   break-inside: avoid;
   background: var(--color-gear-backgroud);
-  padding: 0.5rem 0;
-  border-radius: 0.3rem;
-  margin-bottom: 1rem;
+  padding: 0.77rem 0;
+  //border-radius: 0.3rem;
+  border-bottom: 1rem solid var(--color-background);
+  //margin-top: 2rem;
 }
 
 #main-block {

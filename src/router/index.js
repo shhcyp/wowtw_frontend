@@ -2,6 +2,7 @@ import HomeView from '@/views/HomeView.vue'
 import PromptView from '@/views/PromptView.vue'
 import GearView from '@/views/GearView.vue'
 import MatchView from '@/views/MatchView.vue'
+import RankView from '@/views/RankView.vue'
 import ShopView from '@/views/ShopView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -50,6 +51,16 @@ const routes = [
         component: MatchView,
         // 添加 requiresAuth 元信息
         meta: {requiresAuth: true},
+        beforeEnter: (to, from, next) => {
+            setTimeout(() => {
+                next()
+            }, 123)
+        }
+    },
+    {
+        path: '/rank',
+        name: 'rank',
+        component: RankView,
         beforeEnter: (to, from, next) => {
             setTimeout(() => {
                 next()

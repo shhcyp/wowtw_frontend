@@ -9,22 +9,52 @@ const openModal = (value) => {
 </script>
 
 <template>
-  <div class="container-dark">
-    <div class="title-dark">NEW 价值观</div>
-    <div @click="openModal('twFun')" class="home-portal">> 时光漫游的可玩性 ></div>
-    <div class="temp-placeholder"></div>
-    <div class="theme" id="how-container">
-      <div>慢节奏的娱乐方式</div>
-      <div>核武器级的输出</div>
-      <div>轻松通关法师塔</div>
+  <div class="container-light flex-column-align-center">
+    <div class="title-light">NEW 价值观</div>
+    <div @click="openModal('twFun')" id="about-value">时空漫游知新</div>
+    <div id="value-container">
+      <div class="flex-column-align-center">
+        <div><img src="/homepage/havefun.webp" alt=""></div>
+        <div class="description-theme">慢节奏，真养生魔兽</div>
+      </div>
+      <div class="flex-column-align-center">
+        <div><img src="/homepage/dps.webp" alt=""></div>
+        <div class="description-theme">漫游事件周，我要打十个！</div>
+      </div>
+      <div class="flex-column-align-center">
+        <div><img src="/homepage/magetower.webp" alt=""></div>
+        <div class="description-theme">“轻松”通关法师塔</div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-#how-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+#about-value {
+  color: black;
+  cursor: pointer;
+  width: 9rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 2.7rem 2.7rem;
+}
+
+#value-container {
+  width: 100%;
+  //display: flex;
+  margin: 3.3rem 0 2rem 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 1024px) {
+  #value-container {
+    grid-template-columns: 1fr;
+    row-gap: 3rem;
+  }
+
 }
 </style>

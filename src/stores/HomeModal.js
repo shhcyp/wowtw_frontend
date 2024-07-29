@@ -19,6 +19,8 @@ export const useHomeModalStore = defineStore('HomeModal', () => {
 
         document.body.style.overflow = 'hidden'  // 禁止滚动
         document.addEventListener('touchmove', preventDefault, {passive: false})
+
+        // console.log("open", postPath.value)
     }
 
     const closeHomeModal = () => {
@@ -28,6 +30,8 @@ export const useHomeModalStore = defineStore('HomeModal', () => {
 
         document.body.style.overflow = 'auto'  // 恢复滚动
         document.removeEventListener('touchmove', preventDefault, {passive: false})
+
+        // console.log("close", postPath.value)
     }
 
     router.beforeEach((to, from, next) => {

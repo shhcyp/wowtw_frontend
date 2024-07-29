@@ -4,7 +4,7 @@
 <template>
   <div class="container wrapper no-select">
     <div id="page-head-container">
-      <h1>
+      <h1 id="page-title">
         <slot name="page-title"></slot>
       </h1>
       <div id="sub-title"><slot name="page-subtitle"></slot></div>
@@ -17,6 +17,10 @@
 #page-head-container {
   text-align: center;
   margin-top: 1.7rem;
+}
+
+#page-title {
+  padding-top: 6rem;
 }
 
 #sub-title {

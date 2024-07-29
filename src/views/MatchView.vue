@@ -7,15 +7,14 @@ import GroupPageHeader from '@/components/viewport/GroupPageHeader.vue'
     <template #page-header>
       <GroupPageHeader>
         <template #page-title>
-          开发中
+          "漫游杯"辅助系统
         </template>
         <template #page-subtitle>
-          这是第一段说明这是第一段说明这是第一段说明这是第一段说明这是第一段说明
         </template>
       </GroupPageHeader>
     </template>
     <template #page-main>
-      开发中
+      <div style="text-align: left; padding: 3rem; text-align: center">游戏内活动尚未开启，暂无内容</div>
     </template>
   </TheLayout>
 </template>

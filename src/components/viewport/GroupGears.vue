@@ -74,9 +74,7 @@ const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 }
 
 #gears {
-  -webkit-column-count: 3;
-  -moz-column-count: 3;
-  column-count: 3;
+  columns: 3 auto;
 }
 
 @media (max-width: 932px) {

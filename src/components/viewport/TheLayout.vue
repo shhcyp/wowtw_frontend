@@ -1,6 +1,8 @@
 <script setup>
 import GroupNavigation from './GroupNavigation.vue'
 import GroupFooter from './GroupFooter.vue'
+import DialogModalHomePage from "@/components/module/DialogModalHomePage.vue";
+import BlogPost from "@/components/module/BlogPost.vue";
 </script>
 
 <template>
@@ -12,6 +14,9 @@ import GroupFooter from './GroupFooter.vue'
     <slot name="page-header"></slot>
     <slot name="page-main"></slot>
     <!-- </div> -->
+    <DialogModalHomePage>
+      <BlogPost></BlogPost>
+    </DialogModalHomePage>
   </main>
   <footer>
     <GroupFooter></GroupFooter>

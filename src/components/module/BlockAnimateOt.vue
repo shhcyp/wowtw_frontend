@@ -1,109 +1,94 @@
 <script setup>
-import {ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue'
 
-const isFading = ref(false);
-const isFadingOT = ref(false)
-const isJumpingO = ref(false);
-const isJumpingT = ref(false);
-const isInitialFadeIn = ref(false);
+const isOVisible = ref(false)
+const isTVisible = ref(false)
+const isWVisible = ref(false)
+const isExpanding = ref(false)
+const isLetter = ref(false)
 
+const startAnimation = () => {
+  setTimeout(() => {
+    isOVisible.value = true
+    setTimeout(() => {
+      isTVisible.value = true
+      setTimeout(() => {
+        isWVisible.value = true
+        setTimeout(() => {
+          isExpanding.value = true
+          setTimeout(() => {
+            isLetter.value = true
+            setTimeout(() => {
+              resetAnimation()
+              setTimeout(() => {
+                startAnimation()
+              }, 1000)
+            }, 1314)
+          }, 3000)
+        }, 500)
+      }, 1314)
+    }, 500)
+  }, 1000)
+}
+
+const resetAnimation = () => {
+  isOVisible.value = false
+  isTVisible.value = false
+  isWVisible.value = false
+  isExpanding.value = false
+  isLetter.value = false
+}
 
 onMounted(() => {
-  // Initial fade-in
-  setTimeout(() => {
-    isInitialFadeIn.value = true;
-    // Pause for 1 second after fade-in
-    setTimeout(() => {
-      // Start the rest of the animation sequence
-      isFading.value = true;
-      setTimeout(() => {
-        isJumpingO.value = true;
-        setTimeout(() => {
-          isJumpingO.value = false;
-          isJumpingT.value = true;
-          setTimeout(() => {
-            isJumpingT.value = false;
-            setTimeout(() => {
-              isFadingOT.value = true;
-              // Animation ends here
-            }, 567);
-            // Animation ends here
-          }, 567); // T跳动的持续时间
-        }, 567); // O跳动结束后T开始跳动的时间
-      }, 2345); // 透明度降低后O开始跳动的时间
-    }, 2345); // 初始淡入后停顿时间
-  }, 2345); // 初始淡入动画时间
-});
+  startAnimation()
+})
 </script>
 
 <template>
-  <div class="ot-container wrapper" :class="{ 'initial-fade-in': isInitialFadeIn }">
-    <span :class="{ fade: isFading }">W</span>
-    <span :class="[isJumpingO ? 'jumpO' : '', isFadingOT ? 'fadeOT' : '']">O</span>
-    <span :class="{ fade: isFading }">W</span>
-    <span :class="[isJumpingT ? 'jumpT' : '', isFadingOT ? 'fadeOT' : '']">T</span>
-    <span :class="{ fade: isFading }">W</span>
+  <div class="ot-container wrapper" :class="{ 'expanding': isExpanding, 'letter': isLetter }">
+    <span v-if="isWVisible || isExpanding">W</span>
+    <span v-if="isOVisible || isExpanding">O</span>
+    <span v-if="isWVisible || isExpanding">W</span>
+    <span v-if="isTVisible || isExpanding">T</span>
+    <span v-if="isWVisible || isExpanding">W</span>
   </div>
 </template>
 
 <style scoped>
 .ot-container {
-  font-size: 7rem;
-  line-height: 7rem;
+  height: 12rem;
+  font-size: 10rem;
+  line-height: 10rem;
   font-weight: 900;
-  color: var(--c-text-light-1);
-  margin-bottom: 2rem;
+  color: white;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+}
+
+.expanding {
+  justify-content: space-between;
+}
+
+.letter {
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transform: translateY(-37px);
+  transition: all 1.3s ease-out;
 }
 
-
-
-.initial-fade-in {
-  opacity: 1;
-}
-
-.fade {
-  opacity: 0.2;
-  transition: opacity 1s ease-in-out;
-}
-
-.fadeOT {
-  opacity: 0.2;
-  transition: opacity 1s linear;
-}
-
-span:not(.fade) {
-  transition: opacity 1s ease-in-out;
-}
-
-.jumpO {
-  animation: jump 0.5s ease-out;
-}
-
-.jumpT {
-  animation: jump 0.5s ease-out;
-}
-
-@keyframes jump {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-17px);
-  }
-  100% {
-    transform: translateY(0);
+@media (max-width: 768px) {
+  .ot-container {
+    height: 7rem;
+    font-size: 7rem;
+    line-height: 7rem;
   }
 }
 
 @media (max-width: 430px) {
   .ot-container {
+    height: 4.3rem;
     font-size: 4.3rem;
-    margin-bottom: 1.3rem;
+    line-height: 4.3rem;
   }
 }
 </style>

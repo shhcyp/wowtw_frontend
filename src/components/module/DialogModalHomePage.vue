@@ -61,6 +61,11 @@ onUnmounted(() => {
   background: var(--color-background-mute);
   border-radius: 0.37rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 3rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   position: relative;
   width: 77vw; /* 最大宽度限制，确保适应屏幕 */
@@ -83,9 +88,10 @@ onUnmounted(() => {
 }
 
 #modal-content {
+  flex: 1;
   margin: 3rem 3.7rem;
   padding: 1rem;
-  height: calc(77vh - 6.4rem); /* 除去 padding 和关闭按钮的高度 */
+  height: calc(77vh - 7rem); /* 除去 padding 和关闭按钮的高度 */
   overflow-y: auto; /* 当内容溢出时添加垂直滚动条 */
   -webkit-overflow-scrolling: touch; /* 移动端惯性滚动 */
 }
@@ -95,6 +101,13 @@ onUnmounted(() => {
     width: 87vw; /* 最大宽度限制，确保适应屏幕 */
     height: 77vh; /* 最大高度限制，确保适应屏幕 */
   }
+}
 
+@media (max-width: 430px) {
+  #modal-content {
+    margin: 2rem 1rem;
+
+  }
+  
 }
 </style>

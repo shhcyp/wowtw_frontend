@@ -1,14 +1,11 @@
 <script setup>
 import AnimateOt from '@/components/module/BlockAnimateOt.vue'
-import MatchCharts from '@/components/module/BlockMatchCharts.vue'
 import BlockWOWTW from '@/components/module/BlockWOWTW.vue'
 import BlockHowToPlay from '@/components/module/BlockHowToPlay.vue'
 import BlockGuild from '@/components/module/BlockGuild.vue'
 import BlockMatch from '@/components/module/BlockMatch.vue'
 import BlockResource from '@/components/module/BlockResource.vue'
 import BlockBusiness from '@/components/module/BlockBusiness.vue'
-import DialogModalHomePage from '@/components/module/DialogModalHomePage.vue'
-import BlogPost from '@/components/module/BlogPost.vue'
 import {useHomeModalStore} from '@/stores/index'
 
 const homeModalStore = useHomeModalStore()
@@ -24,37 +21,28 @@ const openModal = (value) => {
       <template #page-header>
         <div id="page-header">
           <div id="welcome">欢迎来到时光漫游</div>
-          <div @click="openModal('mcypTW')" class="home-portal">> 网站简介 ></div>
-          <div id="welcome-placeholder"></div>
+          <div class="flex-grow"></div>
           <AnimateOt></AnimateOt>
+          <div class="flex-row-align-center" id="welcome-link">
+            <div @click="openModal('mcypTW')" id="about-mcyptw">网站简介</div>
+            <div @click="openModal('terms')" id="terms">使用条款</div>
+          </div>
           <div class="short-row-wrapper" id="welcome-subtitle">
-            针对《魔兽世界》时光漫游系统的攻略网站，助你成为队伍中最靓的仔
+            专注《魔兽世界》时空漫游系统攻略，助你成为队伍中最靓的仔
           </div>
         </div>
       </template>
       <template #page-main>
         <div id="page-main">
-          <MatchCharts class="main-details" id="part-I"></MatchCharts>
           <BlockWOWTW class="main-details" id="part-II"></BlockWOWTW>
           <BlockHowToPlay class="main-details" id="part-III"></BlockHowToPlay>
           <div class="main-details" id="part-IV">
             <BlockResource></BlockResource>
-<!--            ???-->
-
             <BlockBusiness></BlockBusiness>
-            <BlockGuild></BlockGuild>
             <BlockMatch></BlockMatch>
+            <BlockGuild></BlockGuild>
           </div>
         </div>
-        <DialogModalHomePage>
-          <BlogPost v-if="homeModalStore.postPath === 'mcypTW'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'roamingCup'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'wowTW'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'twFun'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'webResources'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'membershipPolicy'"></BlogPost>
-          <BlogPost v-else-if="homeModalStore.postPath === 'guild'"></BlogPost>
-        </DialogModalHomePage>
       </template>
     </TheLayout>
   </div>
@@ -63,24 +51,62 @@ const openModal = (value) => {
 <style scoped>
 #home-container {
   background-color: var(--c-white);
-//user-select: none;
+  user-select: none;
+}
+
+#page-header {
+  height: 67vh;
+  background-image: url("/homepage/portal1.webp");
+  background-size: cover; /* 背景图片的大小，可以使用 cover, contain 或者具体的尺寸 */
+  background-repeat: no-repeat; /* 防止背景图片重复 */
+  background-position: center; /* 背景图片的位置 */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #welcome {
   padding: 10rem 0 1rem 0;
-  font-size: 2.7rem;
+  font-size: 3.7rem;
   line-height: 2.7rem;
   font-weight: bolder;
-  color: var(--c-theme-wowtw);
+  color: white;
+
 }
 
-#welcome-placeholder {
-  height: 7rem;
+#welcome-link {
+  margin-top: 2rem;
+}
+
+#about-mcyptw {
+  color: black;
+  cursor: pointer;
+  width: 7rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  background-color: white;
+  border-radius: 2.7rem 2.7rem;
+  margin-right: 1rem;
+}
+
+#terms {
+  color: white;
+  cursor: pointer;
+  width: 7rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 2.7rem 2.7rem;
+  margin-left: 1rem;
 }
 
 #welcome-subtitle {
-  color: var(--c-text-light-1);
-  padding-bottom: 1rem;
+  margin: 1rem 0;
+  color: white;
 }
 
 #page-main {
@@ -112,21 +138,53 @@ const openModal = (value) => {
   }
 }
 
+@media (max-width: 768px) {
+  #page-header {
+    height: 60vh;
+  }
+
+  #welcome {
+    font-size: 3rem;
+  }
+}
+
 @media (max-width: 430px) {
+  #page-header {
+    height: 55vh;
+  }
+
   #welcome {
     padding: 7rem 0 0.7rem 0;
     font-size: 2.3rem;
     line-height: 2.3rem;
   }
 
-  #welcome-placeholder {
-    height: 3.7rem;
+  #welcome-link {
+    margin-top: 1rem;
+  }
+
+  #about-mcyptw {
+    font-size: 0.87rem;
+    width: 6rem;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 2rem 2rem;
+    margin-right: 0.7rem;
+  }
+
+  #terms {
+    font-size: 0.87rem;
+    width: 6rem;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 2rem 2rem;
+    margin-left: 0.7rem;
   }
 
   #welcome-subtitle {
-    width: 80%;
-    margin: 0 auto;
-    padding: 0;
+    font-size: 0.87rem;
+    width: 97%;
+    margin: 0.5rem 0;
   }
 }
 </style>

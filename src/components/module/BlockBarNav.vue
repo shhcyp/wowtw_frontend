@@ -236,6 +236,7 @@ onUnmounted(() => {
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
     <a @click="isLogin('match')">漫游杯</a>
+    <a @click="$router.push('/rank')">排行榜</a>
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 

@@ -9,18 +9,29 @@ const openModal = (value) => {
 </script>
 
 <template>
-  <div class="container-light">
-    <div class="title-light">站内资源</div>
-    <div @click="openModal('webResources')" class="home-portal">> 资源简介 ></div>
+  <div class="container-dark flex-column-align-center" id="resources">
+    <div class="title-dark">站内资源</div>
+    <div @click="openModal('webResources')" id="about-resources">资源简介</div>
     <div class="temp-placeholder"></div>
-    <div class="title-light">
-      <div>绝对不会让你失望</div>
-      <br />
-      <div>只需要下一次副本</div>
-    </div>
   </div>
 </template>
 
 <style scoped>
+#resources {
+  background-image: url("/homepage/resource.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
+#about-resources {
+  color: white;
+  cursor: pointer;
+  width: 7rem;
+  height: 2.7rem;
+  line-height: 2.7rem;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 2.7rem 2.7rem;
+}
 </style>

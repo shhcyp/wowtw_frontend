@@ -14,7 +14,7 @@ provide('formType', 'register')
           用户注册
         </template>
         <template #page-subtitle>
-          <p>注册步骤非常重要，请尽量在电脑端进行操作</p>
+          <p>注册步骤非常重要，请尽量在电脑端进行操作，注册前请阅读位于页脚处的《使用条款》</p>
 
         </template>
       </GroupPageHeader>

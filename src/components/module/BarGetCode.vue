@@ -45,7 +45,8 @@ const startCountdown = () => {
 
 <style scoped>
 #bar-get-code {
-  height: calc(2.37rem - 2px);
+  height: 2.37rem;
+  //height: calc(2.37rem - 2px);
   padding: 0 1rem;
   font-size: 0.87rem;
   width: 52px;
