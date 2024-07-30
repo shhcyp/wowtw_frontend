@@ -77,4 +77,16 @@ onMounted(() => {
 
   justify-content: space-around;
 }
+
+@media (max-width: 430px) {
+  #modal-content {
+    padding: 1rem;
+  }
+
+  #modal-content {
+    width: 100%;
+    padding: 1.7rem 3.8rem;
+  }
+
+}
 </style>

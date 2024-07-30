@@ -145,11 +145,11 @@ const confirm = async () => {
 
   if (target.value === 'nickname' && isAccess.value) {
     //发起新昵称请求
-    await nicknameService(userStore.id, newNickname.value)
+    const result = await nicknameService(userStore.id, newNickname.value)
+    userStore.nickname = result.data.message
+    newNickname.value = ''
     isModalOpen.value = false
     isAccess.value = false
-    userStore.nickname = newNickname
-    newNickname.value = ''
 
     document.body.style.overflow = 'auto'  // 恢复滚动
     document.removeEventListener('touchmove', preventDefault, {passive: false})
@@ -313,7 +313,7 @@ onUnmounted(() => {
   padding: 1rem;
   display: grid;
   gap: 0.7rem;
-  grid-template-columns: repeat(14, 2rem);
+  grid-template-columns: repeat(12, 1fr);
 }
 
 #nickname {

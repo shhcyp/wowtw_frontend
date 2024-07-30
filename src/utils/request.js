@@ -3,10 +3,10 @@ import {useUserStore} from '@/stores'
 import router from "@/router"
 
 // 生产环境
-const baseURL = `${window.location.origin}/api`
+// const baseURL = `${window.location.origin}/api`
 
 // 开发环境
-// const baseURL = 'http://localhost:8080/api'
+const baseURL = 'http://localhost:8080/api'
 // const baseURL = 'http://192.168.2.73:8080/api'
 
 const instance = axios.create({
@@ -40,7 +40,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // 1.处理响应/获取响应数据
-        // console.log('后端响应的数据', response.data);
+        console.log('后端响应的数据', response.data);
         if (response.data.code === 1) {
             return response
         }

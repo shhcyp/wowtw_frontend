@@ -10,13 +10,15 @@ const {infoGroupData, presentTalent} = storeToRefs(useInfoGroupsStore())
 
 const isCopied = ref(false)
 const alertMessage = ref('')
+const chosenIndex = ref('')
 
 // 复制天赋
-const copyToClipboard = (content) => {
+const copyToClipboard = (content, index) => {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(content)
         .then(() => {
           isCopied.value = true
+          chosenIndex.value = index
           alertMessage.value = '复制成功'
           setTimeout(() => {
             alertMessage.value = ''
@@ -93,10 +95,10 @@ const fallbackCopyToClipboard = (text) => {
 
       <!--天赋模板-->
       <div v-else>
-        <div @click="copyToClipboard(tree.string)" v-for="tree in infoGroup.details" :key="tree.id" id="talent-tree-string" style="cursor: pointer">
+        <div @click="copyToClipboard(tree.string, index)" v-for="(tree, index) in infoGroup.details" :key="tree.id" id="talent-tree-string" style="cursor: pointer">
           <div   class="flex-row space-between" >
             <h4 style="text-align: left; cursor: pointer">{{ tree.talentName }}</h4>
-            <span style="font-size: 0.87rem; color: var(--c-good)">{{ alertMessage}}</span>
+            <span v-if="chosenIndex === index" style="font-size: 0.87rem; color: var(--c-good)">{{ alertMessage}}</span>
           </div>
           <div class="flex-grow flex-center-center" id="talent-string" style="cursor: pointer">{{ tree.string }}</div>
           <span class="flex-column" id="notice" style="cursor: pointer">单击复制</span>
