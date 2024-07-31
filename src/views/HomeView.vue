@@ -7,6 +7,12 @@ import BlockMatch from '@/components/module/BlockMatch.vue'
 import BlockResource from '@/components/module/BlockResource.vue'
 import BlockBusiness from '@/components/module/BlockBusiness.vue'
 import {useHomeModalStore} from '@/stores/index'
+import {visitService} from '@/apis/user.js'
+import {onMounted} from 'vue'
+
+onMounted(async () => {
+  await visitService()
+})
 
 const homeModalStore = useHomeModalStore()
 
@@ -130,7 +136,7 @@ const openModal = (value) => {
   gap: 1rem;
 }
 
-@media (max-width: 820px) {
+@media (max-width: 865px) {
   #part-IV {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(4, 1fr);

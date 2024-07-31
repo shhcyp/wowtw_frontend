@@ -310,6 +310,7 @@ onUnmounted(() => {
 
 #nickname {
   margin-left: 1rem;
+  color: var(--c-good);
 }
 
 #avatars-container {

@@ -1,5 +1,10 @@
 import request from '@/utils/request'
 
+// 有访客
+export const visitService = () => {
+    return request.get('/hello')
+}
+
 // 注册接口
 // 验证账号
 export const usernameService = (username) => {

@@ -32,6 +32,9 @@ const generateQRCode = async () => {
     case 0:
       colorDark = rgbToHex(getCssVariable('--c-red')) // 获取并转换 CSS 变量值
       break
+    case -1:
+      colorDark = '#000000'
+      break
     default:
       colorDark = '#000000' // 黑色
   }

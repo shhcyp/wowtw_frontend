@@ -19,7 +19,7 @@ const openModal = (value) => {
       </div>
       <div class="flex-column-align-center">
         <div><img src="/homepage/dps.webp" alt=""></div>
-        <div class="description-theme">漫游事件周，我要打十个！</div>
+        <div class="description-theme">漫游周，我要打十个！</div>
       </div>
       <div class="flex-column-align-center">
         <div><img src="/homepage/magetower.webp" alt=""></div>

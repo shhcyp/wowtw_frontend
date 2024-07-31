@@ -71,6 +71,7 @@ watch(() => postPath.value, async (newPath) => {
   margin-bottom: 2rem;
   text-indent: 2em; /* 设置首行缩进为两个字符 */
   overflow-wrap: break-word;
+  user-select: auto;
 }
 
 @media (max-width: 430px) {

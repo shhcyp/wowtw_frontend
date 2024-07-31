@@ -154,7 +154,7 @@ const updateAnswer = (inputValue) => {
 // 短信验证码发送请求
 const codeVerifyPassport = ref(false)
 const handleSms = async () => {
-  console.log(phoneNumber.state, barSmsState.value);
+  // console.log(phoneNumber.state, barSmsState.value);
   if (phoneNumber.state === 1 && !isPhoneNumberUpdated && barSmsState.value === 0) {
     // console.log(phoneNumber.value, '发送发送验证码请求')
     await smsService(phoneNumber.value)
@@ -215,12 +215,25 @@ const alipayQRCodeContent = ref(null)
 /** @type {import('vue').Ref<number | null>} */
 const intervalId = ref(0)
 
+// 支付剩余时间
+// 定义倒计时初始值
+const initialCountdown = 180
+
+// 定义倒计时状态
+const payCountdown = ref(initialCountdown)
+const isCounting = ref(false)
+
+let payIntervalId = null
+
 const createOrder = async () => {
   const result = await createOrderService(phoneNumber.value, inviteIdentifier.value)
   // console.log('请求预创建订单返回数据', result)
   alipayQRCodeContent.value = result.data.data.alipayQRCode
   // console.log('支付二维码链接', alipayQRCodeContent.value)
   outTradeNo.value = result.data.data.outTradeNo
+  console.log("当前订单号：", outTradeNo.value)
+  paymentInfo.state = -1
+
   setTimeout(async () => {
     paymentPollQuery(outTradeNo.value)
   }, 7000)
@@ -237,14 +250,13 @@ const paymentPollQuery = (outTradeNo) => {
   intervalId.value = setInterval(async () => {
     const result = await queryPaymentService(outTradeNo)
     const tradeStatus = result.data.data
-    const code = result.data.code
 
     if (tradeStatus === 'TRADE_SUCCESS') {
       clearInterval(intervalId.value)
       intervalId.value = null; // 清空轮询标识符
       // 处理支付成功逻辑
       paymentInfo.value = outTradeNo
-      paymentInfo.state = code
+      paymentInfo.state = 1
     } else if (tradeStatus === 'TRADE_CLOSED') {
       clearInterval(intervalId.value);
       intervalId.value = null; // 清空轮询标识符
@@ -256,6 +268,19 @@ const paymentPollQuery = (outTradeNo) => {
         clearInterval(intervalId.value)
         intervalId.value = null; // 清空轮询标识符
 
+        // 开始支付倒计时
+        isCounting.value = true
+        payIntervalId = setInterval(() => {
+          if (payCountdown.value > 0) {
+            payCountdown.value--
+          } else {
+            clearInterval(payIntervalId)
+            payCountdown.value = initialCountdown
+            isCounting.value = false
+          }
+        }, 1000)
+
+
         // 设置3分钟后的最终检查
         setTimeout(async () => {
           const finalResult = await queryPaymentService(outTradeNo)
@@ -265,7 +290,7 @@ const paymentPollQuery = (outTradeNo) => {
             // console.log("支付成功！感谢您的支持！")
             // 处理支付成功逻辑
             paymentInfo.value = outTradeNo
-            paymentInfo.state = code
+            paymentInfo.state = 1
           } else {
             await cancelPaymentService(outTradeNo)
             // console.log("支付时间超时，交易已关闭")
@@ -296,6 +321,7 @@ watch(() => ({
       // console.log("准备取消前面的订单:", outTradeNo.value)
       await cancelPaymentService(outTradeNo.value)
       // console.log("有新二维码取消前面的订单", cancelPastTrade)
+      paymentInfo.state = -1
     }
     await createOrder()
   }
@@ -306,6 +332,7 @@ watch(() => ({
       // console.log("准备取消前面的订单:", outTradeNo.value);
       await cancelPaymentService(outTradeNo.value)
       // console.log("有新二维码取消前面的订单", cancelPastTrade)
+      paymentInfo.state = -1
     }
     await createOrder()
   }
@@ -331,7 +358,7 @@ watch(() => registerFormData.paymentInfo.state, () => {
     switchGreen.value = true
     paymentAlert.value = '支付成功，感谢您的支持！请点击提交完成注册'
   }
-  if (paymentInfo.value === 0) {
+  if (paymentInfo.state === 0) {
     switchGreen.value = false
     paymentAlert.value = '订单已过期，请刷新页面重新填写表单！'
   }
@@ -339,27 +366,38 @@ watch(() => registerFormData.paymentInfo.state, () => {
 
 // 提交表单
 const handleSubmit = async () => {
-  // 把要提交的字段重新打包，别写到方法外面去了
-  const submitData = {
-    username: username.value,
-    password: password.value,
-    phoneNumber: phoneNumber.value,
-    question: question.value,
-    answer: answer.value,
-    avatar: '/avatar/grandfathered.webp',
-    nickname: '时光漫游靓仔',
-    inviteIdentifier: inviteIdentifier.value,
-    paymentInfo: paymentInfo.value
-  }
-
   const paymentStatus = await queryPaymentService(outTradeNo.value)
-  const finalTradeStatus = paymentStatus.data.data;
+  const finalTradeStatus = paymentStatus.data.data
+  const finalMessage = paymentStatus.data.message
 
   if (finalTradeStatus === 'TRADE_SUCCESS') {
+    if (intervalId.value) {
+      clearInterval(intervalId.value); // 清除之前的轮询任务
+    }
     // console.log("支付成功")
     // 处理支付成功逻辑
-    paymentInfo.value = outTradeNo
+    paymentInfo.value = outTradeNo.value
     paymentInfo.state = 1
+
+    // 把要提交的字段重新打包，别写到方法外面去了
+    const submitData = {
+      username: username.value,
+      password: password.value,
+      phoneNumber: phoneNumber.value,
+      question: question.value,
+      answer: answer.value,
+      avatar: '/avatar/rabbit1.webp',
+      nickname: '时光漫游靓仔',
+      inviteIdentifier: inviteIdentifier.value,
+      paymentInfo: paymentInfo.value
+    }
+
+    // console.log("=====提交的数据=====", submitData)
+
+    clearInterval(payIntervalId)
+    payCountdown.value = initialCountdown
+    isCounting.value = false
+
 
     if (passport.value && submitAnimateRun.value === false) {
       // console.log('表单提交了', submitData);
@@ -367,20 +405,23 @@ const handleSubmit = async () => {
       const result = await userRegisterService(submitData)
       // alertMessageInput.value = '注册成功，即将跳转'
 
-      setTimeout(() => {
         // 注册成功，即将跳转
         if (result.data.code === 1) {
           messageForButton.value = result.data.message
-          router.push('/login')
+          await router.push('/login')
         }
         // 注册失败，请重试
         if (result.data.code === 0) {
           messageForButton.value = result.data.data ? result.data.data : result.data.message
         }
-      }, 2000)
     }
+  } else if (finalMessage === '支付超时，订单已关闭' || paymentInfo.state === 0) {
+    switchGreen.value = false
+    paymentAlert.value = '订单已过期，请刷新页面重新填写表单！'
   } else {
     console.log("还没有付款")
+    switchGreen.value = false
+    paymentAlert.value = '请完成支付后再试'
   }
 }
 
@@ -456,9 +497,11 @@ const handleEnter = (event) => {
         </div>
         <PanelAlert :switch-green="switchGreen">{{ paymentAlert }}</PanelAlert>
 
+
         <ul style="font-size: 12px;" id="payment-announcement">
-          <li>本站会员价格为人民币420元，使用邀请码价格为390元。付款方式仅支持<span style="color: var(--c-blue);font-weight: bold;">支付宝</span>。</li>
-          <li></li>
+          <li v-if="!isCounting">请先完成支付再提交。</li>
+          <li v-else>订单剩余有效时间：{{ payCountdown }}秒。</li>
+          <li>本站会员价格为人民币420元，使用邀请码价格为390元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
           <li>
             注册后，系统会自动为用户生成专属邀请码，使用邀请码邀请好友注册为会员，你将获得30元返现，邀请码使用次数无限制，返现收益系统统计后于每月初发放。
           </li>
