@@ -40,7 +40,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // 1.处理响应/获取响应数据
-        console.log('后端响应的数据', response.data);
+        // console.log('后端响应的数据', response.data);
         if (response.data.code === 1) {
             return response
         }

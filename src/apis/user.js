@@ -25,11 +25,6 @@ export const userRegisterService = ({ username, password, phoneNumber, question,
     return request.post('/user/register', { username, password, phoneNumber, question, answer, avatar, nickname, inviteIdentifier, paymentInfo })
 }
 
-// 生成邀请码
-export const identifierService = (id) => {
-    return request.post('/user/identifiers/generate', { id })
-}
-
 // 登录
 export const userLoginService = ({ username, password }) => {
     return request.post('/user/login', { username, password })
@@ -80,9 +75,4 @@ export const checkIdentifierService = (identifier) => {
     return request.get('/identifiers/exists', {
         params: { identifier }
     })
-}
-
-// 装备数量统计
-export const gearCountService = () => {
-    return request.get('/user/gearCount')
 }

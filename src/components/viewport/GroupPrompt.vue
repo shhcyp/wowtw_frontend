@@ -70,7 +70,7 @@ import PromptTableLevel from '../module/PromptTableLevel.vue'
       <template #prompt-icon>
         <img src="/legends/yaso.webp" alt="">
       </template>
-      <template #prompt-title>时光周角色等级|装备等级压缩一览</template>
+      <template #prompt-title>时光周角色/装备等级压缩一览</template>
       <template #details>
         <PromptTableLevel></PromptTableLevel>
       </template>

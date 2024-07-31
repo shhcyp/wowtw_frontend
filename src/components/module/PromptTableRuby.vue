@@ -26,6 +26,17 @@
       </tr>
       <tr>
         <td>
+          <div class="ruby-icon"><img src="/ruby/eye_of_sea_beast.webp" alt="">
+          </div>
+        </td>
+        <td>海怪之眼</td>
+        <td>+3</td>
+        <td>+6</td>
+        <td>+6</td>
+        <td>+9</td>
+      </tr>
+      <tr>
+        <td>
           <div class="ruby-icon"><img src="/ruby/illimited_iamond.webp" alt=""></div>
         </td>
         <td>无限钻石</td>

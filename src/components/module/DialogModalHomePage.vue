@@ -1,11 +1,9 @@
 <script setup>
-import {onMounted, onUnmounted, watch} from 'vue'
+import {onMounted, onUnmounted} from 'vue'
 import IconXmark from '@/components/module/IconXmark.vue'
 import {useHomeModalStore} from '@/stores/index.js'
-import {storeToRefs} from 'pinia'
 
 const homeModalStore = useHomeModalStore()
-// const {isModalOpen, isContentLoaded, postPath} = storeToRefs(homeModalStore)
 
 const closeModal = () => {
   homeModalStore.closeHomeModal()
@@ -106,8 +104,6 @@ onUnmounted(() => {
 @media (max-width: 430px) {
   #modal-content {
     margin: 2rem 1rem;
-
   }
-  
 }
 </style>

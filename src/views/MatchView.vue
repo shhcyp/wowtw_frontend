@@ -14,7 +14,7 @@ import GroupPageHeader from '@/components/viewport/GroupPageHeader.vue'
       </GroupPageHeader>
     </template>
     <template #page-main>
-      <div style="text-align: left; padding: 3rem; text-align: center">游戏内活动尚未开启，暂无内容</div>
+      <div style="padding: 3rem; text-align: center">游戏内活动尚未开启，暂无内容</div>
     </template>
   </TheLayout>
 </template>

@@ -11,7 +11,9 @@ import {visitService} from '@/apis/user.js'
 import {onMounted} from 'vue'
 
 onMounted(async () => {
-  await visitService()
+  if (localStorage.length === 0) {
+    await visitService()
+  }
 })
 
 const homeModalStore = useHomeModalStore()
@@ -123,7 +125,6 @@ const openModal = (value) => {
   margin-bottom: 1rem;
 }
 
-#part-I,
 #part-II,
 #part-III {
   padding: 1rem 0;

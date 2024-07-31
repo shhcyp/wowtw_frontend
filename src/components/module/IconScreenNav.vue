@@ -27,12 +27,8 @@ onMounted(() => {
 
     if (!currenBoolean.value) {
       showScrollBar()
-      // 横竖屏限制
-      // unlockOrientation(!currenBoolean)
     } else {
       hideScrollBar()
-      // 横竖屏限制
-      // lockLandscape(!currenBoolean)
     }
   })
 })
