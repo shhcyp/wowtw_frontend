@@ -11,7 +11,7 @@ import {visitService} from '@/apis/user.js'
 import {onMounted} from 'vue'
 
 onMounted(async () => {
-  if (localStorage.length === 0) {
+  if (localStorage.length <= 1) {
     await visitService()
   }
 })
@@ -29,6 +29,9 @@ const openModal = (value) => {
       <template #page-header>
         <div id="page-header">
           <div id="welcome">欢迎来到时光漫游</div>
+          <div class="short-row-wrapper" id="welcome-subtitle">
+            重要通知：时空漫游正在改版中，配装玩法或将不可用，请会员用户暂时不要花费过大精力进行伐木
+          </div>
           <div class="flex-grow"></div>
           <AnimateOt></AnimateOt>
           <div class="flex-row-align-center" id="welcome-link">
@@ -38,6 +41,7 @@ const openModal = (value) => {
           <div class="short-row-wrapper" id="welcome-subtitle">
             专注《魔兽世界》时空漫游系统攻略，助你成为队伍中最靓的仔
           </div>
+          <a href="https://www.bilibili.com/video/BV1ZF4m1w7Si/?spm_id_from=333.999.0.0" target="_blank" id="battle-portal">> 战斗效果（黑暗神殿）></a>
         </div>
       </template>
       <template #page-main>
@@ -86,6 +90,7 @@ const openModal = (value) => {
 
 #welcome-link {
   margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 #about-mcyptw {
@@ -101,15 +106,21 @@ const openModal = (value) => {
 }
 
 #terms {
-  color: white;
+  color: black;
   cursor: pointer;
   width: 7rem;
   height: 2.7rem;
   line-height: 2.7rem;
   text-align: center;
-  border: 1px solid white;
+  background-color: white;
   border-radius: 2.7rem 2.7rem;
-  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#battle-portal {
+  color: var(--color-portal);
+  padding-bottom: 1rem;
+  font-weight: bold;
 }
 
 #welcome-subtitle {
@@ -185,7 +196,7 @@ const openModal = (value) => {
     height: 2.3rem;
     line-height: 2.3rem;
     border-radius: 2.3rem 2.3rem;
-    margin-left: 0.7rem;
+    margin-right: 0.7rem;
   }
 
   #welcome-subtitle {

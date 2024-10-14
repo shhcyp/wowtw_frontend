@@ -25,9 +25,9 @@ const openModal = (value) => {
         <div class="description-theme">法师塔重启加入时空漫游</div>
       </div>
       <div class="flex-column-align-center">
-        <div id="nowadays"><img src="/homepage/11coming.webp" alt=""></div>
+        <div id="nowadays"><img src="/homepage/present.webp" alt=""></div>
         <div class="year">现在</div>
-        <div class="description-theme">11.0即将开启</div>
+        <div class="description-theme">时空漫游改版中</div>
       </div>
     </div>
   </div>

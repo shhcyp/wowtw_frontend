@@ -232,6 +232,7 @@ onUnmounted(() => {
 <template>
   <div class="no-select" id="bars-left">
     <RouterLink :to="`/`">首页</RouterLink>
+    <a @click="$router.push('/guide')">攻略</a>
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
     <a @click="isLogin('match')">漫游杯</a>

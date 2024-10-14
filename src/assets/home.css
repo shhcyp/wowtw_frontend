@@ -54,6 +54,17 @@
     padding-bottom: 1rem;
 }
 
+.subtitle-light-little-padding {
+    color: var(--c-black-pure);
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.subtitle-light-no-padding-top {
+    color: var(--c-black-pure);
+    padding-bottom: 1rem;
+}
+
 .description-theme {
     color: var(--c-theme-wowtw);
     padding: 1.3rem 0;

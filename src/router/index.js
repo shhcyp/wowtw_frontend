@@ -1,4 +1,5 @@
 import HomeView from '@/views/HomeView.vue'
+import GuideView from '@/views/GuideView.vue'
 import PromptView from '@/views/PromptView.vue'
 import GearView from '@/views/GearView.vue'
 import MatchView from '@/views/MatchView.vue'
@@ -12,9 +13,21 @@ import {useUserStore} from '@/stores/index.js'
 
 const routes = [
     {
-        path: '/',
+        path: '',
         name: 'home',
         component: HomeView,
+        meta: {requiresAuth: false},
+        beforeEnter: (to, from, next) => {
+            setTimeout(() => {
+                next()
+            }, 123)
+        }
+    },
+    {
+        path: '/guide',
+        name: 'guide',
+        component: GuideView,
+        meta: {requiresAuth: false},
         beforeEnter: (to, from, next) => {
             setTimeout(() => {
                 next()

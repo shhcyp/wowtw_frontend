@@ -65,6 +65,7 @@ export const useUserStore = defineStore(
             if (username.value) {
                 // 开发环境
                 // socket = new WebSocket(`${protocol}://192.168.2.73:8080/websocket?username=${username.value}`)
+                // socket = new WebSocket(`${protocol}://localhost:8080/websocket?username=${username.value}`)
                 // 生产环境
                 socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
                 socket.onopen = function () {
