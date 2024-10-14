@@ -7,7 +7,7 @@ import GroupPageHeader from '@/components/viewport/GroupPageHeader.vue'
     <template #page-header>
       <GroupPageHeader style="border-bottom: none;">
         <template #page-title>
-          攻略？
+          建设中……
         </template>
       </GroupPageHeader>
     </template>
