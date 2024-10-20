@@ -320,6 +320,7 @@ onUnmounted(() => {
 #nickname {
   color: var(--c-good);
   margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 #new-nickname {

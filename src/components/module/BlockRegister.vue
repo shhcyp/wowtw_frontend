@@ -7,7 +7,7 @@ import QRCodeGenerator from "@/components/module/QRCodeGenerator.vue"
 import BarFormSubmit from './BarFormSubmit.vue'
 import PanelFormFooter from './PanelFormFooter.vue'
 import {
-  checkIdentifierService,
+  // checkIdentifierService,
   codeVerifyService,
   phoneNumberService,
   smsService,
@@ -134,10 +134,12 @@ const clearVerificationCode = (value) => {
   verificationCode.value = value
   verificationCode.state = 0
 }
-const clearInviteIdentifier = (value) => {
-  inviteIdentifier.value = value
-  inviteIdentifier.state = 0
-}
+
+//弃用激活码功能
+// const clearInviteIdentifier = (value) => {
+//   inviteIdentifier.value = value
+//   inviteIdentifier.state = 0
+// }
 const notPhoneNumber = () => {
   phoneNumber.value = ''
   phoneNumber.state = 0
@@ -199,14 +201,15 @@ watch(() => registerFormData.phoneNumber.value, async () => {
 })
 
 // 邀请码验证请求
-const handleInviteIdentifier = async (inputValue) => {
-  const result = await checkIdentifierService(inputValue)
-  inviteIdentifierResponseData.value = result.data
-  if (result.data.code === 1) {
-    inviteIdentifier.value = inputValue
-  }
-  inviteIdentifier.state = result.data.code
-}
+// 弃用邀请码功能
+// const handleInviteIdentifier = async (inputValue) => {
+//   const result = await checkIdentifierService(inputValue)
+//   inviteIdentifierResponseData.value = result.data
+//   if (result.data.code === 1) {
+//     inviteIdentifier.value = inputValue
+//   }
+//   inviteIdentifier.state = result.data.code
+// }
 
 // 支付宝二维码生成
 const outTradeNo = ref(null)
@@ -484,10 +487,10 @@ const handleEnter = (event) => {
       <div id="payment-container">
         <div class="flex-column space-between" id="payment-tips">
           <!--邀请码-->
-          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"
-                       name="inviteIdentifier"
-                       placeholder="邀请码（选填）">
-          </InputPublic>
+<!--          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"-->
+<!--                       name="inviteIdentifier"-->
+<!--                       placeholder="邀请码（选填）">-->
+<!--          </InputPublic>-->
         </div>
         <div class="flex-center-center" id="payment-code">
           <div class="flex-center-center" id="qrcode-container">
