@@ -504,7 +504,7 @@ const handleEnter = (event) => {
         <ul style="font-size: 12px;" id="payment-announcement">
           <li v-if="!isCounting">请先完成支付再提交。</li>
           <li v-else>订单剩余有效时间：{{ payCountdown }}秒。</li>
-          <li>本站会员价格为人民币198元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
+          <li>本站会员价格为人民币237元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
 <!--          <li>-->
 <!--            注册后，系统会自动为用户生成专属邀请码，使用邀请码邀请好友注册为会员，你将获得30元返现，邀请码使用次数无限制，返现收益系统统计后于每月初发放。-->
 <!--          </li>-->

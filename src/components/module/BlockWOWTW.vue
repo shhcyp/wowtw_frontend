@@ -27,7 +27,7 @@ const openModal = (value) => {
       <div class="flex-column-align-center">
         <div id="nowadays"><img src="/homepage/present.webp" alt=""></div>
         <div class="year">现在</div>
-        <div class="description-theme">时空漫游改版中</div>
+        <div class="description-theme">时空漫游已消亡</div>
       </div>
     </div>
   </div>

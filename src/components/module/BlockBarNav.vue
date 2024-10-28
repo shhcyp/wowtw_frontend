@@ -242,8 +242,8 @@ onUnmounted(() => {
 
   <div v-if="!userStore.isLogin" id="bars-right">
     <!-- <div v-if="false" id="bars-right"> -->
-    <RouterLink :to="`/register`">注册</RouterLink>
-    <RouterLink :to="`/login`">登录</RouterLink>
+<!--    <RouterLink :to="`/register`">注册</RouterLink>-->
+<!--    <RouterLink :to="`/login`">登录</RouterLink>-->
   </div>
   <div v-else id="bars-right">
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>

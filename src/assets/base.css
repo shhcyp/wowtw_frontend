@@ -126,6 +126,10 @@
   box-sizing: border-box;
 }
 
+html {
+  filter: grayscale(100%);
+}
+
 html,
 body {
   min-width: 375px;
