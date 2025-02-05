@@ -29,9 +29,9 @@ const openModal = (value) => {
       <template #page-header>
         <div id="page-header">
           <div id="welcome">欢迎来到时光漫游</div>
-          <div class="short-row-wrapper" id="welcome-subtitle">
-            重要通知：由于暴雪将时空漫游修改为了克罗米时间线模式，配装玩法的时空漫游已经消亡。不论如何，非常感谢大家的陪伴，愿真正的漫游时光永存！
-          </div>
+<!--          <div class="short-row-wrapper" id="welcome-subtitle">-->
+<!--            重要通知：由于暴雪将时空漫游修改为了克罗米时间线模式，配装玩法的时空漫游已经消亡。不论如何，非常感谢大家的陪伴，愿真正的漫游时光永存！-->
+<!--          </div>-->
           <div class="flex-grow"></div>
           <AnimateOt></AnimateOt>
           <div class="flex-row-align-center" id="welcome-link">
@@ -39,7 +39,7 @@ const openModal = (value) => {
             <div @click="openModal('terms')" id="terms">使用条款</div>
           </div>
           <div class="short-row-wrapper" id="welcome-subtitle">
-            专注《魔兽世界》时空漫游装备搭配攻略，助你成为队伍中最靓的仔
+            专注《魔兽世界》时空漫游装备搭配攻略，助你成为队伍中最靓的仔(目前时光漫游配装仅可在团队漫游事件中使用)
           </div>
           <a href="https://www.bilibili.com/video/BV1ZF4m1w7Si/?spm_id_from=333.999.0.0" target="_blank" id="battle-portal">> 战斗效果（黑暗神殿）></a>
         </div>

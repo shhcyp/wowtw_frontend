@@ -235,15 +235,15 @@ onUnmounted(() => {
     <!--<a @click="$router.push('/guide')">攻略</a>-->
     <a @click="isLogin('guidance')">指引</a>
     <a @click="isLogin('gears')">装配</a>
-    <a @click="isLogin('match')">漫游杯</a>
-    <a @click="$router.push('/rank')">漫游榜</a>
+<!--    <a @click="isLogin('match')">漫游杯</a>-->
+<!--    <a @click="$router.push('/rank')">漫游榜</a>-->
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 
   <div v-if="!userStore.isLogin" id="bars-right">
     <!-- <div v-if="false" id="bars-right"> -->
-<!--    <RouterLink :to="`/register`">注册</RouterLink>-->
-<!--    <RouterLink :to="`/login`">登录</RouterLink>-->
+    <RouterLink :to="`/register`">注册</RouterLink>
+    <RouterLink :to="`/login`">登录</RouterLink>
   </div>
   <div v-else id="bars-right">
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>

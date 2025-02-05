@@ -1,0 +1,46 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid lightgray;
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#cyp_1x, #cyp_2x, #cyp_3x,
+#cj_1x, #cj_2x, #cj_3x,
+#level1_energy_1x, #level1_energy_2x, #level1_energy_3x,
+#level3_energy_1x, #level3_energy_2x, #level3_energy_3x,
+#level4_energy_1x, #level4_energy_2x, #level4_energy_3x,
+#level5_energy_1x, #level5_energy_2x, #level5_energy_3x,
+#level6_energy_1x, #level6_energy_2x, #level6_energy_3x,
+#places_1x, #places_2x, #places_3x,
+#collisionAnimation,
+#background_test_01_1x {
+    display: none;
+}
+
+#level-control {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 18px;
+}
+
+select, option {
+    font-size: 17px;
+}
+
+select {
+    width: 123px;
+}

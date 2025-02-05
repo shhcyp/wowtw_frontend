@@ -10,10 +10,34 @@ import LoginView from '@/views/LoginView.vue'
 import ResetPasswordView from '@/views/ResetPasswordView.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import {useUserStore} from '@/stores/index.js'
+import JinJinBoys from "@/views/JinJinBoys.vue";
+import JinJinGirls from "@/views/JinJinGirls.vue";
 
 const routes = [
     {
-        path: '',
+        path: '/girls',
+        name: 'girls',
+        component: JinJinGirls,
+        meta: {requiresAuth: false},
+        beforeEnter: (to, from, next) => {
+            setTimeout(() => {
+                next()
+            }, 123)
+        }
+    },
+    {
+        path: '/boys',
+        name: 'boys',
+        component: JinJinBoys,
+        meta: {requiresAuth: false},
+        beforeEnter: (to, from, next) => {
+            setTimeout(() => {
+                next()
+            }, 123)
+        }
+    },
+    {
+        path: '/',
         name: 'home',
         component: HomeView,
         meta: {requiresAuth: false},

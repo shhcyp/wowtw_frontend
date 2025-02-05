@@ -126,9 +126,10 @@
   box-sizing: border-box;
 }
 
-html {
-  filter: grayscale(100%);
-}
+/*消亡色*/
+/*html {*/
+/*  filter: grayscale(100%);*/
+/*}*/
 
 html,
 body {

@@ -8,17 +8,18 @@
 
     <div id="gild-placeholder"></div>
 
-    <div class="theme">打赏/资助</div>
+<!--    <div class="theme">打赏/资助</div>-->
+    <div class="theme">暂时没有互动，会长AFK了 : ( </div>
 
-    <div id="help-qrcode"><img src="/homepage/little.webp" alt="qrcode"></div>
-    <div class="subtitle-light-no-padding-top">收益将用于网站运营、公会活动基金、公益团打手补贴</div>
+<!--    <div id="help-qrcode"><img src="/homepage/little.webp" alt="qrcode"></div>-->
+<!--    <div class="subtitle-light-no-padding-top">收益将用于网站运营、公会活动基金、公益团打手补贴</div>-->
 
-    <div class="theme">游戏内公会</div>
-    <div class="subtitle-light-little-padding">名称：WOWTW，会长：Hithere</div>
-    <div class="subtitle-light-no-padding-top">联盟可直接查找器申请，部落需在同名社区联系管理员加公会</div>
+<!--    <div class="theme">游戏内公会</div>-->
+<!--    <div class="subtitle-light-little-padding">名称：WOWTW，会长：Hithere</div>-->
+<!--    <div class="subtitle-light-no-padding-top">联盟可直接查找器申请，部落需在同名社区联系管理员加公会</div>-->
 
-    <div class="theme">WarcraftLogs公会</div>
-    <a href="https://cn.warcraftlogs.com/guild/autojoin/743554/X8Z34vCH" target="_blank" id="guild-portal">> 自动加入 ></a>
+<!--    <div class="theme">WarcraftLogs公会</div>-->
+<!--    <a href="https://cn.warcraftlogs.com/guild/autojoin/743554/X8Z34vCH" target="_blank" id="guild-portal">> 自动加入 ></a>-->
   </div>
 </template>
 
