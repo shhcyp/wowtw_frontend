@@ -7,7 +7,7 @@ import QRCodeGenerator from "@/components/module/QRCodeGenerator.vue"
 import BarFormSubmit from './BarFormSubmit.vue'
 import PanelFormFooter from './PanelFormFooter.vue'
 import {
-  // checkIdentifierService,
+  checkIdentifierService,
   codeVerifyService,
   phoneNumberService,
   smsService,
@@ -136,10 +136,10 @@ const clearVerificationCode = (value) => {
 }
 
 //弃用激活码功能
-// const clearInviteIdentifier = (value) => {
-//   inviteIdentifier.value = value
-//   inviteIdentifier.state = 0
-// }
+const clearInviteIdentifier = (value) => {
+  inviteIdentifier.value = value
+  inviteIdentifier.state = 0
+}
 const notPhoneNumber = () => {
   phoneNumber.value = ''
   phoneNumber.state = 0
@@ -202,14 +202,14 @@ watch(() => registerFormData.phoneNumber.value, async () => {
 
 // 邀请码验证请求
 // 弃用邀请码功能
-// const handleInviteIdentifier = async (inputValue) => {
-//   const result = await checkIdentifierService(inputValue)
-//   inviteIdentifierResponseData.value = result.data
-//   if (result.data.code === 1) {
-//     inviteIdentifier.value = inputValue
-//   }
-//   inviteIdentifier.state = result.data.code
-// }
+const handleInviteIdentifier = async (inputValue) => {
+  const result = await checkIdentifierService(inputValue)
+  inviteIdentifierResponseData.value = result.data
+  if (result.data.code === 1) {
+    inviteIdentifier.value = inputValue
+  }
+  inviteIdentifier.state = result.data.code
+}
 
 // 支付宝二维码生成
 const outTradeNo = ref(null)
@@ -345,7 +345,7 @@ watch(() => ({
 
 // 检查state是不是都是1
 watch(registerFormData, () => {
-  console.log("表单实时数据:", registerFormData)
+  // console.log("表单实时数据:", registerFormData)
   passport.value = Object.entries(registerFormData)
       .filter(([key]) => key !== 'inviteIdentifier' && key !== 'paymentInfo') // 过滤掉 inviteIdentifier 和 paymentInfo
       .every(([, field]) => field.state === 1)
@@ -489,7 +489,7 @@ const handleEnter = (event) => {
           <!--邀请码-->
 <!--          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"-->
 <!--                       name="inviteIdentifier"-->
-<!--                       placeholder="邀请码（选填）">-->
+<!--                       placeholder="邀请码（选填）填入有效邀请码后付款码将自动更新">-->
 <!--          </InputPublic>-->
         </div>
         <div class="flex-center-center" id="payment-code">
@@ -504,9 +504,10 @@ const handleEnter = (event) => {
         <ul style="font-size: 12px;" id="payment-announcement">
           <li v-if="!isCounting">请先完成支付再提交。</li>
           <li v-else>订单剩余有效时间：{{ payCountdown }}秒。</li>
-          <li>本站会员价格为人民币137元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
+          <li>本站会员价格为人民币6.66元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
+          <li>说明：本站为作者独立开发者，能力有限，原本准备免费开放，但由于网站前期的大量支付逻辑限制，为节约时间，把重心放在装备测试和攻略更新上，故用户注册仍然需要支付会员费，望理解。</li>
 <!--          <li>-->
-<!--            注册后，系统会自动为用户生成专属邀请码，使用邀请码邀请好友注册为会员，你将获得30元返现，邀请码使用次数无限制，返现收益系统统计后于每月初发放。-->
+<!--            填入有效邀请码后付款码将自动更新。-->
 <!--          </li>-->
         </ul>
       </div>

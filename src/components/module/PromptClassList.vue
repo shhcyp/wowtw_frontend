@@ -1,13 +1,18 @@
 <script setup>
 import {ref} from 'vue'
 
+// const charts = ref([
+//   {image: '/charts/tank_raid.webp', name: '坦克（团本）'},
+//   {image: '/charts/tank_dungeon.webp', name: '坦克（副本）'},
+//   {image: '/charts/healer_raid.webp', name: '治疗（团本）'},
+//   {image: '/charts/healer_dungeon.webp', name: '治疗（副本）'},
+//   {image: '/charts/dps_raid.webp', name: 'DPS（团本）'},
+//   {image: '/charts/dps_dungeon.webp', name: 'DPS（副本）'},
+// ])
 const charts = ref([
-  {image: '/charts/tank_raid.webp', name: '坦克（团本）'},
-  {image: '/charts/tank_dungeon.webp', name: '坦克（副本）'},
-  {image: '/charts/healer_raid.webp', name: '治疗（团本）'},
-  {image: '/charts/healer_dungeon.webp', name: '治疗（副本）'},
-  {image: '/charts/dps_raid.webp', name: 'DPS（团本）'},
-  {image: '/charts/dps_dungeon.webp', name: 'DPS（副本）'},
+  {image: '/charts/tank_raid.webp', name: '坦克'},
+  {image: '/charts/healer_raid.webp', name: '治疗'},
+  {image: '/charts/dps_raid.webp', name: 'DPS'},
 ])
 </script>
 
@@ -24,9 +29,9 @@ const charts = ref([
 .prompt-details-container-image {
   margin-left: 0.7rem;
   display: grid;
-  grid-auto-flow: column;
+  grid-auto-flow: row;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  //grid-template-rows: repeat(2, 1fr);
 }
 
 #prompt-details {

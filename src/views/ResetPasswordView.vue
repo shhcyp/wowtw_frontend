@@ -78,7 +78,7 @@ let isVerify = false
 
 // 用户名、手机号验证
 watch(resetPasswordFormData, async () => {
-  console.log('表单form实时数据', resetPasswordFormData);
+  // console.log('表单form实时数据', resetPasswordFormData);
   // 检查state是不是都是1
   passport.value = Object.values(resetPasswordFormData).every(field => field.state === 1)
 
@@ -90,11 +90,11 @@ watch(resetPasswordFormData, async () => {
 
   if (verifyPassport) {
     const result = await resetPasswordVerifyService(verifyData)
-    console.log('result', result.data);
+    // console.log('result', result.data);
     question.value = result.data.data
-    console.log(question.value);
+    // console.log(question.value);
     phoneNumberResponseData.value = result.data
-    console.log(phoneNumberResponseData.value);
+    // console.log(phoneNumberResponseData.value);
 
     username.isUpdated = false
     phoneNumber.isUpdated = false

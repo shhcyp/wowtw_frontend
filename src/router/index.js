@@ -10,32 +10,8 @@ import LoginView from '@/views/LoginView.vue'
 import ResetPasswordView from '@/views/ResetPasswordView.vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import {useUserStore} from '@/stores/index.js'
-import JinJinBoys from "@/views/JinJinBoys.vue";
-import JinJinGirls from "@/views/JinJinGirls.vue";
 
 const routes = [
-    {
-        path: '/girls',
-        name: 'girls',
-        component: JinJinGirls,
-        meta: {requiresAuth: false},
-        beforeEnter: (to, from, next) => {
-            setTimeout(() => {
-                next()
-            }, 123)
-        }
-    },
-    {
-        path: '/boys',
-        name: 'boys',
-        component: JinJinBoys,
-        meta: {requiresAuth: false},
-        beforeEnter: (to, from, next) => {
-            setTimeout(() => {
-                next()
-            }, 123)
-        }
-    },
     {
         path: '/',
         name: 'home',
@@ -85,6 +61,18 @@ const routes = [
     {
         path: '/match',
         name: 'match',
+        component: MatchView,
+        // 添加 requiresAuth 元信息
+        meta: {requiresAuth: true},
+        beforeEnter: (to, from, next) => {
+            setTimeout(() => {
+                next()
+            }, 123)
+        }
+    },
+    {
+        path: '/mageTower',
+        name: 'mageTower',
         component: MatchView,
         // 添加 requiresAuth 元信息
         meta: {requiresAuth: true},

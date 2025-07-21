@@ -13,7 +13,7 @@ import GroupGears from '@/components/viewport/GroupGears.vue'
           全职业装备搭配表
         </template>
         <template #page-subtitle>
-          大多数情况下，装备按照从上到下，从左到右，毕业在前，备用在后，但是也有例外
+          大多数情况下，装备按照从上到下，从左到右，毕业在前，备用在后，所有装备装等需大于等于事件压缩装等（例如法师塔大于等于120）
         </template>
       </GroupPageHeader>
     </template>

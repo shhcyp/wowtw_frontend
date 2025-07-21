@@ -9,7 +9,7 @@ import GroupPrompt from '@/components/viewport/GroupPrompt.vue'
         <template #page-header>
             <GroupPageHeader>
                 <template #page-title>
-                    时光漫游细节指引
+                    使用说明
                 </template>
             </GroupPageHeader>
         </template>

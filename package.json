@@ -14,7 +14,7 @@
     "@formkit/auto-animate": "^0.8.2",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "axios": "^1.7.2",
+    "axios": "1.8.2",
     "body-scroll-lock": "4.0.0-beta.0",
     "marked": "^13.0.2",
     "pinia": "^2.1.7",

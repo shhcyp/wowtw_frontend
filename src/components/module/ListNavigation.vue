@@ -221,10 +221,11 @@ onUnmounted(() => {
         <RouterLink v-if="!userStore.isLogin" @click="toggleBoolean" :to="`/register`">注册</RouterLink>
         <RouterLink v-if="!userStore.isLogin" @click="toggleBoolean" :to="`/login`">登录</RouterLink>
         <RouterLink @click="toggleBoolean" :to="`/`">首页</RouterLink>
-        <RouterLink @click="toggleBoolean" :to="`/prompt`">指引</RouterLink>
-        <RouterLink @click="toggleBoolean" :to="`/gear`">装配</RouterLink>
-        <RouterLink @click="toggleBoolean" :to="`/match`">漫游杯</RouterLink>
-        <RouterLink @click="toggleBoolean" :to="`/rank`">漫游榜</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/prompt`">使用说明</RouterLink>
+        <RouterLink @click="toggleBoolean" :to="`/gear`">装备搭配</RouterLink>
+<!--        <RouterLink @click="toggleBoolean" :to="`/mageTower`">法塔杯</RouterLink>-->
+<!--        <RouterLink @click="toggleBoolean" :to="`/match`">漫游杯</RouterLink>-->
+<!--        <RouterLink @click="toggleBoolean" :to="`/rank`">荣耀榜</RouterLink>-->
         <!-- <RouterLink @click="toggleBoolean" :to="`/shop`">地精商店</RouterLink> -->
         <div v-if="userStore.isLogin" @click="openModal('identifier')" class="custom-button" id="generate-identifier">
           邀请码

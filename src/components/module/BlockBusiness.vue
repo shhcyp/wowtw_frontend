@@ -10,7 +10,7 @@ const openModal = (value) => {
 
 <template>
   <div class="container-light flex-column-align-center" id="business">
-    <div class="title-dark">会员福利</div>
+    <div class="title-dark">会员服务</div>
     <div @click="openModal('membershipPolicy')" id="about-business">了解更多</div>
 <!--    <div class="temp-placeholder"></div>-->
   </div>

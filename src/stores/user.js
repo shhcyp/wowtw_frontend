@@ -64,10 +64,11 @@ export const useUserStore = defineStore(
             const host = window.location.host
             if (username.value) {
                 // 开发环境
-                // socket = new WebSocket(`${protocol}://192.168.2.73:8080/websocket?username=${username.value}`)
-                socket = new WebSocket(`${protocol}://localhost:8080/websocket?username=${username.value}`)
+                // socket = new WebSocket(`${protocol}://192.168.1.4:8080/websocket?username=${username.value}`)
+                // socket = new WebSocket(`${protocol}://localhost:8080/websocket?username=${username.value}`)
                 // 生产环境
-                // socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
+                socket = new WebSocket(`${protocol}://${host}/websocket?username=${username.value}`)
+
                 socket.onopen = function () {
                     // console.log('WebSocket connection opened')
                     startHeartbeat();

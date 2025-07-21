@@ -10,10 +10,10 @@ const openModal = (value) => {
 
 <template>
   <div class="container-dark" id="cup-bg-img">
-    <div class="title-dark">拉力赛"漫游杯"</div>
+    <div class="title-dark">拉力赛</div>
     <div @click="openModal('roamingCup')" id="about-cup">了解更多</div>
     <div id="cup-placeholder"></div>
-    <div class="title-dark" id="cup-description">组建战队，一起穿越</div>
+    <div class="title-dark" id="cup-description">漫游专属穿越行动</div>
   </div>
 </template>
 

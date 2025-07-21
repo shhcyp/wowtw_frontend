@@ -26,8 +26,8 @@ const openModal = (value) => {
       </div>
       <div class="flex-column-align-center">
         <div id="nowadays"><img src="/homepage/present.webp" alt=""></div>
-        <div class="year">现在</div>
-        <div class="description-theme">时空漫游已消亡</div>
+        <div class="year">2024年</div>
+        <div class="description-theme">漫游五人本机制变更</div>
       </div>
     </div>
   </div>

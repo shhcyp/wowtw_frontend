@@ -22,15 +22,15 @@
       </li>
       <li class="legend">
         <img class="icon-legend" src="/legends/grandfathered.webp" alt="">
-        <span>绝版</span>
+        <span>涉及绝版</span>
       </li>
       <li class="legend">
         <img class="icon-legend" src="/legends/rare.webp" alt="">
         <span>极稀有</span>
       </li>
       <li class="legend">
-        <img class="icon-legend" src="/legends/group.webp" alt="">
-        <span>配套标记</span>
+        <img class="icon-legend" src="/legends/bug.webp" alt="">
+        <span>异常(随时可能被和谐)</span>
       </li>
     </ul>
   </div>

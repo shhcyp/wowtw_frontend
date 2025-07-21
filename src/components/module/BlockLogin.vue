@@ -83,6 +83,7 @@ const handleSubmit = async () => {
       setTimeout(async () => {
         // 登录成功，直接跳转
         if (result.data.code === 1) {
+          console.log(result)
           userStore.isLogin = true
           userStore.setUsername(username.value)
           messageForButton.value = result.data.message

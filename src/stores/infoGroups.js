@@ -20,5 +20,5 @@ export const useInfoGroupsStore = defineStore("infoGroupResponse", () => {
         return {infoGroupData, presentTalent, resetPresentTalent, setInfoGroupData}
     },
     {
-        persist: true
+        persist: false
     })

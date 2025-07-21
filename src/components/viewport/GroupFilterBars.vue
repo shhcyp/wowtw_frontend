@@ -78,6 +78,7 @@ const handleTalentClick = async (index, talentId) => {
       const result = await infoGroupService(talentId)
       infoGroupsStore.setInfoGroupData(talentId, result.data.data)
       console.log('Fetched data')
+      // console.log(result)
       presentTalent.value = talentId
     } catch (error) {
       console.log('Error fetching data:', error)

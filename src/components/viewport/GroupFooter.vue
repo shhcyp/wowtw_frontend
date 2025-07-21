@@ -17,9 +17,11 @@ const openModal = (value) => {
       <li class="no-select"><span>|</span></li>
       <li class="no-select"><a @click="openModal('disclaimer')">免责声明</a></li>
       <li class="no-select"><span>|</span></li>
-      <li class="no-select"><a @click="openModal('contact')">联系方式</a></li>
+      <li class="no-select"><a href="https://beian.miit.gov.cn" target="_blank">滇ICP备2025056169号-1</a></li>
       <li class="no-select"><span>|</span></li>
-      <li class="no-select"><a href="https://beian.miit.gov.cn" target="_blank">滇ICP备2024031975号</a></li>
+      <li class="no-select"><a href="https://beian.mps.gov.cn/#/" target="_blank">滇公网安备53010202002178号</a></li>
+      <li class="no-select"><span>|</span></li>
+      <li class="no-select"><a @click="openModal('contact')">联系方式</a></li>
 <!--      <li class="no-select"><span>|</span></li>-->
       <!--      <li class="no-select"><span>本网站是一个非魔兽世界官方的粉丝站点，站内所有《魔兽世界》相关的内容均归暴雪娱乐公司所有</span></li>-->
     </ul>

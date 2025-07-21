@@ -233,10 +233,12 @@ onUnmounted(() => {
   <div class="no-select" id="bars-left">
     <RouterLink :to="`/`">首页</RouterLink>
     <!--<a @click="$router.push('/guide')">攻略</a>-->
-    <a @click="isLogin('guidance')">指引</a>
-    <a @click="isLogin('gears')">装配</a>
+    <a @click="isLogin('guidance')">使用说明</a>
+    <!--    <a @click="isLogin('gears50')">五人漫游</a>-->
+    <a @click="isLogin('gears')">装备搭配</a>
+<!--    <a @click="isLogin('match')">法塔杯</a>-->
 <!--    <a @click="isLogin('match')">漫游杯</a>-->
-<!--    <a @click="$router.push('/rank')">漫游榜</a>-->
+<!--    <a @click="$router.push('/rank')">荣耀榜</a>-->
     <!-- <RouterLink :to="`/shop`">地精商店</RouterLink> -->
   </div>
 
@@ -248,7 +250,7 @@ onUnmounted(() => {
   <div v-else id="bars-right">
     <BarAvatar @click="openModal('avatar')" :url="userStore.userAvatar"></BarAvatar>
     <div @click="openModal('nickname')" class="custom-button" id="nickname">{{ userStore.nickname }}</div>
-    <!--    <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>-->
+    <div @click="openModal('identifier')" class="custom-button" id="generate-identifier">邀请码</div>
     <!--    <div @click="openModal('changepwd')" class="custom-button" id="generate-identifier">修改密码</div>-->
     <div @click="$router.push('/resetpassword')" class="custom-button">重置密码</div>
     <div @click="openModal('quitBar')" class="custom-button" id="quit-button">退出</div>

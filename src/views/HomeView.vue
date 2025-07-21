@@ -30,30 +30,39 @@ const openModal = (value) => {
         <div id="page-header">
           <div id="welcome">欢迎来到时光漫游</div>
 <!--          <div class="short-row-wrapper" id="welcome-subtitle">-->
-<!--            重要通知：由于暴雪将时空漫游修改为了克罗米时间线模式，配装玩法的时空漫游已经消亡。不论如何，非常感谢大家的陪伴，愿真正的漫游时光永存！-->
+<!--            通知：由于工信部及运营商新规，短信验证码功能报备中，暂时无法注册，新会员可通过网页底端联系方式进行人工注册！团本装备搭配内容更新中，请用户暂时等待！法师塔搭配已为最新，请放心食用！-->
 <!--          </div>-->
-          <div class="flex-grow"></div>
+<!--          <div class="flex-grow"></div>-->
           <AnimateOt></AnimateOt>
           <div class="flex-row-align-center" id="welcome-link">
             <div @click="openModal('mcypTW')" id="about-mcyptw">网站简介</div>
             <div @click="openModal('terms')" id="terms">使用条款</div>
           </div>
           <div class="short-row-wrapper" id="welcome-subtitle">
-            专注《魔兽世界》时空漫游装备搭配攻略，助你成为队伍中最靓的仔(目前时光漫游配装仅可在团队漫游事件中使用)
+            专注《魔兽世界》时空漫游装备搭配（【漫游团本】 + 【法师塔】），助你成为最靓的仔
+          </div>
+          <div class="short-row-wrapper" id="welcome-subtitle">
+            法师塔装备搭配已完结(天赋除外)，团本装备目前为旧版，新版更新中...
           </div>
           <a href="https://www.bilibili.com/video/BV1ZF4m1w7Si/?spm_id_from=333.999.0.0" target="_blank" id="battle-portal">> 战斗效果（黑暗神殿）></a>
         </div>
       </template>
       <template #page-main>
         <div id="page-main">
-          <BlockWOWTW class="main-details" id="part-II"></BlockWOWTW>
-          <BlockHowToPlay class="main-details" id="part-III"></BlockHowToPlay>
           <div class="main-details" id="part-IV">
+            <BlockGuild></BlockGuild>
             <BlockResource></BlockResource>
             <BlockBusiness></BlockBusiness>
             <BlockMatch></BlockMatch>
-            <BlockGuild></BlockGuild>
           </div>
+          <BlockWOWTW class="main-details" id="part-II"></BlockWOWTW>
+          <BlockHowToPlay class="main-details" id="part-III"></BlockHowToPlay>
+<!--          <div class="main-details" id="part-IV">-->
+<!--            <BlockResource></BlockResource>-->
+<!--            <BlockBusiness></BlockBusiness>-->
+<!--            <BlockMatch></BlockMatch>-->
+<!--            <BlockGuild></BlockGuild>-->
+<!--          </div>-->
         </div>
       </template>
     </TheLayout>
@@ -67,7 +76,7 @@ const openModal = (value) => {
 }
 
 #page-header {
-  height: 67vh;
+  height: 60vh;
   background-image: url("/homepage/portal1.webp");
   background-size: cover; /* 背景图片的大小，可以使用 cover, contain 或者具体的尺寸 */
   background-repeat: no-repeat; /* 防止背景图片重复 */
@@ -85,7 +94,6 @@ const openModal = (value) => {
   line-height: 2.7rem;
   font-weight: bolder;
   color: white;
-
 }
 
 #welcome-link {
