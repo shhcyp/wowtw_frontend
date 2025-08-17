@@ -205,6 +205,8 @@ watch(() => registerFormData.phoneNumber.value, async () => {
 const handleInviteIdentifier = async (inputValue) => {
   const result = await checkIdentifierService(inputValue)
   inviteIdentifierResponseData.value = result.data
+  // console.log(inputValue)
+  // console.log(inviteIdentifierResponseData.value)
   if (result.data.code === 1) {
     inviteIdentifier.value = inputValue
   }
@@ -408,15 +410,15 @@ const handleSubmit = async () => {
       const result = await userRegisterService(submitData)
       // alertMessageInput.value = '注册成功，即将跳转'
 
-        // 注册成功，即将跳转
-        if (result.data.code === 1) {
-          messageForButton.value = result.data.message
-          await router.push('/login')
-        }
-        // 注册失败，请重试
-        if (result.data.code === 0) {
-          messageForButton.value = result.data.data ? result.data.data : result.data.message
-        }
+      // 注册成功，即将跳转
+      if (result.data.code === 1) {
+        messageForButton.value = result.data.message
+        await router.push('/login')
+      }
+      // 注册失败，请重试
+      if (result.data.code === 0) {
+        messageForButton.value = result.data.data ? result.data.data : result.data.message
+      }
     }
   } else if (finalMessage === '支付超时，订单已关闭' || paymentInfo.state === 0) {
     switchGreen.value = false
@@ -463,7 +465,8 @@ const handleEnter = (event) => {
           密保问题
         </InputPublic>
         <!--答案-->
-        <InputPublic @clear="clearAnswer" @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer" :maxlength="24">
+        <InputPublic @clear="clearAnswer" @keydown.enter="handleEnter" @blur="updateAnswer" type="text" name="answer"
+                     :maxlength="24">
           密保答案
         </InputPublic>
         <!--手机号-->
@@ -487,10 +490,10 @@ const handleEnter = (event) => {
       <div id="payment-container">
         <div class="flex-column space-between" id="payment-tips">
           <!--邀请码-->
-<!--          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"-->
-<!--                       name="inviteIdentifier"-->
-<!--                       placeholder="邀请码（选填）填入有效邀请码后付款码将自动更新">-->
-<!--          </InputPublic>-->
+          <InputPublic @clear="clearInviteIdentifier" @request="handleInviteIdentifier" :maxlength="34"
+                       name="inviteIdentifier"
+                       placeholder="邀请码（选填）填入有效邀请码后付款码将自动更新">
+          </InputPublic>
         </div>
         <div class="flex-center-center" id="payment-code">
           <div class="flex-center-center" id="qrcode-container">
@@ -504,11 +507,10 @@ const handleEnter = (event) => {
         <ul style="font-size: 12px;" id="payment-announcement">
           <li v-if="!isCounting">请先完成支付再提交。</li>
           <li v-else>订单剩余有效时间：{{ payCountdown }}秒。</li>
-          <li>本站会员价格为人民币6.66元。付款方式仅支持<span style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>。</li>
-          <li>说明：本站为作者独立开发者，能力有限，原本准备免费开放，但由于网站前期的大量支付逻辑限制，为节约时间，把重心放在装备测试和攻略更新上，故用户注册仍然需要支付会员费，望理解。</li>
-<!--          <li>-->
-<!--            填入有效邀请码后付款码将自动更新。-->
-<!--          </li>-->
+          <li>本站会员价格为人民币300元。付款方式仅支持<span
+              style="color: var(--c-blue);font-size: 0.87rem;font-style: italic; font-weight: bold;">支付宝</span>，请先从上到下填写表单，短信验证通过后会显示付款码，填入有效邀请码后付款码将自动更新。
+          </li>
+          <li>可以从已注册用户或抖音用户McypJS处获取邀请码，具有邀请码会员费折扣价为210元。</li>
         </ul>
       </div>
       <TheDivider></TheDivider>
